@@ -56,7 +56,9 @@ export class SqliteManagerService {
     if (!dbSetupDone.value) {
       this.downloadDatabase();
     } else {
-
+      const dbName = await this.getDBName();
+      await CapacitorSQLite.createConnection({ database: dbName });
+      await CapacitorSQLite.open({ database: dbName });
     }
   }
 
@@ -77,6 +79,15 @@ export class SqliteManagerService {
       }
     })
 
+  }
+
+  async getDBName() {
+
+    if (!this.dbName) {
+      const dbName = await Preferences.get({ key: this.DB_NAME_KEY });
+      this.dbName = dbName.value;
+    }
+    return this.dbName;
   }
 
 }
