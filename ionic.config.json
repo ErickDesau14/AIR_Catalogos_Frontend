@@ -1,0 +1,7 @@
+{
+  "name": "AIR_App",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
