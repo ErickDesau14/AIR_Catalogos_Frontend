@@ -4,12 +4,14 @@ import { CapacitorSQLite, JsonSQLite } from '@capacitor-community/sqlite';
 import { Device } from '@capacitor/device';
 import { Preferences } from '@capacitor/preferences';
 import { AlertController } from '@ionic/angular';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SqliteManagerService {
 
+  public dbReady: BehaviorSubject<boolean>;
   public isWeb: boolean;
 
   private dbName: string;
@@ -23,6 +25,7 @@ export class SqliteManagerService {
   ) {
     this.isWeb = false;
     this.dbName = '';
+    this.dbReady = new BehaviorSubject(false);
   }
 
   async init() {
@@ -59,6 +62,7 @@ export class SqliteManagerService {
       const dbName = await this.getDBName();
       await CapacitorSQLite.createConnection({ database: dbName });
       await CapacitorSQLite.open({ database: dbName });
+      this.dbReady.next(true);
     }
   }
 
@@ -76,6 +80,8 @@ export class SqliteManagerService {
 
         await Preferences.set({ key: this.DB_SETUP_KEY, value: '1' });
         await Preferences.set({ key: this.DB_NAME_KEY, value: this.dbName });
+
+        this.dbReady.next(true);
       }
     })
 
