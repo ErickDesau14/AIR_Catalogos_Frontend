@@ -1,0 +1,73 @@
+{
+    "database": "catalogos.db",
+    "version": 1,
+    "encrypted": false,
+    "mode": "full",
+    "tables": [
+        {
+            "name": "CAT_Tecnologias",
+            "schema": [
+                {"column": "idTecnologia", "value": "INTEGER PRIMARY KEY"},
+                {"column": "tecnologia", "value": "TEXT NOT NULL"},
+                {"column": "fechaCreacion", "value": "TEXT"},
+                {"column": "fechaModificacion", "value": "TEXT"},
+                {"column": "fechaBaja", "value": "TEXT"},
+                {"column": "estatus", "value": "INTEGER"}
+            ],
+            "values": [
+                {"idTecnologia": 1, "tecnologia": "JavaScript", "fechaCreacion": "2023-01-01", "fechaModificacion": "2023-06-01", "fechaBaja": null, "estatus": 1},
+                {"idTecnologia": 2, "tecnologia": "Python", "fechaCreacion": "2023-02-01", "fechaModificacion": "2023-07-01", "fechaBaja": null, "estatus": 1},
+                {"idTecnologia": 3, "tecnologia": "Java", "fechaCreacion": "2023-03-01", "fechaModificacion": "2023-08-01", "fechaBaja": null, "estatus": 1}
+            ]
+        },
+        {
+            "name": "CAT_Puesto",
+            "schema": [
+                {"column": "idPuesto", "value": "INTEGER PRIMARY KEY"},
+                {"column": "puesto", "value": "TEXT NOT NULL"},
+                {"column": "fechaCreacion", "value": "TEXT"},
+                {"column": "fechaModificacion", "value": "TEXT"},
+                {"column": "fechaBaja", "value": "TEXT"},
+                {"column": "estatus", "value": "INTEGER"}
+            ],
+            "values": [
+                {"idPuesto": 1, "puesto": "Desarrollador", "fechaCreacion": "2023-01-15", "fechaModificacion": "2023-06-15", "fechaBaja": null, "estatus": 1},
+                {"idPuesto": 2, "puesto": "Analista", "fechaCreacion": "2023-02-15", "fechaModificacion": "2023-07-15", "fechaBaja": null, "estatus": 1},
+                {"idPuesto": 3, "puesto": "Administrador", "fechaCreacion": "2023-03-15", "fechaModificacion": "2023-08-15", "fechaBaja": null, "estatus": 1}
+            ]
+        },
+        {
+            "name": "CAT_Experiencia",
+            "schema": [
+                {"column": "idExperiencia", "value": "INTEGER PRIMARY KEY"},
+                {"column": "experiencia", "value": "TEXT NOT NULL"},
+                {"column": "fechaCreacion", "value": "TEXT"},
+                {"column": "fechaModificacion", "value": "TEXT"},
+                {"column": "fechaBaja", "value": "TEXT"},
+                {"column": "estatus", "value": "INTEGER"}
+            ],
+            "values": [
+                {"idExperiencia": 1, "experiencia": "Junior", "fechaCreacion": "2023-01-20", "fechaModificacion": "2023-06-20", "fechaBaja": null, "estatus": 1},
+                {"idExperiencia": 2, "experiencia": "Semi-Senior", "fechaCreacion": "2023-02-20", "fechaModificacion": "2023-07-20", "fechaBaja": null, "estatus": 1},
+                {"idExperiencia": 3, "experiencia": "Senior", "fechaCreacion": "2023-03-20", "fechaModificacion": "2023-08-20", "fechaBaja": null, "estatus": 1}
+            ]
+        },
+        {
+            "name": "CAT_Modalidad",
+            "schema": [
+                {"column": "idModalidad", "value": "INTEGER PRIMARY KEY"},
+                {"column": "modalidad", "value": "TEXT NOT NULL"},
+                {"column": "fechaCreacion", "value": "TEXT"},
+                {"column": "fechaModificacion", "value": "TEXT"},
+                {"column": "fechaBaja", "value": "TEXT"},
+                {"column": "estatus", "value": "INTEGER"}
+            ],
+            "values": [
+                {"idModalidad": 1, "modalidad": "Presencial", "fechaCreacion": "2023-01-25", "fechaModificacion": "2023-06-25", "fechaBaja": null, "estatus": 1},
+                {"idModalidad": 2, "modalidad": "Remoto", "fechaCreacion": "2023-02-25", "fechaModificacion": "2023-07-25", "fechaBaja": null, "estatus": 1},
+                {"idModalidad": 3, "modalidad": "Híbrido", "fechaCreacion": "2023-03-25", "fechaModificacion": "2023-08-25", "fechaBaja": null, "estatus": 1}
+            ]
+        }
+    ]
+
+}
