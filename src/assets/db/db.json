@@ -12,11 +12,6 @@
                 {"column": "fechaCreacion", "value": "TEXT"},
                 {"column": "fechaModificacion", "value": "TEXT"},
                 {"column": "fechaBaja", "value": "TEXT"},
-                {"column": "estatus", "value": "INTEGER"},
-                {"column": "tecnologia", "value": "TEXT NOT NULL"},
-                {"column": "fechaCreacion", "value": "TEXT"},
-                {"column": "fechaModificacion", "value": "TEXT"},
-                {"column": "fechaBaja", "value": "TEXT"},
                 {"column": "estatus", "value": "INTEGER"}
             ],
             "values": [
