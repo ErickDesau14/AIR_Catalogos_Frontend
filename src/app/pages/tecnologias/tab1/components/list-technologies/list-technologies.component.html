@@ -10,6 +10,31 @@
           addText="Añadir tecnología"
           (add)="onShowForm()"
           >
+          <ng-template #templateData let-item="item">
+
+            <ion-item>
+              <ion-label>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="1">
+                      {{ item.idTecnologia }}
+                    </ion-col>
+                    <ion-col size="4">
+                      {{ item.tecnologia }}
+                    </ion-col>
+                    <ion-col size="3">
+                      Activa
+                    </ion-col>
+                    <ion-col size="4">
+                      {{ item.fechaCreacion }}
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+                <!-- {{ item.idTecnologia + ' ' + item.tecnologia + ' ' + item.estatus + ' ' + item.fechaCreacion }} -->
+              </ion-label>
+            </ion-item>
+
+          </ng-template>
         </app-list-data>
         </ion-col>
       </ion-row>
