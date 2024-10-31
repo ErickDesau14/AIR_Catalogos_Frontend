@@ -1,16 +1,82 @@
+<!-- Tecnología -->
+<div class="ion-padding-bottom">
+  <ion-item id="style-inputs">
+    <ion-icon name="code-working" class="icon-input"></ion-icon>
+    <ion-input 
+      type="text" 
+      name="Tecnología" 
+      placeholder="Tecnología">
+    </ion-input>
+  </ion-item>
+</div>
 
-<ion-row>
+<!-- Fecha de creación -->
+<div class="ion-padding-bottom">
+  <ion-item id="style-inputs">
+    <ion-icon name="calendar-clear-outline" class="icon-input"></ion-icon>
+    <ion-input
+    label="Creado el"
+    label-placement="floating" 
+    type="date" 
+    name="fechaCreacionTecnologia" 
+    placeholder="Creado el"
+    disabled
+    >
+    </ion-input>
+  </ion-item>
+</div> 
 
-</ion-row>
+<!-- Fecha de Modificación -->
+<div class="ion-padding-bottom">
+  <ion-item id="style-inputs">
+    <ion-icon name="calendar-clear-outline" class="icon-input"></ion-icon>
+    <ion-input
+      label="Modificado el"
+      label-placement="floating"  
+      type="date" 
+      name="fechaModificacionTecnologia" 
+      placeholder="Modificado el"
+      disabled
+      >
+    </ion-input>
+  </ion-item>
+</div>
+
+<!-- Fecha de Baja -->
+<div>
+  <ion-item id="style-inputs">
+    <ion-icon name="calendar-clear-outline" class="icon-input"></ion-icon>
+    <ion-input
+      label="Baja desde el"
+      label-placement="floating"  
+      type="date" 
+      name="fechaBajaTecnologia" 
+      placeholder="Baja desde el"
+      disabled
+      >
+    </ion-input>
+  </ion-item>
+</div>
 
 <ion-row *ngIf="showAdd">
   <ion-col>
-    <ion-item (click)="addData()">
-      <ion-label *ngIf="addText">Añadir tecnología</ion-label>
-      <ion-icon name="add-outline"></ion-icon>
+    <ion-item (click)="addData()" id="item-button">
+      <ion-button class="add-button" id="want-add" *ngIf="addText">
+        <ion-icon name="add-outline" class="icon-button-add"></ion-icon>
+        Agregar tecnología
+      </ion-button>
     </ion-item>
   </ion-col>
 </ion-row>
+
+<ion-grid id="size-grid-table-header">
+  <ion-row id="table-header">
+    <ion-col size="1"> Id </ion-col>
+    <ion-col size="4"> Tecnología </ion-col>
+    <ion-col size="3"> Estatus </ion-col>
+    <ion-col size="4"> Añadido el</ion-col>
+  </ion-row>
+</ion-grid>
 
 <ion-row *ngIf="!data || (data && data.length === 0)">
   <ion-col>
