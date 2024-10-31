@@ -19,7 +19,17 @@ export class ListTechnologiesComponent  implements OnInit {
     this.technologies = [];
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getTechnologies();
+  }
+
+  getTechnologies() {
+    this.sqliteService.getTechnologies().then( (technologies: Tecnologias[]) => {
+      this.technologies = technologies;
+      console.log(this.technologies);
+      
+    })
+  }
 
   onShowForm() {
     this.showForm = true;

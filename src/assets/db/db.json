@@ -15,9 +15,30 @@
                 {"column": "estatus", "value": "INTEGER"}
             ],
             "values": [
-                {"idTecnologia": 1, "tecnologia": "JavaScript", "fechaCreacion": "2023-01-01", "fechaModificacion": "2023-06-01", "fechaBaja": null, "estatus": 1},
-                {"idTecnologia": 2, "tecnologia": "Python", "fechaCreacion": "2023-02-01", "fechaModificacion": "2023-07-01", "fechaBaja": null, "estatus": 1},
-                {"idTecnologia": 3, "tecnologia": "Java", "fechaCreacion": "2023-03-01", "fechaModificacion": "2023-08-01", "fechaBaja": null, "estatus": 1}
+                [
+                    1,
+                    "JavaScript",
+                    "2023-01-01",
+                    "2023-06-01",
+                    null,
+                    1
+                ],
+                [
+                    2,
+                    "Python",
+                    "2023-02-01",
+                    "2023-07-01",
+                    null,
+                    1
+                ],
+                [
+                    3,
+                    "Java",
+                    "2023-03-01",
+                    "2023-08-01",
+                    null,
+                    1
+                ]
             ]
         },
         {
@@ -31,9 +52,30 @@
                 {"column": "estatus", "value": "INTEGER"}
             ],
             "values": [
-                {"idPuesto": 1, "puesto": "Desarrollador", "fechaCreacion": "2023-01-15", "fechaModificacion": "2023-06-15", "fechaBaja": null, "estatus": 1},
-                {"idPuesto": 2, "puesto": "Analista", "fechaCreacion": "2023-02-15", "fechaModificacion": "2023-07-15", "fechaBaja": null, "estatus": 1},
-                {"idPuesto": 3, "puesto": "Administrador", "fechaCreacion": "2023-03-15", "fechaModificacion": "2023-08-15", "fechaBaja": null, "estatus": 1}
+                [
+                    2,
+                    "Analista",
+                    "2023-02-15",
+                    "2023-07-15",
+                    null,
+                    1
+                ],
+                [
+                    1,
+                    "Desarrollador",
+                    "2023-01-15",
+                    "2023-06-15",
+                    null,
+                    1
+                ],
+                [
+                    3, 
+                    "Administrador",
+                    "2023-03-15",
+                    "2023-08-15",
+                    null,
+                    1
+                ]
             ]
         },
         {
@@ -47,9 +89,30 @@
                 {"column": "estatus", "value": "INTEGER"}
             ],
             "values": [
-                {"idExperiencia": 1, "experiencia": "Junior", "fechaCreacion": "2023-01-20", "fechaModificacion": "2023-06-20", "fechaBaja": null, "estatus": 1},
-                {"idExperiencia": 2, "experiencia": "Semi-Senior", "fechaCreacion": "2023-02-20", "fechaModificacion": "2023-07-20", "fechaBaja": null, "estatus": 1},
-                {"idExperiencia": 3, "experiencia": "Senior", "fechaCreacion": "2023-03-20", "fechaModificacion": "2023-08-20", "fechaBaja": null, "estatus": 1}
+                [
+                    1,
+                    "Junior",
+                    "2023-01-20",
+                    "2023-06-20", 
+                    null,
+                    1
+                ],
+                [
+                    2,
+                    "Semi-Senior", 
+                    "2023-02-20", 
+                    "2023-07-20", 
+                    null, 
+                    1
+                ],
+                [
+                    3, 
+                    "Senior", 
+                    "2023-03-20", 
+                    "2023-08-20", 
+                    null, 
+                    1
+                ]
             ]
         },
         {
@@ -63,9 +126,30 @@
                 {"column": "estatus", "value": "INTEGER"}
             ],
             "values": [
-                {"idModalidad": 1, "modalidad": "Presencial", "fechaCreacion": "2023-01-25", "fechaModificacion": "2023-06-25", "fechaBaja": null, "estatus": 1},
-                {"idModalidad": 2, "modalidad": "Remoto", "fechaCreacion": "2023-02-25", "fechaModificacion": "2023-07-25", "fechaBaja": null, "estatus": 1},
-                {"idModalidad": 3, "modalidad": "Híbrido", "fechaCreacion": "2023-03-25", "fechaModificacion": "2023-08-25", "fechaBaja": null, "estatus": 1}
+                [
+                    1, 
+                    "Presencial", 
+                    "2023-01-25", 
+                    "2023-06-25", 
+                    null, 
+                    1
+                ],
+                [
+                    2, 
+                    "Remoto", 
+                    "2023-02-25", 
+                    "2023-07-25", 
+                    null, 
+                    1
+                ],
+                [
+                    3, 
+                    "Híbrido", 
+                    "2023-03-25", 
+                    "2023-08-25", 
+                    null, 
+                    1
+                ]
             ]
         }
     ]

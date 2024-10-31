@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CapacitorSQLite, JsonSQLite } from '@capacitor-community/sqlite';
+import { CapacitorSQLite, capSQLiteValues, JsonSQLite } from '@capacitor-community/sqlite';
 import { Device } from '@capacitor/device';
 import { Preferences } from '@capacitor/preferences';
 import { AlertController } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
+import { Tecnologias } from '../models/tecnologias';
 
 @Injectable({
   providedIn: 'root'
@@ -68,7 +69,7 @@ export class SqliteManagerService {
 
   downloadDatabase() {
 
-    this.http.get('assets/db.sql/db.json').subscribe( async (jsonExport: JsonSQLite) => {
+    this.http.get('../../assets/db/db.json').subscribe( async (jsonExport: JsonSQLite) => {
       const jsonString = JSON.stringify(jsonExport);
       const isValid = await CapacitorSQLite.isJsonValid({ jsonstring: jsonString });
 
@@ -94,6 +95,25 @@ export class SqliteManagerService {
       this.dbName = dbName.value;
     }
     return this.dbName;
+  }
+
+  async getTechnologies() {
+    let sql = 'SELECT * FROM CAT_Tecnologias WHERE estatus = 1';
+
+    const dbName = await this.getDBName();
+    return CapacitorSQLite.query({
+      database: dbName,
+      statement: sql
+    }).then( (response: capSQLiteValues) => {
+      let technologies: Tecnologias[] = [];
+      for (let index = 0; index < response.values.length; index++) {
+        const row = response.values[index];
+        let technologie = row as Tecnologias;
+        technologies.push(technologie);
+      }
+      return Promise.resolve(technologies);
+    }).catch(error => Promise.reject(error));
+
   }
 
 }
