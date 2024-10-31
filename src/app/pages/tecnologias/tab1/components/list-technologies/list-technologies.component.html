@@ -12,27 +12,42 @@
           >
           <ng-template #templateData let-item="item">
 
-            <ion-item>
-              <ion-label>
-                <ion-grid>
-                  <ion-row>
-                    <ion-col size="1">
-                      {{ item.idTecnologia }}
-                    </ion-col>
-                    <ion-col size="4">
-                      {{ item.tecnologia }}
-                    </ion-col>
-                    <ion-col size="3">
-                      Activa
-                    </ion-col>
-                    <ion-col size="4">
-                      {{ item.fechaCreacion }}
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
-                <!-- {{ item.idTecnologia + ' ' + item.tecnologia + ' ' + item.estatus + ' ' + item.fechaCreacion }} -->
-              </ion-label>
-            </ion-item>
+            <ion-item-sliding>
+
+              <ion-item>
+                <ion-label>
+                  <ion-grid>
+                    <ion-row>
+                      <ion-col size="1">
+                        {{ item.idTecnologia }}
+                      </ion-col>
+                      <ion-col size="4">
+                        {{ item.tecnologia }}
+                      </ion-col>
+                      <ion-col size="3">
+                        Activa
+                      </ion-col>
+                      <ion-col size="4">
+                        {{ item.fechaCreacion }}
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                  <!-- {{ item.idTecnologia + ' ' + item.tecnologia + ' ' + item.estatus + ' ' + item.fechaCreacion }} -->
+                </ion-label>
+              </ion-item>
+
+              <ion-item-options side="end">
+
+                <ion-item-option color="warning">
+                  <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+                </ion-item-option>
+                <ion-item-option color="danger">
+                  <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                </ion-item-option>
+
+              </ion-item-options>
+
+            </ion-item-sliding>
 
           </ng-template>
         </app-list-data>
