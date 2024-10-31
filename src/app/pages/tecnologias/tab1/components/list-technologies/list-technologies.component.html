@@ -1,0 +1,23 @@
+<ion-grid>
+  <ion-row>
+    <ion-col *ngIf="!showForm">
+
+      <ion-row>
+        <ion-col>
+          <app-list-data 
+          [data]="technologies"
+          emptyText="No hay tecnologías creadas"
+          addText="Añadir tecnología"
+          (add)="onShowForm()"
+          >
+        </app-list-data>
+        </ion-col>
+      </ion-row>
+      
+    </ion-col>
+
+    <ion-col *ngIf="showForm">
+      
+    </ion-col>
+  </ion-row>
+</ion-grid>
