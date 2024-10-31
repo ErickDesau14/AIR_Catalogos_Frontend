@@ -7,7 +7,12 @@
         {
             "name": "CAT_Tecnologias",
             "schema": [
-                {"column": "idTecnologia", "value": "INTEGER PRIMARY KEY"},
+                {"column": "idTecnologia", "value": "INTEGER PRIMARY KEY AUTOINCREMENT"},
+                {"column": "tecnologia", "value": "TEXT NOT NULL"},
+                {"column": "fechaCreacion", "value": "TEXT"},
+                {"column": "fechaModificacion", "value": "TEXT"},
+                {"column": "fechaBaja", "value": "TEXT"},
+                {"column": "estatus", "value": "INTEGER"},
                 {"column": "tecnologia", "value": "TEXT NOT NULL"},
                 {"column": "fechaCreacion", "value": "TEXT"},
                 {"column": "fechaModificacion", "value": "TEXT"},
@@ -44,7 +49,7 @@
         {
             "name": "CAT_Puesto",
             "schema": [
-                {"column": "idPuesto", "value": "INTEGER PRIMARY KEY"},
+                {"column": "idPuesto", "value": "INTEGER PRIMARY KEY AUTOINCREMENT"},
                 {"column": "puesto", "value": "TEXT NOT NULL"},
                 {"column": "fechaCreacion", "value": "TEXT"},
                 {"column": "fechaModificacion", "value": "TEXT"},
@@ -81,7 +86,7 @@
         {
             "name": "CAT_Experiencia",
             "schema": [
-                {"column": "idExperiencia", "value": "INTEGER PRIMARY KEY"},
+                {"column": "idExperiencia", "value": "INTEGER PRIMARY KEY AUTOINCREMENT"},
                 {"column": "experiencia", "value": "TEXT NOT NULL"},
                 {"column": "fechaCreacion", "value": "TEXT"},
                 {"column": "fechaModificacion", "value": "TEXT"},
@@ -118,7 +123,7 @@
         {
             "name": "CAT_Modalidad",
             "schema": [
-                {"column": "idModalidad", "value": "INTEGER PRIMARY KEY"},
+                {"column": "idModalidad", "value": "INTEGER PRIMARY KEY AUTOINCREMENT"},
                 {"column": "modalidad", "value": "TEXT NOT NULL"},
                 {"column": "fechaCreacion", "value": "TEXT"},
                 {"column": "fechaModificacion", "value": "TEXT"},
