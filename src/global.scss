@@ -84,6 +84,10 @@ ion-tab-bar {
     border-color: transparent;
 }
 
+ion-tab-button {
+    --color-selected: #092E1C;
+}
+
 ion-card{
     background-color: rgba(255, 255, 255, 0.24);
     border-radius: 20px;
