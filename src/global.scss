@@ -35,3 +35,40 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 /* @import "@ionic/angular/css/palettes/dark.system.css"; */
+
+body {
+    background-image: url('./assets/images/Background4.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+}
+
+@media screen and (orientation: landscape) {
+    body {
+    background: url('./assets/images/Background4_Horizontal.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    }
+
+    ion-title {
+        text-align: center;
+    }
+}
+
+ion-header, ion-content, ion-toolbar, ion-card-content {
+    --background: transparent;
+    --ion-border-color: transparent;
+}
+
+ion-title {
+    color: #fff;
+    font-size: 20px;
+}
+
+.button-back-style {
+    color: #fff;
+    font-size: 30px;
+}

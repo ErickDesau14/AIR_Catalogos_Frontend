@@ -1,11 +1,19 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
+
+    <ion-buttons slot="start"> 
+      <ion-button fill="clear">
+        <ion-icon class="button-back-style" name="arrow-back-outline"></ion-icon>  
+      </ion-button>
+    </ion-buttons>
+    
     <ion-title>
       Catálogo de Tecnologías
     </ion-title>
+
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content>
   <app-list-technologies></app-list-technologies>
 </ion-content>
