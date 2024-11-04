@@ -79,12 +79,13 @@ ion-grid {
 }
 
 ion-tab-bar {
-    --background: #34A853;
+    --background: transparent;
     --color: #fff;
-    border-color: transparent;
+    border: none;
 }
 
 ion-tab-button {
+    --ripple-color: #46534D;
     --color-selected: #092E1C;
 }
 
