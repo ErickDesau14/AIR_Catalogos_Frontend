@@ -5,7 +5,9 @@
     <ion-input 
       type="text" 
       name="Tecnología" 
-      placeholder="Tecnología">
+      placeholder="Tecnología"
+      [(ngModel)]="nameTechnology"
+      >
     </ion-input>
   </ion-item>
 </div>
@@ -61,7 +63,7 @@
 <ion-row *ngIf="showAdd">
   <ion-col>
     <ion-item (click)="addData()" id="item-button">
-      <ion-button class="add-button" *ngIf="addText">
+      <ion-button class="add-button" *ngIf="addText" [disabled]="!nameTechnology">
         <ion-icon name="add-outline" class="icon-button-add"></ion-icon>
         Agregar tecnología
       </ion-button>

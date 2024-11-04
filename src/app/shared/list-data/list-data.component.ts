@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, ContentChild, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -8,7 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './list-data.component.html',
   styleUrls: ['./list-data.component.scss'],
   standalone: true,
-  imports: [ IonicModule, CommonModule, TranslateModule]
+  imports: [ IonicModule, CommonModule, TranslateModule, FormsModule]
 })
 export class ListDataComponent {
 
@@ -21,6 +22,8 @@ export class ListDataComponent {
 
   @ContentChild('templateData', { static: false})
   templateData: TemplateRef<any>;
+
+  public nameTechnology: string;
 
   constructor() {
     this.add = new EventEmitter<boolean>();
