@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CapacitorSQLite, capSQLiteValues, JsonSQLite } from '@capacitor-community/sqlite';
+import { CapacitorSQLite, capSQLiteChanges, capSQLiteValues, JsonSQLite } from '@capacitor-community/sqlite';
 import { Device } from '@capacitor/device';
 import { Preferences } from '@capacitor/preferences';
 import { AlertController } from '@ionic/angular';
@@ -115,5 +115,43 @@ export class SqliteManagerService {
     }).catch(error => Promise.reject(error));
 
   }
+
+  async addTechnology(technology: Tecnologias) {
+    const dbName = await this.getDBName();
+    const currentDate = new Date().toISOString().split('T')[0];
+    let sql = 'INSERT INTO CAT_Tecnologias (tecnologia, fechaCreacion, estatus) VALUES (?, ?, 1)';
+    return CapacitorSQLite.executeSet({
+      database: dbName,
+      set: [{
+        statement: sql,
+        values: [
+          technology.name,
+          currentDate
+        ]
+      }]
+    }).then( (changes: capSQLiteChanges) => {
+      if (this.isWeb) {
+        CapacitorSQLite.saveToStore({ database: dbName });
+      }
+      return changes;
+    }).catch( err => Promise.reject(err));
+  }
+
+  async technologyExists(name: string): Promise<boolean> {
+    const dbName = await this.getDBName();
+    const sql = 'SELECT COUNT(*) as count FROM CAT_Tecnologias WHERE LOWER(tecnologia) =  LOWER(?) AND estatus = 1';
+    return CapacitorSQLite.query({
+      database: dbName,
+      statement: sql,
+      values: [name]
+    }).then((response) => {
+      const count = response.values[0].count;
+      return count > 0;
+    }).catch((error) => {
+      console.error('Error al verificar si la tecnología existe:', error);
+      return false;
+    });
+  }
+  
 
 }
