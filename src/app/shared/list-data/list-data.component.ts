@@ -30,7 +30,7 @@ export class ListDataComponent {
   }
 
   addData() {
-    this.add.emit(true);
+    
   }
 
 }
