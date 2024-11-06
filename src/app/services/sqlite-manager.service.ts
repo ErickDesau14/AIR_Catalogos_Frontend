@@ -183,13 +183,15 @@ export class SqliteManagerService {
     }
 
     const newStatus = currentStatus === 1 ? 0 : 1;
+    const currentDate = new Date().toISOString().split('T')[0];
 
-    const updateStatusSql = 'UPDATE CAT_Tecnologias SET estatus = ? WHERE idTecnologia = ?';
+    const updateStatusSql = 'UPDATE CAT_Tecnologias SET estatus = ?, fechaBaja = ? WHERE idTecnologia = ?';
+
     return CapacitorSQLite.executeSet({
       database: dbName,
       set: [{
         statement: updateStatusSql,
-        values: [newStatus, idTecnologia]
+        values: [newStatus, newStatus === 0 ? currentDate : null, idTecnologia]
       }]
     }).then(() => {
       if (this.isWeb) {
