@@ -98,7 +98,7 @@ export class SqliteManagerService {
   }
 
   async getTechnologies() {
-    let sql = 'SELECT * FROM CAT_Tecnologias WHERE estatus = 1';
+    let sql = 'SELECT * FROM CAT_Tecnologias';
 
     const dbName = await this.getDBName();
     return CapacitorSQLite.query({
@@ -139,7 +139,7 @@ export class SqliteManagerService {
 
   async technologyExists(name: string): Promise<boolean> {
     const dbName = await this.getDBName();
-    const sql = 'SELECT COUNT(*) as count FROM CAT_Tecnologias WHERE LOWER(tecnologia) =  LOWER(?) AND estatus = 1';
+    const sql = 'SELECT COUNT(*) as count FROM CAT_Tecnologias WHERE LOWER(tecnologia) =  LOWER(?)';
     return CapacitorSQLite.query({
       database: dbName,
       statement: sql,
@@ -152,6 +152,40 @@ export class SqliteManagerService {
       return false;
     });
   }
-  
+
+  async desactivateTechnology(idTecnologia: number): Promise<void> {
+    const dbName = await this.getDBName();
+
+    const getStatusSql = 'SELECT estatus FROM CAT_Tecnologias WHERE idTecnologia = ?';
+    const currentStatus = await CapacitorSQLite.query({
+      database: dbName,
+      statement: getStatusSql,
+      values: [idTecnologia]
+    }).then((response) => {
+      return response.values[0].estatus;
+    }).catch((error) => {
+      console.error('Error al obtener el estatus de la tecnología:', error);
+      return null;
+    })
+
+    if (currentStatus == null) {
+      return Promise.reject('No se pudo obtener el estatus de la tecnología');
+    }
+
+    const newStatus = currentStatus === 1 ? 0 : 1;
+
+    const updateStatusSql = 'UPDATE CAT_Tecnologias SET estatus = ? WHERE idTecnologia = ?';
+    return CapacitorSQLite.executeSet({
+      database: dbName,
+      set: [{
+        statement: updateStatusSql,
+        values: [newStatus, idTecnologia]
+      }]
+    }).then(() => {
+      if (this.isWeb) {
+        CapacitorSQLite.saveToStore({ database: dbName });
+      }
+    }).catch(err => Promise.reject(err));
+  }
 
 }

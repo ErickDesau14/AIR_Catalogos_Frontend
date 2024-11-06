@@ -3,15 +3,15 @@
 
     <ion-grid>
       <ion-row>
-        <ion-col *ngIf="!showForm">
+        <ion-col>
     
           <ion-row>
             <ion-col>
               <app-list-data 
               [data]="technologies"
               emptyText="No hay tecnologías creadas"
-              addText="Añadir tecnología"
-              (add)="onShowForm()"
+              [addText]="'Agregar nueva tecnología'"
+              (technologyAdded)="getTechnologies()"
               >
               <ng-template #templateData let-item="item">
     
@@ -27,8 +27,8 @@
                           <ion-col size="4">
                             {{ item.tecnologia }}
                           </ion-col>
-                          <ion-col size="3" id="col-estatus-activa">
-                            Activa
+                          <ion-col size="3" [id]="item.estatus === 1 ? 'col-estatus-activa' : 'col-estatus-desactivada'">
+                            {{ item.estatus === 1 ? 'Activa' : 'Inactiva' }}
                           </ion-col>
                           <ion-col size="4" id="col-estatus-fecha">
                             {{ item.fechaCreacion }}
@@ -43,7 +43,7 @@
                     <ion-item-option class="option-edit">
                       <ion-icon slot="icon-only" name="create-outline"></ion-icon>
                     </ion-item-option>
-                    <ion-item-option class="option-delete">
+                    <ion-item-option class="option-delete" (click)="desactivateTechnology(item.idTecnologia)">
                       <ion-icon slot="icon-only" name="power-outline"></ion-icon>
                     </ion-item-option>
     
@@ -55,10 +55,6 @@
             </app-list-data>
             </ion-col>
           </ion-row>
-          
-        </ion-col>
-    
-        <ion-col *ngIf="showForm">
           
         </ion-col>
       </ion-row>

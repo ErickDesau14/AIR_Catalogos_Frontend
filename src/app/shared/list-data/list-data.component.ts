@@ -20,7 +20,7 @@ export class ListDataComponent {
   @Input() addText: string;
   @Input() showAdd: boolean = true;
 
-  @Output() add: EventEmitter<boolean>;
+  @Output() technologyAdded: EventEmitter<void> = new EventEmitter<void>();
 
   @ContentChild('templateData', { static: false})
   templateData: TemplateRef<any>;
@@ -30,7 +30,7 @@ export class ListDataComponent {
   constructor(
     private sqliteManager: SqliteManagerService
   ) {
-    this.add = new EventEmitter<boolean>();
+    
   }
 
   get isNameTechnologyValid(): boolean {
@@ -63,6 +63,8 @@ export class ListDataComponent {
       .then((changes) => {
         console.log('Tecnología añadida:', changes);
         this.nameTechnology = '';
+
+        this.technologyAdded.emit();
       })
       .catch((err) => {
         console.error('Error al añadir tecnología:', err);

@@ -35,4 +35,12 @@ export class ListTechnologiesComponent  implements OnInit {
     this.showForm = true;
   }
 
+  desactivateTechnology(idTecnologia: number) {
+    this.sqliteService.desactivateTechnology(idTecnologia).then( () => {
+      this.getTechnologies();
+    }).catch( (err) => {
+      console.error(err);
+    })
+  }
+
 }
