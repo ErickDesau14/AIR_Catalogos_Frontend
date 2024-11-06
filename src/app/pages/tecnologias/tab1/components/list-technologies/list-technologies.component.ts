@@ -12,6 +12,13 @@ export class ListTechnologiesComponent  implements OnInit {
   public technologies: Tecnologias[];
   public showForm: boolean;
 
+  public selectedNameTechnology: string = '';
+  public selectedCreationDate: string = '';
+  public selectedModificationDate: string = '';
+  public selectedDeactivationDate: string = '';
+
+  public isReadOnly: boolean = true;
+
   constructor(
     private sqliteService: SqliteManagerService
   ) {
@@ -29,6 +36,23 @@ export class ListTechnologiesComponent  implements OnInit {
       console.log(this.technologies);
       
     })
+  }
+
+  selectTechnology(item: Tecnologias) {
+    this.selectedNameTechnology = item.name || '';
+    this.selectedCreationDate = item.fechaCreacion ? new Date(item.fechaCreacion).toISOString().split('T')[0] : '';
+    this.selectedModificationDate = item.fechaModificacion ? new Date(item.fechaModificacion).toISOString().split('T')[0] : '';
+    this.selectedDeactivationDate = item.fechaBaja ? new Date(item.fechaBaja).toISOString().split('T')[0] : '';
+
+    console.log("Selected Technology Details:", {
+      name: this.selectedNameTechnology,
+      creationDate: this.selectedCreationDate,
+      modificationDate: this.selectedModificationDate,
+      deactivationDate: this.selectedDeactivationDate
+    });
+
+    this.isReadOnly = true;
+
   }
 
   onShowForm() {

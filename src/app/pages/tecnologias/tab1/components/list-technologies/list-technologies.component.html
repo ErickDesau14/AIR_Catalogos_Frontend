@@ -9,29 +9,34 @@
             <ion-col>
               <app-list-data 
               [data]="technologies"
-              emptyText="No hay tecnologías creadas"
+              [emptyText]="'No hay tecnologías creadas'"
               [addText]="'Agregar nueva tecnología'"
+              [nameTechnology]="selectedNameTechnology"
+              [creationDate]="selectedCreationDate"
+              [modificationDate]="selectedModificationDate"
+              [deactivationDate]="selectedDeactivationDate"
+              [isReadOnly]="isReadOnly"
               (technologyAdded)="getTechnologies()"
               >
               <ng-template #templateData let-item="item">
     
                 <ion-item-sliding>
     
-                  <ion-item id="table-content">
+                  <ion-item id="table-content" (click)="selectTechnology(item)">
                     <ion-label>
                       <ion-grid>
                         <ion-row>
                           <ion-col size="1">
-                            {{ item.idTecnologia }}
+                            {{ item.id }}
                           </ion-col>
                           <ion-col size="4">
-                            {{ item.tecnologia }}
+                            {{ item.name }}
                           </ion-col>
                           <ion-col size="3" [id]="item.estatus === 1 ? 'col-estatus-activa' : 'col-estatus-desactivada'">
                             {{ item.estatus === 1 ? 'Activa' : 'Inactiva' }}
                           </ion-col>
                           <ion-col size="4" id="col-estatus-fecha">
-                            {{ item.fechaCreacion }}
+                            {{ item.fechaCreacion | date: 'yyyy-MM-dd' }}
                           </ion-col>
                         </ion-row>
                       </ion-grid>
@@ -43,7 +48,7 @@
                     <ion-item-option class="option-edit">
                       <ion-icon slot="icon-only" name="create-outline"></ion-icon>
                     </ion-item-option>
-                    <ion-item-option class="option-delete" (click)="desactivateTechnology(item.idTecnologia)">
+                    <ion-item-option class="option-delete" (click)="desactivateTechnology(item.id)">
                       <ion-icon slot="icon-only" name="power-outline"></ion-icon>
                     </ion-item-option>
     

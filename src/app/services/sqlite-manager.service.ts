@@ -102,19 +102,27 @@ export class SqliteManagerService {
 
     const dbName = await this.getDBName();
     return CapacitorSQLite.query({
-      database: dbName,
-      statement: sql
-    }).then( (response: capSQLiteValues) => {
-      let technologies: Tecnologias[] = [];
-      for (let index = 0; index < response.values.length; index++) {
-        const row = response.values[index];
-        let technologie = row as Tecnologias;
-        technologies.push(technologie);
-      }
-      return Promise.resolve(technologies);
+        database: dbName,
+        statement: sql
+    }).then((response: capSQLiteValues) => {
+        let technologies: Tecnologias[] = [];
+        for (let index = 0; index < response.values.length; index++) {
+            const row = response.values[index];
+            let technology: Tecnologias = {
+                id: row.idTecnologia,
+                name: row.tecnologia,
+                estatus: row.estatus,
+                fechaCreacion: row.fechaCreacion ? new Date(row.fechaCreacion) : null,
+                fechaModificacion: row.fechaModificacion ? new Date(row.fechaModificacion) : null,
+                fechaBaja: row.fechaBaja ? new Date(row.fechaBaja) : null
+            };
+            technologies.push(technology);
+        }
+        console.log("Fetched Technologies:", technologies); // Log para depuración
+        return Promise.resolve(technologies);
     }).catch(error => Promise.reject(error));
+}
 
-  }
 
   async addTechnology(technology: Tecnologias) {
     const dbName = await this.getDBName();

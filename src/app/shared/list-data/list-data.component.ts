@@ -20,12 +20,18 @@ export class ListDataComponent {
   @Input() addText: string;
   @Input() showAdd: boolean = true;
 
+  @Input() nameTechnology: string = '';
+  @Input() creationDate: string = '';
+  @Input() modificationDate: string = '';
+  @Input() deactivationDate: string = '';
+  @Input() isReadOnly: boolean = true;
+
   @Output() technologyAdded: EventEmitter<void> = new EventEmitter<void>();
 
   @ContentChild('templateData', { static: false})
   templateData: TemplateRef<any>;
 
-  public nameTechnology: string;
+  // public nameTechnology: string;
 
   constructor(
     private sqliteManager: SqliteManagerService

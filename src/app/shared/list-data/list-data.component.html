@@ -8,6 +8,7 @@
       placeholder="Tecnología"
       [(ngModel)]="nameTechnology"
       maxlength="15"
+      [readonly]="isReadOnly"
       >
     </ion-input>
   </ion-item>
@@ -23,6 +24,7 @@
     type="date" 
     name="fechaCreacionTecnologia" 
     placeholder="Creado el"
+    [(ngModel)]="creationDate"
     disabled
     >
     </ion-input>
@@ -39,6 +41,7 @@
       type="date" 
       name="fechaModificacionTecnologia" 
       placeholder="Modificado el"
+      [(ngModel)]="modificationDate"
       disabled
       >
     </ion-input>
@@ -55,6 +58,7 @@
       type="date" 
       name="fechaBajaTecnologia" 
       placeholder="Desactivado desde el"
+      [(ngModel)]="deactivationDate"
       disabled
       >
     </ion-input>
