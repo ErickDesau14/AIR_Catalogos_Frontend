@@ -43,7 +43,9 @@ export class ListDataComponent {
       return;
     }
 
-    this.sqliteManager.technologyExists(this.nameTechnology)
+    const normalizedTechnologyName = this.nameTechnology.replace(/\s+/g, '').toLowerCase();
+
+    this.sqliteManager.technologyExists(normalizedTechnologyName)
     .then((exists) => {
       if (exists) {
         console.warn('La tecnología ya existe');

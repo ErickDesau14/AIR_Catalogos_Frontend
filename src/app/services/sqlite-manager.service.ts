@@ -139,11 +139,13 @@ export class SqliteManagerService {
 
   async technologyExists(name: string): Promise<boolean> {
     const dbName = await this.getDBName();
-    const sql = 'SELECT COUNT(*) as count FROM CAT_Tecnologias WHERE LOWER(tecnologia) =  LOWER(?)';
+    const normalizedName = name.replace(/\s+/g, '').toLowerCase();
+
+    const sql = 'SELECT COUNT(*) as count FROM CAT_Tecnologias WHERE LOWER(TRIM(tecnologia)) = ?';
     return CapacitorSQLite.query({
       database: dbName,
       statement: sql,
-      values: [name]
+      values: [normalizedName]
     }).then((response) => {
       const count = response.values[0].count;
       return count > 0;
