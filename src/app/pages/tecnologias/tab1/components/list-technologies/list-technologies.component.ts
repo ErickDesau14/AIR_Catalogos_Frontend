@@ -17,7 +17,9 @@ export class ListTechnologiesComponent  implements OnInit {
   public selectedModificationDate: string = '';
   public selectedDeactivationDate: string = '';
 
-  public isReadOnly: boolean = true;
+  public isEditing: boolean = false;
+
+  public lastSelectedId: number | null = null;
 
   constructor(
     private sqliteService: SqliteManagerService
@@ -39,11 +41,22 @@ export class ListTechnologiesComponent  implements OnInit {
   }
 
   selectTechnology(item: Tecnologias) {
-    this.selectedNameTechnology = item.name || '';
-    this.selectedCreationDate = item.fechaCreacion ? new Date(item.fechaCreacion).toISOString().split('T')[0] : '';
-    this.selectedModificationDate = item.fechaModificacion ? new Date(item.fechaModificacion).toISOString().split('T')[0] : '';
-    this.selectedDeactivationDate = item.fechaBaja ? new Date(item.fechaBaja).toISOString().split('T')[0] : '';
 
+    if (this.lastSelectedId === item.id) {
+      this.resetForm();
+      this.lastSelectedId = null;
+    } else {
+
+      this.selectedNameTechnology = item.name || '';
+      this.selectedCreationDate = item.fechaCreacion ? new Date(item.fechaCreacion).toISOString().split('T')[0] : '';
+      this.selectedModificationDate = item.fechaModificacion ? new Date(item.fechaModificacion).toISOString().split('T')[0] : '';
+      this.selectedDeactivationDate = item.fechaBaja ? new Date(item.fechaBaja).toISOString().split('T')[0] : '';
+
+      this.isEditing = true;
+      this.lastSelectedId = item.id;
+
+    }
+    
     console.log("Selected Technology Details:", {
       name: this.selectedNameTechnology,
       creationDate: this.selectedCreationDate,
@@ -51,9 +64,20 @@ export class ListTechnologiesComponent  implements OnInit {
       deactivationDate: this.selectedDeactivationDate
     });
 
-    this.isReadOnly = true;
-
   }
+
+  updateTechnology() {
+    this.resetForm();
+  }
+
+  resetForm() {
+    this.selectedNameTechnology = '';
+    this.selectedCreationDate = '';
+    this.selectedModificationDate = '';
+    this.selectedDeactivationDate = '';
+    
+    this.isEditing = false;
+}
 
   onShowForm() {
     this.showForm = true;

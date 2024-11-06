@@ -15,7 +15,7 @@
               [creationDate]="selectedCreationDate"
               [modificationDate]="selectedModificationDate"
               [deactivationDate]="selectedDeactivationDate"
-              [isReadOnly]="isReadOnly"
+              [isReadOnly]="isEditing"
               (technologyAdded)="getTechnologies()"
               >
               <ng-template #templateData let-item="item">
