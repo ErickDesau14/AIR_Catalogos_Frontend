@@ -121,8 +121,7 @@ export class SqliteManagerService {
         console.log("Fetched Technologies:", technologies); // Log para depuración
         return Promise.resolve(technologies);
     }).catch(error => Promise.reject(error));
-}
-
+  }
 
   async addTechnology(technology: Tecnologias) {
     const dbName = await this.getDBName();
