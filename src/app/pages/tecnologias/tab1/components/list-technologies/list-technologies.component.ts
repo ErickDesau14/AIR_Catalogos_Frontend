@@ -48,9 +48,9 @@ export class ListTechnologiesComponent  implements OnInit {
     } else {
 
       this.selectedNameTechnology = item.name || '';
-      this.selectedCreationDate = item.fechaCreacion ? new Date(item.fechaCreacion).toISOString().split('T')[0] : '';
-      this.selectedModificationDate = item.fechaModificacion ? new Date(item.fechaModificacion).toISOString().split('T')[0] : '';
-      this.selectedDeactivationDate = item.fechaBaja ? new Date(item.fechaBaja).toISOString().split('T')[0] : '';
+      this.selectedCreationDate = item.fechaCreacion ? item.fechaCreacion.toLocaleDateString('en-CA') : '';
+      this.selectedModificationDate = item.fechaModificacion ? item.fechaModificacion.toLocaleDateString('en-CA') : '';
+      this.selectedDeactivationDate = item.fechaBaja ? item.fechaBaja.toLocaleDateString('en-CA') : '';
 
       this.isEditing = true;
       this.lastSelectedId = item.id;
