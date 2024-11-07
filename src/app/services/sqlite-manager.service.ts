@@ -126,7 +126,7 @@ export class SqliteManagerService {
 
   async addTechnology(technology: Tecnologias) {
     const dbName = await this.getDBName();
-    const currentDate = new Date().toISOString().split('T')[0];
+    const currentDate = new Date().toDateString();
     let sql = 'INSERT INTO CAT_Tecnologias (tecnologia, fechaCreacion, estatus) VALUES (?, ?, 1)';
     return CapacitorSQLite.executeSet({
       database: dbName,
@@ -183,7 +183,7 @@ export class SqliteManagerService {
     }
 
     const newStatus = currentStatus === 1 ? 0 : 1;
-    const currentDate = new Date().toISOString().split('T')[0];
+    const currentDate = new Date().toDateString();
 
     const updateStatusSql = 'UPDATE CAT_Tecnologias SET estatus = ?, fechaBaja = ? WHERE idTecnologia = ?';
 
