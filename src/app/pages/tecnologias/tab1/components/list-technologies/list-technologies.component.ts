@@ -41,7 +41,7 @@ export class ListTechnologiesComponent  implements OnInit {
     })
   }
 
-  selectTechnology(item: Tecnologias) {
+  selectTechnology(item: Tecnologias, editMode: boolean = false) {
     if (this.lastSelectedId === item.id) {
       this.resetForm();
       this.lastSelectedId = null;
@@ -51,7 +51,7 @@ export class ListTechnologiesComponent  implements OnInit {
       this.selectedModificationDate = item.fechaModificacion ? item.fechaModificacion.toLocaleDateString('en-CA') : '';
       this.selectedDeactivationDate = item.fechaBaja ? item.fechaBaja.toLocaleDateString('en-CA') : '';
 
-      this.isEditing = true;
+      this.isEditing = editMode;
       this.lastSelectedId = item.id;
 
       console.log("Selected Technology Details:", {
