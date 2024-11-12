@@ -118,7 +118,7 @@ export class SqliteManagerService {
             };
             technologies.push(technology);
         }
-        console.log("Fetched Technologies:", technologies); // Log para depuración
+        console.log("Fetched Technologies:", technologies);
         return Promise.resolve(technologies);
     }).catch(error => Promise.reject(error));
   }
@@ -197,6 +197,29 @@ export class SqliteManagerService {
         CapacitorSQLite.saveToStore({ database: dbName });
       }
     }).catch(err => Promise.reject(err));
+  }
+
+  async updateTechnology(technology: Tecnologias): Promise<void> {
+
+    const dbName = await this.getDBName();
+    const updateSql = `UPDATE CAT_Tecnologias SET tecnologia = ?, fechaModificacion = ? WHERE idTecnologia = ?`;
+    const currentDate = new Date().toDateString();
+
+    return CapacitorSQLite.executeSet({
+      database: dbName,
+      set: [{
+        statement: updateSql,
+        values: [technology.name, currentDate, technology.id]
+      }]
+    }).then(() => {
+      if (this.isWeb) {
+        return CapacitorSQLite.saveToStore({ database: dbName }).then(() => {});
+      }
+      return Promise.resolve();
+    }).catch(error => {
+      console.error('Error al actualizar la tecnología:', error);
+      throw error;
+    });
   }
 
 }

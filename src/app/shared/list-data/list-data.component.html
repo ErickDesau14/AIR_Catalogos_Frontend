@@ -2,11 +2,11 @@
 <div class="ion-padding-bottom">
   <ion-item id="style-inputs">
     <ion-icon name="code-working" class="icon-input"></ion-icon>
-    <ion-input 
-      type="text" 
-      name="Tecnología" 
+    <ion-input
+      type="text"
+      name="Tecnología"
       placeholder="Tecnología"
-      [(ngModel)]="nameTechnology"
+      [(ngModel)]="selectedNameTechnology"
       maxlength="15"
       [readonly]="isReadOnly"
       >
@@ -20,16 +20,16 @@
     <ion-icon name="calendar-clear-outline" class="icon-input"></ion-icon>
     <ion-input
     label="Creado el"
-    label-placement="floating" 
-    type="date" 
-    name="fechaCreacionTecnologia" 
+    label-placement="floating"
+    type="date"
+    name="fechaCreacionTecnologia"
     placeholder="Creado el"
     [(ngModel)]="creationDate"
     disabled
     >
     </ion-input>
   </ion-item>
-</div> 
+</div>
 
 <!-- Fecha de Modificación -->
 <div class="ion-padding-bottom">
@@ -37,9 +37,9 @@
     <ion-icon name="calendar-clear-outline" class="icon-input"></ion-icon>
     <ion-input
       label="Modificado el"
-      label-placement="floating"  
-      type="date" 
-      name="fechaModificacionTecnologia" 
+      label-placement="floating"
+      type="date"
+      name="fechaModificacionTecnologia"
       placeholder="Modificado el"
       [(ngModel)]="modificationDate"
       disabled
@@ -54,9 +54,9 @@
     <ion-icon name="calendar-clear-outline" class="icon-input"></ion-icon>
     <ion-input
       label="Desactivado desde el"
-      label-placement="floating"  
-      type="date" 
-      name="fechaBajaTecnologia" 
+      label-placement="floating"
+      type="date"
+      name="fechaBajaTecnologia"
       placeholder="Desactivado desde el"
       [(ngModel)]="deactivationDate"
       disabled
@@ -65,12 +65,13 @@
   </ion-item>
 </div>
 
-<ion-row *ngIf="showAdd">
+<ion-row *ngIf="true">
   <ion-col>
-    <ion-item (click)="addData()" id="item-button">
-      <ion-button class="add-button" *ngIf="addText" [disabled]="!isNameTechnologyValid">
-        <ion-icon name="add-outline" class="icon-button-add"></ion-icon>
-        Agregar tecnología
+    <ion-item (click)="emitUpdateTechnology()" id="item-button">
+      <ion-button [ngClass]="isEditing ? 'edit-button' : 'add-button'" >
+        <ion-icon *ngIf="!isEditing" name="add-outline" class="icon-button-add"></ion-icon>
+        <ion-icon *ngIf="isEditing" name="create-outline" class="icon-button-add"></ion-icon>
+        {{ isEditing ? 'Editar tecnología' : 'Agregar tecnología' }}
       </ion-button>
     </ion-item>
   </ion-col>

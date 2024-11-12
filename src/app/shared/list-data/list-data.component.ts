@@ -19,14 +19,17 @@ export class ListDataComponent {
   @Input() emptyText: string;
   @Input() addText: string;
   @Input() showAdd: boolean = true;
+  @Input() isEditing: boolean = false;
 
   @Input() nameTechnology: string = '';
   @Input() creationDate: string = '';
   @Input() modificationDate: string = '';
   @Input() deactivationDate: string = '';
   @Input() isReadOnly: boolean = true;
+  @Input() selectedNameTechnology: string = '';
 
   @Output() technologyAdded: EventEmitter<void> = new EventEmitter<void>();
+  @Output() updateTechnology = new EventEmitter<string>();
 
   @ContentChild('templateData', { static: false})
   templateData: TemplateRef<any>;
@@ -36,11 +39,15 @@ export class ListDataComponent {
   constructor(
     private sqliteManager: SqliteManagerService
   ) {
-    
+
   }
 
   get isNameTechnologyValid(): boolean {
     return this.nameTechnology && this.nameTechnology.trim().length > 0;
+  }
+
+  emitUpdateTechnology() {
+    this.updateTechnology.emit(this.selectedNameTechnology);  // Emite el nombre actualizado
   }
 
   addData() {
@@ -57,7 +64,7 @@ export class ListDataComponent {
         console.warn('La tecnología ya existe');
         return;
       }
-    
+
       const newTechnology: Tecnologias = {
         id: 0,
         name: this.nameTechnology,
@@ -77,7 +84,7 @@ export class ListDataComponent {
       .catch((err) => {
         console.error('Error al añadir tecnología:', err);
       });
-    
+
     });
 
   }

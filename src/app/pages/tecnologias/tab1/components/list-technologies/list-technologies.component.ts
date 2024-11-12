@@ -12,6 +12,7 @@ export class ListTechnologiesComponent  implements OnInit {
   public technologies: Tecnologias[];
   public showForm: boolean;
 
+  public nameTechnology: string = '';
   public selectedNameTechnology: string = '';
   public selectedCreationDate: string = '';
   public selectedModificationDate: string = '';
@@ -36,18 +37,16 @@ export class ListTechnologiesComponent  implements OnInit {
     this.sqliteService.getTechnologies().then( (technologies: Tecnologias[]) => {
       this.technologies = technologies;
       console.log(this.technologies);
-      
+
     })
   }
 
   selectTechnology(item: Tecnologias) {
-
     if (this.lastSelectedId === item.id) {
       this.resetForm();
       this.lastSelectedId = null;
     } else {
-
-      this.selectedNameTechnology = item.name || '';
+      this.selectedNameTechnology = item.name || '';  // Asigna el nombre seleccionado
       this.selectedCreationDate = item.fechaCreacion ? item.fechaCreacion.toLocaleDateString('en-CA') : '';
       this.selectedModificationDate = item.fechaModificacion ? item.fechaModificacion.toLocaleDateString('en-CA') : '';
       this.selectedDeactivationDate = item.fechaBaja ? item.fechaBaja.toLocaleDateString('en-CA') : '';
@@ -55,19 +54,42 @@ export class ListTechnologiesComponent  implements OnInit {
       this.isEditing = true;
       this.lastSelectedId = item.id;
 
+      console.log("Selected Technology Details:", {
+        name: this.selectedNameTechnology, // Verifica en consola el valor de selectedNameTechnology
+        creationDate: this.selectedCreationDate,
+        modificationDate: this.selectedModificationDate,
+        deactivationDate: this.selectedDeactivationDate
+      });
     }
-    
+
     console.log("Selected Technology Details:", {
-      name: this.selectedNameTechnology,
+      name: this.selectedNameTechnology, // Verifica en consola el valor de selectedNameTechnology
       creationDate: this.selectedCreationDate,
       modificationDate: this.selectedModificationDate,
       deactivationDate: this.selectedDeactivationDate
     });
-
   }
 
-  updateTechnology() {
-    this.resetForm();
+
+  updateTechnology(updatedName: string) {
+    if (this.lastSelectedId !== null) {
+      const updatedTechnology: Tecnologias = {
+        id: this.lastSelectedId,
+        name: updatedName,  // Usa el nombre actualizado
+        estatus: 1,
+        fechaCreacion: this.selectedCreationDate ? new Date(this.selectedCreationDate) : null,
+        fechaModificacion: new Date(),
+        fechaBaja: this.selectedDeactivationDate ? new Date(this.selectedDeactivationDate) : null
+      };
+
+      this.sqliteService.updateTechnology(updatedTechnology)
+        .then(() => {
+          console.log('Tecnología actualizada exitosamente');
+          this.getTechnologies();  // Recarga la lista de tecnologías
+          this.resetForm();  // Reinicia el formulario
+        })
+        .catch((error) => console.error('Error al actualizar la tecnología:', error));
+    }
   }
 
   resetForm() {
@@ -75,7 +97,7 @@ export class ListTechnologiesComponent  implements OnInit {
     this.selectedCreationDate = '';
     this.selectedModificationDate = '';
     this.selectedDeactivationDate = '';
-    
+
     this.isEditing = false;
 }
 

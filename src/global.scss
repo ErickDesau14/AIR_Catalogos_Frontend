@@ -98,7 +98,7 @@ ion-card{
     backdrop-filter: blur(10px);
     min-height: 605px;
     max-height: 605px;
-    overflow-y: auto;   
+    overflow-y: auto;
 }
 
 #table-content {
@@ -147,7 +147,7 @@ ion-card{
     border-radius: 8px;
     border-color: #27AE60;
     border-width: 1px;
-    border-style: solid;    
+    border-style: solid;
 }
 
 .icon-input {
@@ -169,6 +169,16 @@ ion-card{
     height: 40px;
     width: 100%;
     text-transform: none;
+}
+
+.edit-button {
+  color: #fff;
+  --background: #d4ac0d;
+  --border-radius: 20px;
+  font-size: 14px;
+  height: 40px;
+  width: 100%;
+  text-transform: none;
 }
 
 .option-edit {
