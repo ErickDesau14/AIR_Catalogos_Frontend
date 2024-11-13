@@ -19,6 +19,7 @@ export class ListTechnologiesComponent  implements OnInit {
   public selectedDeactivationDate: string = '';
 
   public isEditing: boolean = false;
+  public isReadOnly: boolean = false;
 
   public lastSelectedId: number | null = null;
 
@@ -46,36 +47,29 @@ export class ListTechnologiesComponent  implements OnInit {
       this.resetForm();
       this.lastSelectedId = null;
     } else {
-      this.selectedNameTechnology = item.name || '';  // Asigna el nombre seleccionado
+      this.selectedNameTechnology = item.name || '';
       this.selectedCreationDate = item.fechaCreacion ? item.fechaCreacion.toLocaleDateString('en-CA') : '';
       this.selectedModificationDate = item.fechaModificacion ? item.fechaModificacion.toLocaleDateString('en-CA') : '';
       this.selectedDeactivationDate = item.fechaBaja ? item.fechaBaja.toLocaleDateString('en-CA') : '';
 
       this.isEditing = editMode;
+      this.isReadOnly = !editMode;
       this.lastSelectedId = item.id;
 
       console.log("Selected Technology Details:", {
-        name: this.selectedNameTechnology, // Verifica en consola el valor de selectedNameTechnology
+        name: this.selectedNameTechnology,
         creationDate: this.selectedCreationDate,
         modificationDate: this.selectedModificationDate,
         deactivationDate: this.selectedDeactivationDate
       });
     }
-
-    console.log("Selected Technology Details:", {
-      name: this.selectedNameTechnology, // Verifica en consola el valor de selectedNameTechnology
-      creationDate: this.selectedCreationDate,
-      modificationDate: this.selectedModificationDate,
-      deactivationDate: this.selectedDeactivationDate
-    });
   }
-
 
   updateTechnology(updatedName: string) {
     if (this.lastSelectedId !== null) {
       const updatedTechnology: Tecnologias = {
         id: this.lastSelectedId,
-        name: updatedName,  // Usa el nombre actualizado
+        name: updatedName,
         estatus: 1,
         fechaCreacion: this.selectedCreationDate ? new Date(this.selectedCreationDate) : null,
         fechaModificacion: new Date(),
@@ -85,8 +79,8 @@ export class ListTechnologiesComponent  implements OnInit {
       this.sqliteService.updateTechnology(updatedTechnology)
         .then(() => {
           console.log('Tecnología actualizada exitosamente');
-          this.getTechnologies();  // Recarga la lista de tecnologías
-          this.resetForm();  // Reinicia el formulario
+          this.getTechnologies();
+          this.resetForm();
         })
         .catch((error) => console.error('Error al actualizar la tecnología:', error));
     }

@@ -98,9 +98,8 @@ export class SqliteManagerService {
   }
 
   async getTechnologies() {
-    let sql = 'SELECT * FROM CAT_Tecnologias';
-
     const dbName = await this.getDBName();
+    let sql = 'SELECT * FROM CAT_Tecnologias';
     return CapacitorSQLite.query({
         database: dbName,
         statement: sql

@@ -16,7 +16,7 @@
               [creationDate]="selectedCreationDate"
               [modificationDate]="selectedModificationDate"
               [deactivationDate]="selectedDeactivationDate"
-              [isReadOnly]="!isEditing"
+              [isReadOnly]="isReadOnly"
               [isEditing]="isEditing"
               (updateTechnology)="updateTechnology($event)"
               (technologyAdded)="getTechnologies()"

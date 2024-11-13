@@ -51,12 +51,12 @@ export class ListDataComponent {
   }
 
   addData() {
-    if (!this.nameTechnology) {
+    if (!this.selectedNameTechnology) {
       console.warn('El nombre de la tecnología está vacío');
       return;
     }
 
-    const normalizedTechnologyName = this.nameTechnology.replace(/\s+/g, '').toLowerCase();
+    const normalizedTechnologyName = this.selectedNameTechnology.replace(/\s+/g, '').toLowerCase();
 
     this.sqliteManager.technologyExists(normalizedTechnologyName)
     .then((exists) => {
@@ -67,7 +67,7 @@ export class ListDataComponent {
 
       const newTechnology: Tecnologias = {
         id: 0,
-        name: this.nameTechnology,
+        name: this.selectedNameTechnology,
         estatus: 1,
         fechaCreacion: new Date(),
         fechaModificacion: null,
@@ -77,7 +77,7 @@ export class ListDataComponent {
       this.sqliteManager.addTechnology(newTechnology)
       .then((changes) => {
         console.log('Tecnología añadida:', changes);
-        this.nameTechnology = '';
+        this.selectedNameTechnology = '';
 
         this.technologyAdded.emit();
       })
