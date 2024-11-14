@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { Tecnologias } from 'src/app/models/tecnologias';
+import { AlertService } from 'src/app/services/alert.service';
 import { SqliteManagerService } from 'src/app/services/sqlite-manager.service';
 
 @Component({
@@ -35,7 +36,8 @@ export class ListDataComponent {
   templateData: TemplateRef<any>;
 
   constructor(
-    private sqliteManager: SqliteManagerService
+    private sqliteManager: SqliteManagerService,
+    private alertService: AlertService
   ) {
 
   }
@@ -50,7 +52,10 @@ export class ListDataComponent {
 
   addData() {
     if (!this.selectedNameTechnology) {
-      console.warn('El nombre de la tecnología está vacío');
+      this.alertService.alertMessage(
+        'Error',
+        'El nombre de la tecnología no puede estar vacío'
+      );
       return;
     }
 
