@@ -126,12 +126,15 @@ export class SqliteManagerService {
     const dbName = await this.getDBName();
     const currentDate = new Date().toDateString();
     let sql = 'INSERT INTO CAT_Tecnologias (tecnologia, fechaCreacion, estatus) VALUES (?, ?, 1)';
+
+    const trimmedName = technology.name.trim();
+
     return CapacitorSQLite.executeSet({
       database: dbName,
       set: [{
         statement: sql,
         values: [
-          technology.name,
+          trimmedName,
           currentDate
         ]
       }]
