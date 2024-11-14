@@ -68,7 +68,7 @@
 <ion-row *ngIf="true">
   <ion-col>
     <ion-item (click)="isEditing ? emitUpdateTechnology() : addData()" id="item-button">
-      <ion-button [ngClass]="isEditing ? 'edit-button' : 'add-button'" >
+      <ion-button [ngClass]="isEditing ? 'edit-button' : 'add-button'" [disabled]="!isNameTechnologyValid">
         <ion-icon *ngIf="!isEditing" name="add-outline" class="icon-button-add"></ion-icon>
         <ion-icon *ngIf="isEditing" name="create-outline" class="icon-button-add"></ion-icon>
         {{ isEditing ? 'Editar tecnología' : 'Agregar tecnología' }}

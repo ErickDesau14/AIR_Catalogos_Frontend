@@ -41,11 +41,11 @@ export class ListDataComponent {
   }
 
   get isNameTechnologyValid(): boolean {
-    return this.nameTechnology && this.nameTechnology.trim().length > 0;
+    return this.selectedNameTechnology && this.selectedNameTechnology.trim().length > 0;
   }
 
   emitUpdateTechnology() {
-    this.updateTechnology.emit(this.selectedNameTechnology);  // Emite el nombre actualizado
+    this.updateTechnology.emit(this.selectedNameTechnology);
   }
 
   addData() {
