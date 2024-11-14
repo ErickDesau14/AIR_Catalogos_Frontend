@@ -6,6 +6,7 @@ import { Preferences } from '@capacitor/preferences';
 import { AlertController } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
 import { Tecnologias } from '../models/tecnologias';
+import { AlertService } from './alert.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,7 @@ export class SqliteManagerService {
 
   constructor(
     private alertController: AlertController,
+    private alertService: AlertService,
     private http: HttpClient
   ) {
     this.isWeb = false;
@@ -197,6 +199,12 @@ export class SqliteManagerService {
     }).then(() => {
       if (this.isWeb) {
         CapacitorSQLite.saveToStore({ database: dbName });
+      }
+
+      if (newStatus === 0) {
+        this.alertService.alertMessage('🌙', 'Tecnología desactivada correctamente');
+      } else {
+        this.alertService.alertMessage('🌞', 'Tecnología activada correctamente');
       }
     }).catch(err => Promise.reject(err));
   }

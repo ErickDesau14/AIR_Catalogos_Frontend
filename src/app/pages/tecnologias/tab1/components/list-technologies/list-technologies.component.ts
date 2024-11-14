@@ -106,10 +106,6 @@ export class ListTechnologiesComponent  implements OnInit {
 
   desactivateTechnology(idTecnologia: number) {
     this.sqliteService.desactivateTechnology(idTecnologia).then( () => {
-      this.alertService.alertMessage(
-        '🌙',
-        'Tecnología desactivada correctamente'
-      );
       this.getTechnologies();
     }).catch( (err) => {
       console.error(err);
