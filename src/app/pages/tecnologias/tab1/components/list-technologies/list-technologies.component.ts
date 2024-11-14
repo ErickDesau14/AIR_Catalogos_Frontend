@@ -68,6 +68,15 @@ export class ListTechnologiesComponent  implements OnInit {
   }
 
   updateTechnology(updatedName: string) {
+
+    if (!updatedName || updatedName.trim().length === 0) {
+      this.alertService.alertMessage(
+        '❌',
+        'El nombre de la tecnología no puede editar estar vacío'
+      );
+      return;
+    }
+
     if (this.lastSelectedId !== null) {
       const updatedTechnology: Tecnologias = {
         id: this.lastSelectedId,
@@ -78,16 +87,18 @@ export class ListTechnologiesComponent  implements OnInit {
         fechaBaja: this.selectedDeactivationDate ? new Date(this.selectedDeactivationDate) : null
       };
 
-      this.sqliteService.updateTechnology(updatedTechnology)
-        .then(() => {
-          this.alertService.alertMessage(
-            '✅',
-            'Tecnología actualizada correctamente'
-          );
-          this.getTechnologies();
-          this.resetForm();
-        })
-        .catch((error) => console.error('Error al actualizar la tecnología:', error));
+      this.alertService.alertConfirm(
+        'Confirmación',
+        '¿Estás seguro de que deseas actualizar la tecnología?',
+        () => {
+          this.sqliteService.updateTechnology(updatedTechnology)
+            .then(() => {
+              this.getTechnologies();
+              this.resetForm();
+            })
+            .catch((error) => console.error('Error al actualizar la tecnología:', error));
+        }
+      );
     }
   }
 

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, ContentChild, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonCardContent, IonicModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { Tecnologias } from 'src/app/models/tecnologias';
 import { AlertService } from 'src/app/services/alert.service';
@@ -64,7 +64,7 @@ export class ListDataComponent {
     this.sqliteManager.technologyExists(normalizedTechnologyName)
     .then((exists) => {
       if (exists) {
-        console.warn('La tecnología ya existe');
+        this.alertService.alertMessage('⚠️', 'Esta tecnología ya existe');
         return;
       }
 

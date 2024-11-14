@@ -144,6 +144,7 @@ export class SqliteManagerService {
       if (this.isWeb) {
         CapacitorSQLite.saveToStore({ database: dbName });
       }
+      this.alertService.alertMessage('✅', 'Tecnología agregada correctamente');
       return changes;
     }).catch( err => Promise.reject(err));
   }
@@ -227,7 +228,6 @@ export class SqliteManagerService {
       }
       return Promise.resolve();
     }).catch(error => {
-      console.error('Error al actualizar la tecnología:', error);
       throw error;
     });
   }
