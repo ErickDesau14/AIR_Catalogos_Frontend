@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ContentChild, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import { Component, ContentChild, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
@@ -33,8 +33,6 @@ export class ListDataComponent {
 
   @ContentChild('templateData', { static: false})
   templateData: TemplateRef<any>;
-
-  // public nameTechnology: string;
 
   constructor(
     private sqliteManager: SqliteManagerService
