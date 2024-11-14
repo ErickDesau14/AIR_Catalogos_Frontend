@@ -144,7 +144,7 @@ export class SqliteManagerService {
       if (this.isWeb) {
         CapacitorSQLite.saveToStore({ database: dbName });
       }
-      this.alertService.alertMessage('✅', 'Tecnología agregada correctamente');
+      this.alertService.alertMessage('✅', 'Tecnología agregada');
       return changes;
     }).catch( err => Promise.reject(err));
   }
@@ -203,9 +203,9 @@ export class SqliteManagerService {
       }
 
       if (newStatus === 0) {
-        this.alertService.alertMessage('🌙', 'Tecnología desactivada correctamente');
+        this.alertService.alertMessage('🌙', 'Tecnología desactivada');
       } else {
-        this.alertService.alertMessage('🌞', 'Tecnología activada correctamente');
+        this.alertService.alertMessage('🌞', 'Tecnología activada');
       }
     }).catch(err => Promise.reject(err));
   }
