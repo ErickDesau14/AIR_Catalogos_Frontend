@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { Tecnologias } from 'src/app/models/tecnologias';
+import { AlertService } from 'src/app/services/alert.service';
 import { SqliteManagerService } from 'src/app/services/sqlite-manager.service';
 
 @Component({
@@ -24,7 +25,8 @@ export class ListTechnologiesComponent  implements OnInit {
   public lastSelectedId: number | null = null;
 
   constructor(
-    private sqliteService: SqliteManagerService
+    private sqliteService: SqliteManagerService,
+    private alertService: AlertService
   ) {
     this.showForm = false;
     this.technologies = [];
@@ -78,7 +80,10 @@ export class ListTechnologiesComponent  implements OnInit {
 
       this.sqliteService.updateTechnology(updatedTechnology)
         .then(() => {
-          console.log('Tecnología actualizada exitosamente');
+          this.alertService.alertMessage(
+            '✅',
+            'Tecnología actualizada correctamente'
+          );
           this.getTechnologies();
           this.resetForm();
         })
@@ -101,6 +106,10 @@ export class ListTechnologiesComponent  implements OnInit {
 
   desactivateTechnology(idTecnologia: number) {
     this.sqliteService.desactivateTechnology(idTecnologia).then( () => {
+      this.alertService.alertMessage(
+        '🌙',
+        'Tecnología desactivada correctamente'
+      );
       this.getTechnologies();
     }).catch( (err) => {
       console.error(err);
