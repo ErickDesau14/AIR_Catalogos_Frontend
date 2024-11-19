@@ -48,6 +48,7 @@ export class ListTechnologiesComponent  implements OnInit {
     if (this.lastSelectedId === item.id) {
       this.resetForm();
       this.lastSelectedId = null;
+      this.isReadOnly = false;
     } else {
       this.selectedNameTechnology = item.name || '';
       this.selectedCreationDate = item.fechaCreacion ? item.fechaCreacion.toLocaleDateString('en-CA') : '';
@@ -109,6 +110,7 @@ export class ListTechnologiesComponent  implements OnInit {
     this.selectedDeactivationDate = '';
 
     this.isEditing = false;
+    this.isReadOnly = false;
 }
 
   onShowForm() {
