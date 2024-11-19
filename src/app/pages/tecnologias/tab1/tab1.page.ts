@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { ListTechnologiesComponent } from './components/list-technologies/list-technologies.component';
 
 @Component({
   selector: 'app-tab1',
@@ -7,12 +8,20 @@ import { Component } from '@angular/core';
 })
 export class Tab1Page {
 
+  @ViewChild(ListTechnologiesComponent) listTechnologiesComponent!: ListTechnologiesComponent;
+
   constructor() {}
 
-  handleRefresh(event) {
+  handleRefresh(event: any) {
+
+    if (this.listTechnologiesComponent) {
+      this.listTechnologiesComponent.resetForm();
+    }
+
     setTimeout(() => {
       event.target.complete();
-    }, 2000);
+    }, 500);
+
   }
 
 }
