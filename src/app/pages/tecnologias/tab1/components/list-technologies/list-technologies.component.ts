@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonContent } from '@ionic/angular';
 import { Tecnologias } from 'src/app/models/tecnologias';
 import { AlertService } from 'src/app/services/alert.service';
 import { SqliteManagerService } from 'src/app/services/sqlite-manager.service';
@@ -9,6 +10,8 @@ import { SqliteManagerService } from 'src/app/services/sqlite-manager.service';
   styleUrls: ['./list-technologies.component.scss'],
 })
 export class ListTechnologiesComponent  implements OnInit {
+
+  @ViewChild(IonContent) content: IonContent;
 
   public technologies: Tecnologias[];
   public showForm: boolean;
@@ -58,6 +61,7 @@ export class ListTechnologiesComponent  implements OnInit {
       this.isEditing = editMode;
       this.isReadOnly = !editMode;
       this.lastSelectedId = item.id;
+      this.content.scrollToTop(500);
 
       console.log("Selected Technology Details:", {
         name: this.selectedNameTechnology,

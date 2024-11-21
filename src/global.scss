@@ -72,10 +72,14 @@ ion-title {
 ion-col {
     margin: 0;
     padding: 0;
+    margin-right: 5px;
+    margin-left: 5px;
 }
 
 ion-grid {
     padding-bottom: 0;
+    margin-right: 10px;
+    margin-left: 10px;
 }
 
 ion-tab-bar {
@@ -89,15 +93,15 @@ ion-tab-button {
     --color-selected: #092E1C;
 }
 
-ion-card{
+.card {
     background-color: rgba(255, 255, 255, 0.24);
+    border-color: #46534D;
     border-radius: 20px;
     border-width: 1px;
     border-style: solid;
     margin-top: 10px;
+    margin-bottom: 10px;
     backdrop-filter: blur(10px);
-    min-height: 605px;
-    max-height: 605px;
     overflow-y: auto;
 }
 
@@ -117,21 +121,17 @@ ion-card{
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 18px;
-}
-
-#col-estatus-activa {
-    padding-left: 8px;
+    font-weight: bold;
+    font-size: 15px;
 }
 
 #col-estatus-fecha {
-    padding-left: 10px;
     font-size: 14px;
 }
 
 #size-grid-table-header {
-    padding-left: 0;
-    padding-right: 0;
     padding-top: 10px;
+    margin: 0;
 }
 
 #item-button {
