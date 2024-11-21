@@ -214,6 +214,8 @@ export class SqliteManagerService {
               newStatus === 0 ? '🌙' : '🌞',
               `Tecnología ${newStatus === 0 ? 'desactivada' : 'activada'}`
             );
+
+            resolve();
           } catch (error) {
             console.error('Error al actualizar el estatus de la tecnología:', error);
             reject(error);
