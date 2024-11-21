@@ -181,7 +181,7 @@ export class SqliteManagerService {
     }).catch((error) => {
       console.error('Error al obtener el estatus de la tecnología:', error);
       return null;
-    })
+    });
 
     if (currentStatus == null) {
       return Promise.reject('No se pudo obtener el estatus de la tecnología');
@@ -192,32 +192,38 @@ export class SqliteManagerService {
 
     const updateStatusSql = 'UPDATE CAT_Tecnologias SET estatus = ?, fechaBaja = ? WHERE idTecnologia = ?';
 
-    return CapacitorSQLite.executeSet({
-      database: dbName,
-      set: [{
-        statement: updateStatusSql,
-        values: [newStatus, newStatus === 0 ? currentDate : null, idTecnologia]
-      }]
-    }).then(() => {
-      if (this.isWeb) {
-        CapacitorSQLite.saveToStore({ database: dbName });
-      }
-
+    return new Promise<void>((resolve, reject) => {
       this.alertService.alertConfirm(
         'Confirmación',
-        '¿Estás seguro de que deseas desactivar la tecnología?',
-        () => {
+        `¿Estás seguro de que deseas ${newStatus === 0 ? 'desactivar' : 'activar'} la tecnología?`,
+        async () => {
 
-          if (newStatus === 0) {
-            this.alertService.alertMessage('🌙', 'Tecnología desactivada');
-          } else {
-            this.alertService.alertMessage('🌞', 'Tecnología activada');
+          try {
+            await CapacitorSQLite.executeSet({
+              database: dbName,
+              set: [{
+                statement: updateStatusSql,
+                values: [newStatus, newStatus === 0 ? currentDate : null, idTecnologia]
+              }]
+            });
+
+            if (this.isWeb) {
+              CapacitorSQLite.saveToStore({ database: dbName });
+            }
+
+            this.alertService.alertMessage(
+              newStatus === 0 ? '🌙' : '🌞',
+              `Tecnología ${newStatus === 0 ? 'desactivada' : 'activada'}`
+            );
+
+            resolve();
+          } catch (error) {
+            console.error('Error al actualizar el estatus de la tecnología:', error);
+            reject(error);
           }
-
         }
       );
-
-    }).catch(err => Promise.reject(err));
+    });
   }
 
   async updateTechnology(technology: Tecnologias): Promise<void> {
