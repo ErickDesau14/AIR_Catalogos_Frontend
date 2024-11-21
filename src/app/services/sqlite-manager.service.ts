@@ -7,7 +7,6 @@ import { AlertController } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
 import { Tecnologias } from '../models/tecnologias';
 import { AlertService } from './alert.service';
-import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
