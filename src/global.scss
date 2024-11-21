@@ -70,16 +70,16 @@ ion-title {
 }
 
 ion-col {
-    margin: 0;
-    padding: 0;
-    margin-right: 5px;
-    margin-left: 5px;
+  margin: 0;
+  padding: 0;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 ion-grid {
     padding-bottom: 0;
-    margin-right: 10px;
-    margin-left: 10px;
+    margin-left: 8px;
+    margin-right: 8px;
 }
 
 ion-tab-bar {
@@ -93,7 +93,7 @@ ion-tab-button {
     --color-selected: #092E1C;
 }
 
-.card {
+#card {
     background-color: rgba(255, 255, 255, 0.24);
     border-color: #46534D;
     border-radius: 20px;
@@ -103,6 +103,11 @@ ion-tab-button {
     margin-bottom: 10px;
     backdrop-filter: blur(10px);
     overflow-y: auto;
+}
+
+#table {
+  margin: 0;
+  padding: 0;
 }
 
 #table-content {
@@ -120,18 +125,17 @@ ion-tab-button {
     color: #fff;
     padding-top: 10px;
     padding-bottom: 10px;
-    padding-left: 18px;
-    font-weight: bold;
-    font-size: 15px;
+    padding-left: 10px;
 }
 
 #col-estatus-fecha {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 #size-grid-table-header {
     padding-top: 10px;
     margin: 0;
+    text-align: center;
 }
 
 #item-button {

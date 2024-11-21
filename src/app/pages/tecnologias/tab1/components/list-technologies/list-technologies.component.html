@@ -1,5 +1,5 @@
 <ion-content>
-    <ion-grid class="card">
+    <ion-grid id="card">
       <ion-row>
         <ion-col>
           <ion-row>
@@ -22,19 +22,19 @@
                 <ion-item-sliding>
                   <ion-item id="table-content" (click)="selectTechnology(item, false)">
                     <ion-label>
-                      <ion-grid>
-                        <ion-row>
+                      <ion-grid id="table">
+                        <ion-row id="table">
                           <ion-col size="auto">
                             {{ item.id }}
                           </ion-col>
-                          <ion-col id="col-tecnologia">
+                          <ion-col size="4">
                             {{ item.name }}
                           </ion-col>
-                          <ion-col [id]="item.estatus === 1 ? 'col-estatus-activa' : 'col-estatus-desactivada'">
+                          <ion-col size="3" [id]="item.estatus === 1 ? 'col-estatus-activa' : 'col-estatus-desactivada'">
                             {{ item.estatus === 1 ? 'Activa' : 'Inactiva' }}
                           </ion-col>
-                          <ion-col id="col-estatus-fecha">
-                            {{ item.fechaCreacion | date: 'yyyy-MM-dd' }}
+                          <ion-col size="3" id="col-estatus-fecha">
+                            {{ item.fechaCreacion | date: 'dd-MM-yy' }}
                           </ion-col>
                         </ion-row>
                       </ion-grid>

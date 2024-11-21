@@ -7,6 +7,7 @@ import { AlertController } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
 import { Tecnologias } from '../models/tecnologias';
 import { AlertService } from './alert.service';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -169,8 +170,8 @@ export class SqliteManagerService {
 
   async desactivateTechnology(idTecnologia: number): Promise<void> {
     const dbName = await this.getDBName();
-
     const getStatusSql = 'SELECT estatus FROM CAT_Tecnologias WHERE idTecnologia = ?';
+
     const currentStatus = await CapacitorSQLite.query({
       database: dbName,
       statement: getStatusSql,
@@ -202,11 +203,20 @@ export class SqliteManagerService {
         CapacitorSQLite.saveToStore({ database: dbName });
       }
 
-      if (newStatus === 0) {
-        this.alertService.alertMessage('🌙', 'Tecnología desactivada');
-      } else {
-        this.alertService.alertMessage('🌞', 'Tecnología activada');
-      }
+      this.alertService.alertConfirm(
+        'Confirmación',
+        '¿Estás seguro de que deseas desactivar la tecnología?',
+        () => {
+
+          if (newStatus === 0) {
+            this.alertService.alertMessage('🌙', 'Tecnología desactivada');
+          } else {
+            this.alertService.alertMessage('🌞', 'Tecnología activada');
+          }
+
+        }
+      );
+
     }).catch(err => Promise.reject(err));
   }
 

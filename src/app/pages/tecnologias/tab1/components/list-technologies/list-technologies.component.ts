@@ -43,7 +43,6 @@ export class ListTechnologiesComponent  implements OnInit {
     this.sqliteService.getTechnologies().then( (technologies: Tecnologias[]) => {
       this.technologies = technologies;
       console.log(this.technologies);
-
     })
   }
 
@@ -102,7 +101,8 @@ export class ListTechnologiesComponent  implements OnInit {
               this.resetForm();
             })
             .catch((error) => console.error('Error al actualizar la tecnología:', error));
-        }
+            this.resetForm();
+          }
       );
     }
   }
@@ -127,6 +127,7 @@ export class ListTechnologiesComponent  implements OnInit {
     }).catch( (err) => {
       console.error(err);
     })
+    this.resetForm();
   }
 
 }
