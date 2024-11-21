@@ -1,103 +1,108 @@
-<!-- Tecnología -->
-<div class="ion-padding-bottom">
-  <ion-item id="style-inputs">
-    <ion-icon name="code-working" class="icon-input"></ion-icon>
-    <ion-input
-      type="text"
-      name="Tecnología"
-      placeholder="Tecnología"
-      [(ngModel)]="selectedNameTechnology"
-      maxlength="50"
-      [readonly]="isReadOnly"
-      >
-    </ion-input>
-  </ion-item>
-</div>
+<div class="ion-padding-top ion-padding-bottom">
 
-<!-- Fecha de creación -->
-<div class="ion-padding-bottom">
-  <ion-item id="style-inputs">
-    <ion-icon name="calendar-clear-outline" class="icon-input"></ion-icon>
-    <ion-input
-    label="Creado el"
-    label-placement="floating"
-    type="date"
-    name="fechaCreacionTecnologia"
-    placeholder="Creado el"
-    [(ngModel)]="creationDate"
-    disabled
-    >
-    </ion-input>
-  </ion-item>
-</div>
+  <!-- Tecnología -->
+  <div class="ion-padding-bottom">
+    <ion-item id="style-inputs">
+      <ion-icon name="code-working" class="icon-input"></ion-icon>
+      <ion-input
+        type="text"
+        name="Tecnología"
+        placeholder="Tecnología"
+        [(ngModel)]="selectedNameTechnology"
+        maxlength="50"
+        [readonly]="isReadOnly"
+        >
+      </ion-input>
+    </ion-item>
+  </div>
 
-<!-- Fecha de Modificación -->
-<div class="ion-padding-bottom">
-  <ion-item id="style-inputs">
-    <ion-icon name="calendar-clear-outline" class="icon-input"></ion-icon>
-    <ion-input
-      label="Modificado el"
+  <!-- Fecha de creación -->
+  <div class="ion-padding-bottom">
+    <ion-item id="style-inputs">
+      <ion-icon name="calendar-clear-outline" class="icon-input"></ion-icon>
+      <ion-input
+      label="Creado el"
       label-placement="floating"
       type="date"
-      name="fechaModificacionTecnologia"
-      placeholder="Modificado el"
-      [(ngModel)]="modificationDate"
+      name="fechaCreacionTecnologia"
+      placeholder="Creado el"
+      [(ngModel)]="creationDate"
       disabled
       >
-    </ion-input>
-  </ion-item>
-</div>
-
-<!-- Fecha de Baja -->
-<div>
-  <ion-item id="style-inputs">
-    <ion-icon name="calendar-clear-outline" class="icon-input"></ion-icon>
-    <ion-input
-      label="Desactivado desde el"
-      label-placement="floating"
-      type="date"
-      name="fechaBajaTecnologia"
-      placeholder="Desactivado desde el"
-      [(ngModel)]="deactivationDate"
-      disabled
-      >
-    </ion-input>
-  </ion-item>
-</div>
-
-<ion-row *ngIf="true">
-  <ion-col>
-    <ion-item (click)="isEditing ? emitUpdateTechnology() : addData()" id="item-button">
-      <ion-button [ngClass]="isEditing ? 'edit-button' : 'add-button'" [disabled]="!isNameTechnologyValid">
-        <ion-icon *ngIf="!isEditing" name="add-outline" class="icon-button-add"></ion-icon>
-        <ion-icon *ngIf="isEditing" name="create-outline" class="icon-button-add"></ion-icon>
-        {{ isEditing ? 'Editar tecnología' : 'Agregar tecnología' }}
-      </ion-button>
+      </ion-input>
     </ion-item>
-  </ion-col>
-</ion-row>
+  </div>
 
-<ion-grid id="size-grid-table-header">
-  <ion-row id="table-header">
-    <ion-col size="auto"> Id </ion-col>
-    <ion-col > Tecnología </ion-col>
-    <ion-col > Estatus </ion-col>
-    <ion-col size="4"> Añadido el</ion-col>
-  </ion-row>
-</ion-grid>
-
-<ion-row *ngIf="!data || (data && data.length === 0)">
-  <ion-col>
-    <ion-item>
-      <ion-label class="ion-text-center">¡No hay tecnologías agregadas!</ion-label>
+  <!-- Fecha de Modificación -->
+  <div class="ion-padding-bottom">
+    <ion-item id="style-inputs">
+      <ion-icon name="calendar-clear-outline" class="icon-input"></ion-icon>
+      <ion-input
+        label="Modificado el"
+        label-placement="floating"
+        type="date"
+        name="fechaModificacionTecnologia"
+        placeholder="Modificado el"
+        [(ngModel)]="modificationDate"
+        disabled
+        >
+      </ion-input>
     </ion-item>
-  </ion-col>
-</ion-row>
+  </div>
 
-<ng-container *ngIf="data && data.length > 0">
-  <ion-row *ngFor="let d of data">
+  <!-- Fecha de Baja -->
+  <div>
+    <ion-item id="style-inputs">
+      <ion-icon name="calendar-clear-outline" class="icon-input"></ion-icon>
+      <ion-input
+        label="Desactivado desde el"
+        label-placement="floating"
+        type="date"
+        name="fechaBajaTecnologia"
+        placeholder="Desactivado desde el"
+        [(ngModel)]="deactivationDate"
+        disabled
+        >
+      </ion-input>
+    </ion-item>
+  </div>
+
+  <ion-row *ngIf="true">
     <ion-col>
-      <ng-template *ngTemplateOutlet="templateData; context: {item: d}"></ng-template>
+      <ion-item (click)="isEditing ? emitUpdateTechnology() : addData()" id="item-button">
+        <ion-button [ngClass]="isEditing ? 'edit-button' : 'add-button'" [disabled]="!isNameTechnologyValid">
+          <ion-icon *ngIf="!isEditing" name="add-outline" class="icon-button-add"></ion-icon>
+          <ion-icon *ngIf="isEditing" name="create-outline" class="icon-button-add"></ion-icon>
+          {{ isEditing ? 'Editar tecnología' : 'Agregar tecnología' }}
+        </ion-button>
+      </ion-item>
     </ion-col>
   </ion-row>
-</ng-container>
+
+  <ion-grid id="size-grid-table-header">
+    <ion-row id="table-header">
+      <ion-col size="auto"> Id </ion-col>
+      <ion-col > Tecnología </ion-col>
+      <ion-col > Estatus </ion-col>
+      <ion-col size="4"> Añadido el</ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-row *ngIf="!data || (data && data.length === 0)">
+    <ion-col>
+      <ion-item>
+        <ion-label class="ion-text-center">¡No hay tecnologías agregadas!</ion-label>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ng-container *ngIf="data && data.length > 0">
+    <ion-row *ngFor="let d of data">
+      <ion-col>
+        <ng-template *ngTemplateOutlet="templateData; context: {item: d}"></ng-template>
+      </ion-col>
+    </ion-row>
+  </ng-container>
+
+</div>
+
