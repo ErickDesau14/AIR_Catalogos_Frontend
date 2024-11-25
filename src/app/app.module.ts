@@ -22,8 +22,10 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    BrowserModule, 
-    IonicModule.forRoot(), 
+    BrowserModule,
+    IonicModule.forRoot({
+      innerHTMLTemplatesEnabled: true
+    }),
     AppRoutingModule,
     HttpClientModule,
     TranslateModule.forRoot({

@@ -144,7 +144,7 @@ export class SqliteManagerService {
       if (this.isWeb) {
         CapacitorSQLite.saveToStore({ database: dbName });
       }
-      this.alertService.alertMessage('✅', 'Tecnología agregada');
+      this.alertService.alertSuccess('Tecnología agregada');
       return changes;
     }).catch( err => Promise.reject(err));
   }
@@ -193,7 +193,6 @@ export class SqliteManagerService {
 
     return new Promise<void>((resolve, reject) => {
       this.alertService.alertConfirm(
-        'Confirmación',
         `¿Estás seguro de que deseas ${newStatus === 0 ? 'desactivar' : 'activar'} la tecnología?`,
         async () => {
 
@@ -210,10 +209,13 @@ export class SqliteManagerService {
               CapacitorSQLite.saveToStore({ database: dbName });
             }
 
-            this.alertService.alertMessage(
-              newStatus === 0 ? '🌙' : '🌞',
-              `Tecnología ${newStatus === 0 ? 'desactivada' : 'activada'}`
-            );
+            // this.alertService.alertMessage(
+            //   newStatus === 0 ? '🌙' : '🌞',
+            //   `Tecnología ${newStatus === 0 ? 'desactivada' : 'activada'}`,
+            //   'alertMessage'
+            // );
+
+            this.alertService.alertOnOff(newStatus);
 
             resolve();
           } catch (error) {

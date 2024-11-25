@@ -198,3 +198,60 @@ ion-tab-button {
 .icon-button-add {
     padding-right: 12px;
 }
+
+.custom-alert {
+  .alert-wrapper {
+      background: #698C7B;
+  }
+
+  div {
+      background: transparent;
+      border-radius: 10px !important;
+
+      div {
+          text-align: center !important;
+          border: none;
+          color: #ffffff !important;
+          margin-bottom: 10px;
+
+          button {
+              width: 110px;
+              color: #ffffff !important;
+              border-radius: 10px !important;
+
+              .alert-button-inner {
+                  justify-content: center;
+                  align-items: center;
+              }
+          }
+
+          button:first-child {
+              background-color: #c5000f;
+          }
+
+          button:last-child {
+              background-color: #2dd55b;
+              margin: 0px;
+          }
+
+          img {
+              width: 50px !important;
+          }
+      }
+
+      div:nth-child(2) {
+          li {
+              padding-bottom: 10px;
+              text-align: justify;
+          }
+      }
+
+      div:last-child {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          text-align: center !important;
+      }
+  }
+
+}

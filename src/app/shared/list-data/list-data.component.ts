@@ -52,9 +52,8 @@ export class ListDataComponent {
 
   addData() {
     if (!this.selectedNameTechnology) {
-      this.alertService.alertMessage(
-        '❌',
-        'El nombre de la tecnología no puede estar vacío'
+      this.alertService.alertError(
+        'El nombre de la tecnología no puede estar vacío',
       );
       return;
     }
@@ -64,7 +63,7 @@ export class ListDataComponent {
     this.sqliteManager.technologyExists(normalizedTechnologyName)
     .then((exists) => {
       if (exists) {
-        this.alertService.alertMessage('⚠️', 'Esta tecnología ya existe');
+        this.alertService.alertWarning('Esta tecnología ya existe');
         return;
       }
 

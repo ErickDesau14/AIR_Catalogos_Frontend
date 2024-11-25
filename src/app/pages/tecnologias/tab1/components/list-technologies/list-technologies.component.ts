@@ -71,11 +71,10 @@ export class ListTechnologiesComponent  implements OnInit {
     }
   }
 
-  updateTechnology(updatedName: string) {
+  async updateTechnology(updatedName: string) {
 
     if (!updatedName || updatedName.trim().length === 0) {
-      this.alertService.alertMessage(
-        '❌',
+      await this.alertService.alertError(
         'El nombre de la tecnología no puede estar vacío'
       );
       return;
@@ -92,15 +91,13 @@ export class ListTechnologiesComponent  implements OnInit {
       };
 
       this.alertService.alertConfirm(
-        'Confirmación',
         '¿Estás seguro de que deseas actualizar la tecnología?',
         () => {
           this.sqliteService.updateTechnology(updatedTechnology)
             .then(() => {
 
-              this.alertService.alertMessage(
-                '✅',
-                'La tecnología se ha actualizado con éxito'
+              this.alertService.alertSuccess(
+                'La tecnología se ha actualizado con éxito',
               );
               this.getTechnologies();
               this.resetForm();
@@ -108,9 +105,8 @@ export class ListTechnologiesComponent  implements OnInit {
             .catch((error) => {
 
               console.error('Error al actualizar la tecnología:', error);
-              this.alertService.alertMessage(
-                '❌',
-                'Hubo un error al actualizar la tecnología'
+              this.alertService.alertSuccess(
+                'Hubo un error al actualizar la tecnología',
               );
             });
         }
