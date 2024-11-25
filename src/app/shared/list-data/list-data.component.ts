@@ -69,7 +69,7 @@ export class ListDataComponent {
 
       const newTechnology: Tecnologias = {
         id: 0,
-        name: this.selectedNameTechnology,
+        name: this.selectedNameTechnology.trim(),
         estatus: 1,
         fechaCreacion: new Date(),
         fechaModificacion: null,
