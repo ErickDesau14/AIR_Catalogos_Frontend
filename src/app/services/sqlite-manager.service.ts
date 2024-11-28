@@ -153,7 +153,7 @@ export class SqliteManagerService {
     const dbName = await this.getDBName();
     const normalizedName = name.replace(/\s+/g, '').toLowerCase();
 
-    const sql = 'SELECT COUNT(*) as count FROM CAT_Tecnologias WHERE LOWER(TRIM(tecnologia)) = ?';
+    const sql = 'SELECT COUNT(*) as count FROM CAT_Tecnologias WHERE LOWER(REPLACE(tecnologia, " ", "")) = ?';
     return CapacitorSQLite.query({
       database: dbName,
       statement: sql,
