@@ -2,7 +2,6 @@
   <ion-grid id="card">
       <ion-row>
         <ion-col>
-
           <ion-row>
             <ion-col>
               <app-list-data-position
@@ -17,14 +16,12 @@
               (technologyAdded)="getPositions()"
               >
               <ng-template #templateData let-item="item">
-
                 <ion-item-sliding>
-
                   <ion-item id="table-content" (click)="selectPosition(item)">
                     <ion-label>
-                      <ion-grid>
-                        <ion-row>
-                          <ion-col size="1">
+                      <ion-grid id="table">
+                        <ion-row id="table">
+                          <ion-col size="auto">
                             {{ item.id }}
                           </ion-col>
                           <ion-col size="4">
@@ -33,16 +30,14 @@
                           <ion-col size="3" [id]="item.estatus === 1 ? 'col-estatus-activa' : 'col-estatus-desactivada'">
                             {{ item.estatus === 1 ? 'Activa' : 'Inactiva' }}
                           </ion-col>
-                          <ion-col size="4" id="col-estatus-fecha">
-                            {{ item.fechaCreacion | date: 'yyyy-MM-dd' }}
+                          <ion-col size="3" id="col-estatus-fecha">
+                            {{ item.fechaCreacion | date: 'dd-MM-yy' }}
                           </ion-col>
                         </ion-row>
                       </ion-grid>
                     </ion-label>
                   </ion-item>
-
                   <ion-item-options side="end">
-
                     <ion-item-option class="option-edit">
                       <ion-icon slot="icon-only" name="create-outline"></ion-icon>
                     </ion-item-option>
