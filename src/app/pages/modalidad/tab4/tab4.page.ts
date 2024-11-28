@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ListTechnologiesComponent } from '../../tecnologias/tab1/components/list-technologies/list-technologies.component';
 
 @Component({

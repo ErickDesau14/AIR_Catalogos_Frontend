@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonContent } from '@ionic/angular';
 import { Tecnologias } from 'src/app/models/tecnologias';
 import { AlertService } from 'src/app/services/alert.service';
-import { SqliteManagerService } from 'src/app/services/sqlite-manager.service';
 
 @Component({
   selector: 'app-list-technologies',
@@ -28,7 +27,6 @@ export class ListTechnologiesComponent  implements OnInit {
   public lastSelectedId: number | null = null;
 
   constructor(
-    private sqliteService: SqliteManagerService,
     private alertService: AlertService
   ) {
     this.showForm = false;
@@ -40,10 +38,7 @@ export class ListTechnologiesComponent  implements OnInit {
   }
 
   getTechnologies() {
-    this.sqliteService.getTechnologies().then( (technologies: Tecnologias[]) => {
-      this.technologies = technologies;
-      console.log(this.technologies);
-    })
+
   }
 
   selectTechnology(item: Tecnologias, editMode: boolean = false) {
@@ -93,22 +88,7 @@ export class ListTechnologiesComponent  implements OnInit {
       this.alertService.alertConfirm(
         '¿Estás seguro de que deseas actualizar la tecnología?',
         () => {
-          this.sqliteService.updateTechnology(updatedTechnology)
-            .then(() => {
 
-              this.alertService.alertSuccess(
-                'La tecnología se ha actualizado con éxito',
-              );
-              this.getTechnologies();
-              this.resetForm();
-            })
-            .catch((error) => {
-
-              console.error('Error al actualizar la tecnología:', error);
-              this.alertService.alertSuccess(
-                'Hubo un error al actualizar la tecnología',
-              );
-            });
         }
       );
     }
@@ -129,11 +109,7 @@ export class ListTechnologiesComponent  implements OnInit {
   }
 
   desactivateTechnology(idTecnologia: number) {
-    this.sqliteService.desactivateTechnology(idTecnologia).then( () => {
-      this.getTechnologies();
-    }).catch( (err) => {
-      console.error(err);
-    })
+
     this.resetForm();
   }
 

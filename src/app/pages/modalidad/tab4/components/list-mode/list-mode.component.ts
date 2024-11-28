@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonContent } from '@ionic/angular';
 import { Modalidad } from 'src/app/models/mode';
 import { AlertService } from 'src/app/services/alert.service';
-import { SqliteManagerService } from 'src/app/services/sqlite-manager.service';
 
 @Component({
   selector: 'app-list-mode',
@@ -28,7 +27,6 @@ export class ListModeComponent  implements OnInit {
   public lastSelectedId: number | null = null;
 
   constructor(
-    private sqliteService: SqliteManagerService,
     private alertService: AlertService
   ) {
     this.showForm = false;

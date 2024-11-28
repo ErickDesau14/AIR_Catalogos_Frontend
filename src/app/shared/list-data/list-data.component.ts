@@ -5,7 +5,6 @@ import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { Tecnologias } from 'src/app/models/tecnologias';
 import { AlertService } from 'src/app/services/alert.service';
-import { SqliteManagerService } from 'src/app/services/sqlite-manager.service';
 
 @Component({
   selector: 'app-list-data',
@@ -36,7 +35,6 @@ export class ListDataComponent {
   templateData: TemplateRef<any>;
 
   constructor(
-    private sqliteManager: SqliteManagerService,
     private alertService: AlertService
   ) {
 
@@ -59,35 +57,6 @@ export class ListDataComponent {
     }
 
     const normalizedTechnologyName = this.selectedNameTechnology.replace(/\s+/g, '').toLowerCase();
-
-    this.sqliteManager.technologyExists(normalizedTechnologyName)
-    .then((exists) => {
-      if (exists) {
-        this.alertService.alertWarning('Esta tecnología ya existe');
-        return;
-      }
-
-      const newTechnology: Tecnologias = {
-        id: 0,
-        name: this.selectedNameTechnology.trim(),
-        estatus: 1,
-        fechaCreacion: new Date(),
-        fechaModificacion: null,
-        fechaBaja: null
-      };
-
-      this.sqliteManager.addTechnology(newTechnology)
-      .then((changes) => {
-        console.log('Tecnología añadida:', changes);
-        this.selectedNameTechnology = '';
-
-        this.technologyAdded.emit();
-      })
-      .catch((err) => {
-        console.error('Error al añadir tecnología:', err);
-      });
-
-    });
 
   }
 

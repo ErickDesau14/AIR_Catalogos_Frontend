@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Device } from '@capacitor/device';
 import { Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { SqliteManagerService } from 'src/app/services/sqlite-manager.service';
 
 @Component({
   selector: 'app-root',
@@ -16,8 +15,7 @@ export class AppComponent {
 
   constructor(
     private platform: Platform,
-    private translate: TranslateService,
-    private sqliteService: SqliteManagerService
+    private translate: TranslateService
   ) {
     this.load = false;
     this.isWeb = false;
@@ -35,11 +33,6 @@ export class AppComponent {
       if ((await language).value) {
         this.translate.use((await language).value.slice(0, 2));
       }
-
-      this.sqliteService.init();
-      this.sqliteService.dbReady.subscribe(isReady => {
-        this.load = isReady;
-      });
 
     })
   }

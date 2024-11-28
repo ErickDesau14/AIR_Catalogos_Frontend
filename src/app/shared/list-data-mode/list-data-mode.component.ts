@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, ContentChild, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import { Component, ContentChild, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { AlertService } from 'src/app/services/alert.service';
-import { SqliteManagerService } from 'src/app/services/sqlite-manager.service';
 
 @Component({
   selector: 'app-list-data-mode',
@@ -35,7 +34,6 @@ export class ListDataModeComponent {
   templateData: TemplateRef<any>;
 
   constructor(
-    private sqliteManager: SqliteManagerService,
     private alertService: AlertService
   ) { }
 
