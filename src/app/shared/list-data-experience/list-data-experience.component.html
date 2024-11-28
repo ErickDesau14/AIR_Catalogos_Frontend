@@ -1,0 +1,106 @@
+<div class="ion-padding-top ion-padding-bottom">
+
+  <!-- Experiencia -->
+  <div class="ion-padding-bottom">
+    <ion-item id="style-inputs">
+      <ion-icon name="code-working" class="icon-input"></ion-icon>
+      <ion-input
+        type="text"
+        name="Año de experiencia"
+        placeholder="Año de experiencia"
+        [(ngModel)]="yearExperience"
+        maxlength="2"
+        [readonly]="isReadOnly"
+        >
+      </ion-input>
+    </ion-item>
+  </div>
+
+  <!-- Fecha de creación -->
+  <div class="ion-padding-bottom">
+    <ion-item id="style-inputs">
+      <ion-icon name="calendar-clear-outline" class="icon-input"></ion-icon>
+      <ion-input
+      label="Creado el"
+      label-placement="floating"
+      type="date"
+      name="fechaCreacionTecnologia"
+      placeholder="Creado el"
+      [(ngModel)]="creationDate"
+      disabled
+      >
+      </ion-input>
+    </ion-item>
+  </div>
+
+  <!-- Fecha de Modificación -->
+  <div class="ion-padding-bottom">
+    <ion-item id="style-inputs">
+      <ion-icon name="calendar-clear-outline" class="icon-input"></ion-icon>
+      <ion-input
+        label="Modificado el"
+        label-placement="floating"
+        type="date"
+        name="fechaModificacionTecnologia"
+        placeholder="Modificado el"
+        [(ngModel)]="modificationDate"
+        disabled
+        >
+      </ion-input>
+    </ion-item>
+  </div>
+
+  <!-- Fecha de Baja -->
+  <div>
+    <ion-item id="style-inputs">
+      <ion-icon name="calendar-clear-outline" class="icon-input"></ion-icon>
+      <ion-input
+        label="Desactivado desde el"
+        label-placement="floating"
+        type="date"
+        name="fechaBajaTecnologia"
+        placeholder="Desactivado desde el"
+        [(ngModel)]="deactivationDate"
+        disabled
+        >
+      </ion-input>
+    </ion-item>
+  </div>
+
+  <ion-row *ngIf="showAdd">
+    <ion-col>
+      <ion-item (click)="addData()" id="item-button">
+        <ion-button class="add-button" *ngIf="addText" [disabled]="!isYearExperienceValid">
+          <ion-icon name="add-outline" class="icon-button-add"></ion-icon>
+          Agregar año de experiencia
+        </ion-button>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-grid id="size-grid-table-header">
+    <ion-row id="table-header">
+      <ion-col size="1"> Id </ion-col>
+      <ion-col size="4"> Experiencia</ion-col>
+      <ion-col size="3"> Estatus </ion-col>
+      <ion-col size="4"> Añadido el</ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-row *ngIf="!data || (data && data.length === 0)">
+    <ion-col>
+      <ion-item>
+        <ion-label class="ion-text-center">¡No hay años de experiencia agregadas</ion-label>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ng-container *ngIf="data && data.length > 0">
+    <ion-row *ngFor="let d of data">
+      <ion-col>
+        <ng-template *ngTemplateOutlet="templateData; context: {item: d}"></ng-template>
+      </ion-col>
+    </ion-row>
+  </ng-container>
+
+</div>

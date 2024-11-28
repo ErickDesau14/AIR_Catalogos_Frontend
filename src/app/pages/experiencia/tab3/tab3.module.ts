@@ -5,14 +5,19 @@ import { FormsModule } from '@angular/forms';
 import { Tab3Page } from './tab3.page';
 
 import { Tab3PageRoutingModule } from './tab3-routing.module';
+import { ListExperienceComponent } from './components/list-experience/list-experience.component';
+import { ListDataExperienceComponent } from 'src/app/shared/list-data-experience/list-data-experience.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
-    Tab3PageRoutingModule
+    Tab3PageRoutingModule,
+    TranslateModule.forChild(),
+    ListDataExperienceComponent
   ],
-  declarations: [Tab3Page]
+  declarations: [Tab3Page, ListExperienceComponent]
 })
 export class Tab3PageModule {}
