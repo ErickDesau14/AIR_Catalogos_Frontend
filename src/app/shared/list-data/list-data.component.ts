@@ -49,6 +49,7 @@ export class ListDataComponent {
   }
 
   addData() {
+
     if (!this.selectedNameTechnology) {
       this.alertService.alertError(
         'El nombre de la tecnología no puede estar vacío',
@@ -56,7 +57,15 @@ export class ListDataComponent {
       return;
     }
 
-    const normalizedTechnologyName = this.selectedNameTechnology.replace(/\s+/g, '').toLowerCase();
+    // const normalizedTechnologyName = this.selectedNameTechnology.replace(/\s+/g, '').toLowerCase();
+
+    // this.sqliteManager.technologyExists(normalizedTechnologyName)
+    // .then((exists) => {
+    //   if (exists) {
+    //     this.alertService.alertWarning('Esta tecnología ya existe');
+    //     return;
+    //   }
+    // });
 
   }
 

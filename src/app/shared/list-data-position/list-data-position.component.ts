@@ -3,6 +3,7 @@ import { Component, Input, Output, EventEmitter, ContentChild, TemplateRef } fro
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-list-data-position',
@@ -32,19 +33,32 @@ export class ListDataPositionComponent {
   @ContentChild('templateData', { static: false})
   templateData: TemplateRef<any>;
 
-  constructor() { }
+  constructor(
+    private alertService: AlertService
+  ) { }
 
   get isNamePositionValid(): boolean {
     return this.namePosition && this.namePosition.trim().length > 0;
   }
 
   addData() {
-    if (!this.namePosition) {
-      console.warn('El nombre del puesto está vacío');
+
+    if (!this.selectedNamePosition) {
+      this.alertService.alertError(
+        'El nombre del puesto no puede estar vacío',
+      );
       return;
     }
 
-    const normalizedPositionName = this.namePosition.replace(/\s+/g, '').toLowerCase();
+    // const normalizedPositionName = this.namePosition.replace(/\s+/g, '').toLowerCase();
+
+    // this.sqliteManager.technologyExists(normalizedPositionName)
+    // .then((exists) => {
+    //   if (exists) {
+    //     this.alertService.alertWarning('Este puesto ya existe');
+    //     return;
+    //   }
+    // });
 
   }
 

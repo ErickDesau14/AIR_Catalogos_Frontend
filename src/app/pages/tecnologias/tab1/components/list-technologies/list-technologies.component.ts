@@ -42,6 +42,7 @@ export class ListTechnologiesComponent  implements OnInit {
   }
 
   selectTechnology(item: Tecnologias, editMode: boolean = false) {
+
     if (this.lastSelectedId === item.id) {
       this.resetForm();
       this.lastSelectedId = null;
@@ -81,7 +82,7 @@ export class ListTechnologiesComponent  implements OnInit {
         name: updatedName.trim(),
         estatus: 1,
         fechaCreacion: this.selectedCreationDate ? new Date(this.selectedCreationDate) : null,
-        fechaModificacion: new Date(), // Actualiza la fecha de modificación
+        fechaModificacion: new Date(),
         fechaBaja: this.selectedDeactivationDate ? new Date(this.selectedDeactivationDate) : null
       };
 

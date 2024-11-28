@@ -15,7 +15,7 @@ export class ListModeComponent  implements OnInit {
   public modality: Modalidad[];
   public showForm: boolean;
 
-  public selectedMode: string = '';
+  public nameMode: string = '';
   public selectedNameMode: string = '';
   public selectedCreationDate: string = '';
   public selectedModificationDate: string = '';
@@ -49,7 +49,7 @@ export class ListModeComponent  implements OnInit {
       this.isReadOnly = false;
     } else {
 
-      this.selectedMode = item.name || '';
+      this.selectedNameMode = item.name || '';
       this.selectedCreationDate = item.fechaCreacion ? item.fechaCreacion.toLocaleDateString('en-CA') : '';
       this.selectedModificationDate = item.fechaModificacion ? item.fechaModificacion.toLocaleDateString('en-CA') : '';
       this.selectedDeactivationDate = item.fechaBaja ? item.fechaBaja.toLocaleDateString('en-CA') : '';
@@ -62,23 +62,50 @@ export class ListModeComponent  implements OnInit {
     }
 
     console.log("Selected Mode Details:", {
-      mode: this.selectedMode,
+      mode: this.selectedNameMode,
       creationDate: this.selectedCreationDate,
       modificationDate: this.selectedModificationDate,
       deactivationDate: this.selectedDeactivationDate
     });
   }
 
-  updateMode() {
-    this.resetForm();
+  async updateMode(updatedName: string) {
+
+    if (!updatedName || updatedName.trim().length === 0) {
+      await this.alertService.alertError(
+        'El nombre de la modalidad no puede estar vacío'
+      );
+      return;
+    }
+
+    // if (this.lastSelectedId !== null) {
+    //   const updatedMode: Modalidad = {
+    //     id: this.lastSelectedId,
+    //     name: updatedName.trim(),
+    //     estatus: 1,
+    //     fechaCreacion: this.selectedCreationDate ? new Date(this.selectedCreationDate) : null,
+    //     fechaModificacion: new Date(), // Actualiza la fecha de modificación
+    //     fechaBaja: this.selectedDeactivationDate ? new Date(this.selectedDeactivationDate) : null
+    //   };
+    // }
+
+    this.alertService.alertConfirm(
+      '¿Estás seguro de que deseas actualizar la modalidad?',
+      () => {
+
+      }
+    );
+
   }
 
   resetForm() {
-    this.selectedMode = '';
+    this.selectedNameMode = '';
     this.selectedCreationDate = '';
     this.selectedModificationDate = '';
     this.selectedDeactivationDate = '';
+
     this.isEditing = false;
+    this.isReadOnly = false;
   }
 
   onShowForm() {
@@ -87,6 +114,7 @@ export class ListModeComponent  implements OnInit {
 
   desactivateMode(idModalidad: number) {
 
+    this.resetForm();
   }
 
 }

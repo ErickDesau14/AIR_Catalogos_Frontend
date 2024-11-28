@@ -42,12 +42,23 @@ export class ListDataModeComponent {
   }
 
   addData() {
+
     if (!this.nameMode) {
-      console.warn('El nombre de la modalidad está vacía');
+      this.alertService.alertError(
+        'El nombre de la modalidad puede estar vacío',
+      );
       return;
     }
 
-    const normalizedMode = this.nameMode.replace(/\s+/g, '').toLowerCase();
+    // const normalizedMode = this.nameMode.replace(/\s+/g, '').toLowerCase();
+
+    // this.sqliteManager.nameModeExists(normalizedNameMode)
+    // .then((exists) => {
+    //   if (exists) {
+    //     this.alertService.alertWarning('Esta modalidad ya existe');
+    //     return;
+    //   }
+    // });
 
   }
 
