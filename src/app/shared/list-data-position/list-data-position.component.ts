@@ -17,14 +17,17 @@ export class ListDataPositionComponent {
   @Input() emptyText: string;
   @Input() addText: string;
   @Input() showAdd: boolean = true;
+  @Input() isEditing: boolean = false;
 
   @Input() namePosition: string = '';
   @Input() creationDate: string = '';
   @Input() modificationDate: string = '';
   @Input() deactivationDate: string = '';
   @Input() isReadOnly: boolean = true;
+  @Input() selectedNamePosition: string = '';
 
   @Output() positionAdded: EventEmitter<void> = new EventEmitter<void>();
+  @Output() updatePosition = new EventEmitter<string>();
 
   @ContentChild('templateData', { static: false})
   templateData: TemplateRef<any>;
