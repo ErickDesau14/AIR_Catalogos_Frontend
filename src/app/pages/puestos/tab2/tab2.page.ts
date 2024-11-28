@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { ListPositionsComponent } from './components/list-positions/list-positions.component';
 
 @Component({
   selector: 'app-tab2',
@@ -7,6 +8,20 @@ import { Component } from '@angular/core';
 })
 export class Tab2Page {
 
+  @ViewChild(ListPositionsComponent) listPositionsComponent!: ListPositionsComponent;
+
   constructor() {}
+
+  handleRefresh(event: any) {
+
+    if (this.listPositionsComponent) {
+      this.listPositionsComponent.resetForm();
+    }
+
+    setTimeout(() => {
+      event.target.complete();
+    }, 500);
+
+  }
 
 }
