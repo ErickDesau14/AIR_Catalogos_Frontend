@@ -22,9 +22,9 @@
 
                   <ion-item id="table-content" (click)="selectPosition(item)">
                     <ion-label>
-                      <ion-grid>
-                        <ion-row>
-                          <ion-col size="1">
+                      <ion-grid id="table">
+                        <ion-row id="table">
+                          <ion-col size="auto">
                             {{ item.id }}
                           </ion-col>
                           <ion-col size="4">
@@ -33,7 +33,7 @@
                           <ion-col size="3" [id]="item.estatus === 1 ? 'col-estatus-activa' : 'col-estatus-desactivada'">
                             {{ item.estatus === 1 ? 'Activa' : 'Inactiva' }}
                           </ion-col>
-                          <ion-col size="4" id="col-estatus-fecha">
+                          <ion-col size="3" id="col-estatus-fecha">
                             {{ item.fechaCreacion | date: 'yyyy-MM-dd' }}
                           </ion-col>
                         </ion-row>
