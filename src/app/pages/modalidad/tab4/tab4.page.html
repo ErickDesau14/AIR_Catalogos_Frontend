@@ -1,14 +1,14 @@
 <ion-item>
   <ion-toolbar>
 
-    <ion-buttons slot="start"> 
+    <ion-buttons slot="start">
       <ion-button fill="clear">
-        <ion-icon class="button-back-style" name="arrow-back-outline"></ion-icon>  
+        <ion-icon class="button-back-style" name="arrow-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
 
     <ion-title>Catálogo de Modalidad</ion-title>
-    
+
   </ion-toolbar>
 </ion-item>
 
@@ -34,6 +34,9 @@
   </ion-tab-button>
 </ion-tab-bar>
 
-<ion-content [fullscreen]="true">
-
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <app-list-mode></app-list-mode>
 </ion-content>
