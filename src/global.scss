@@ -86,11 +86,20 @@ ion-tab-bar {
     --background: transparent;
     --color: #fff;
     border: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    justify-content: flex-start;
+}
+
+ion-tab-bar::-webkit-scrollbar {
+  display: none;
 }
 
 ion-tab-button {
     --ripple-color: #46534D;
     --color-selected: #092E1C;
+    min-width: 100px;
+    flex-shrink: 0;
 }
 
 #card {
