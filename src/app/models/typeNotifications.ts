@@ -1,5 +1,5 @@
 export class TipoNotificacciones {
-  idTipoNotificacion: number;
+  id: number;
   tipoNotificacion: string;
   estatus: number;
   fechaCreacion: Date;

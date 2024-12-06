@@ -58,8 +58,8 @@ export class ListNotificationsComponent  implements OnInit {
       this.lastSelectedId = item.id;
       this.content.scrollToTop(500);
 
-      console.log("Selected Technology Details:", {
-        name: this.selectedTextNotification,
+      console.log("Selected Details:", {
+        texto: this.selectedTextNotification,
         creationDate: this.selectedCreationDate,
         modificationDate: this.selectedModificationDate,
         deactivationDate: this.selectedDeactivationDate
