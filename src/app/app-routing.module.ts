@@ -9,6 +9,14 @@ const routes: Routes = [
   {
     path: 'tab4',
     loadChildren: () => import('./pages/modalidad/tab4/tab4.module').then( m => m.Tab4PageModule)
+  },
+  {
+    path: 'tab5',
+    loadChildren: () => import('./pages/notificaciones/tab5/tab5.module').then( m => m.Tab5PageModule)
+  },
+  {
+    path: 'tab6',
+    loadChildren: () => import('./pages/tipoNotificaciones/tab6/tab6.module').then( m => m.Tab6PageModule)
   }
 ];
 @NgModule({
