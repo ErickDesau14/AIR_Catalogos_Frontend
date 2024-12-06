@@ -7,7 +7,9 @@
       </ion-button>
     </ion-buttons>
 
-    <ion-title>Catálogo de Modalidad</ion-title>
+    <ion-title>
+      Catálogo de Notificación
+    </ion-title>
 
   </ion-toolbar>
 </ion-item>
@@ -33,12 +35,12 @@
     <ion-label>Modalidad</ion-label>
   </ion-tab-button>
 
-  <ion-tab-button tab="tab5" href="/tabs/tab5">
+  <ion-tab-button tab="tab4" href="/tabs/tab5">
     <ion-icon aria-hidden="true" name="notifications-outline"></ion-icon>
     <ion-label>Notificación</ion-label>
   </ion-tab-button>
 
-  <ion-tab-button tab="tab6" href="/tabs/tab6">
+  <ion-tab-button tab="tab4" href="/tabs/tab6">
     <ion-icon aria-hidden="true" name="notifications"></ion-icon>
     <ion-label>Tipo Notif.</ion-label>
   </ion-tab-button>
@@ -48,5 +50,6 @@
   <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <app-list-mode></app-list-mode>
+  <app-list-notifications></app-list-notifications>
 </ion-content>
+

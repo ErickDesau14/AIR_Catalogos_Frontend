@@ -3,7 +3,6 @@ import { Component, ContentChild, EventEmitter, Input, Output, TemplateRef } fro
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
-import { Tecnologias } from 'src/app/models/tecnologias';
 import { AlertService } from 'src/app/services/alert.service';
 
 @Component({

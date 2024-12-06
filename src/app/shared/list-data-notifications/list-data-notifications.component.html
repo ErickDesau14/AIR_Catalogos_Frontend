@@ -1,3 +1,109 @@
-<p>
-  list-data-notifications works!
-</p>
+<div class="ion-padding-top ion-padding-bottom">
+
+  <!-- Notificación -->
+  <div class="ion-padding-bottom">
+    <ion-item id="style-inputs">
+      <ion-icon name="code-working" class="icon-input"></ion-icon>
+      <ion-input
+        type="text"
+        name="Notificación"
+        placeholder="Notificación"
+        [(ngModel)]="selectedTextNotification"
+        maxlength="50"
+        [readonly]="isReadOnly"
+        >
+      </ion-input>
+    </ion-item>
+  </div>
+
+  <!-- Fecha de creación -->
+  <div class="ion-padding-bottom">
+    <ion-item id="style-inputs">
+      <ion-icon name="calendar-clear-outline" class="icon-input"></ion-icon>
+      <ion-input
+      label="Creado el"
+      label-placement="floating"
+      type="date"
+      name="fechaCreacionNotiiicacion"
+      placeholder="Creado el"
+      [(ngModel)]="creationDate"
+      disabled
+      >
+      </ion-input>
+    </ion-item>
+  </div>
+
+  <!-- Fecha de Modificación -->
+  <div class="ion-padding-bottom">
+    <ion-item id="style-inputs">
+      <ion-icon name="calendar-clear-outline" class="icon-input"></ion-icon>
+      <ion-input
+        label="Modificado el"
+        label-placement="floating"
+        type="date"
+        name="fechaModificacionNotificacion"
+        placeholder="Modificado el"
+        [(ngModel)]="modificationDate"
+        disabled
+        >
+      </ion-input>
+    </ion-item>
+  </div>
+
+  <!-- Fecha de Baja -->
+  <div>
+    <ion-item id="style-inputs">
+      <ion-icon name="calendar-clear-outline" class="icon-input"></ion-icon>
+      <ion-input
+        label="Desactivado desde el"
+        label-placement="floating"
+        type="date"
+        name="fechaBajaNotificacion"
+        placeholder="Desactivado desde el"
+        [(ngModel)]="deactivationDate"
+        disabled
+        >
+      </ion-input>
+    </ion-item>
+  </div>
+
+  <ion-row *ngIf="true">
+    <ion-col>
+      <ion-item (click)="isEditing ? emitUpdateNotification() : addData()" id="item-button">
+        <ion-button [ngClass]="isEditing ? 'edit-button' : 'add-button'" [disabled]="!isTextNotificationValid">
+          <ion-icon *ngIf="!isEditing" name="add-outline" class="icon-button-add"></ion-icon>
+          <ion-icon *ngIf="isEditing" name="create-outline" class="icon-button-add"></ion-icon>
+          {{ isEditing ? 'Editar notificación' : 'Agregar notificación' }}
+        </ion-button>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-grid id="size-grid-table-header">
+    <ion-row id="table-header">
+      <ion-col size="1"> Id </ion-col>
+      <ion-col size="auto"> Notificación </ion-col>
+      <ion-col size="auto"> Estatus </ion-col>
+      <ion-col size="4"> Añadido el </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-row *ngIf="!data || (data && data.length === 0)">
+    <ion-col>
+      <ion-item>
+        <ion-label class="ion-text-center">¡No hay notificaciones agregadas!</ion-label>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ng-container *ngIf="data && data.length > 0">
+    <ion-row *ngFor="let d of data">
+      <ion-col>
+        <ng-template *ngTemplateOutlet="templateData; context: {item: d}"></ng-template>
+      </ion-col>
+    </ion-row>
+  </ng-container>
+
+</div>
+
+
