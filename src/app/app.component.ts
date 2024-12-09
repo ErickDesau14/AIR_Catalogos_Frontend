@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Device } from '@capacitor/device';
 import { Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { TecnologiaService } from './services/tecnologia.service';
 
 @Component({
   selector: 'app-root',
@@ -12,10 +13,13 @@ export class AppComponent {
 
   public isWeb: boolean;
   public load: boolean;
+  public tecnologias: any[] = [];
+  public error: string = '';
 
   constructor(
     private platform: Platform,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private tecnologiaService: TecnologiaService
   ) {
     this.load = false;
     this.isWeb = false;
@@ -34,6 +38,21 @@ export class AppComponent {
         this.translate.use((await language).value.slice(0, 2));
       }
 
+      this.testConnection();
+
+    })
+  }
+
+  testConnection() {
+    this.tecnologiaService.getTecnologiasService().subscribe({
+      next: (data) => {
+        console.log('Conexión exitosa. Datos recibidos:', data);
+        this.tecnologias = data;
+      },
+      error: (err) => {
+        console.log('Error al obtener la conexión: ', err);
+        this.error = 'Error de conexión: ' + err.message;
+      }
     })
   }
 
