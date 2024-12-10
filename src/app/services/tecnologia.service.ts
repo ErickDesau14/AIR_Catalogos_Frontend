@@ -19,6 +19,10 @@ export class TecnologiaService {
     return this.httpClient.get<Tecnologias>(`${environment.tecnologiaUrl}/tecnologias/${id}`);
   }
 
+  getTecnologiasService() {
+    return this.httpClient.get<Tecnologias[]>(this.baseUrl);
+  }
+
   getTecnologias(): Observable<Tecnologias[]> {
     return this.httpClient.get<Tecnologias[]>(this.baseUrl);
   }
