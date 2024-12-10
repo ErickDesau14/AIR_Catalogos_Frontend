@@ -3,6 +3,7 @@ import { Component, ContentChild, EventEmitter, Input, Output, TemplateRef } fro
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
+import { Tecnologias } from 'src/app/models/tecnologias';
 import { AlertService } from 'src/app/services/alert.service';
 import { TecnologiaService } from 'src/app/services/tecnologia.service';
 
@@ -30,6 +31,7 @@ export class ListDataComponent {
 
   @Output() technologyAdded: EventEmitter<void> = new EventEmitter<void>();
   @Output() updateTechnology = new EventEmitter<string>();
+  @Output() resetForm = new EventEmitter<void>();
 
   @ContentChild('templateData', { static: false})
   templateData: TemplateRef<any>;
@@ -41,25 +43,53 @@ export class ListDataComponent {
 
   }
 
+  private normalizeTechnologyName(name: string): string {
+    return name.trim().replace(/\s+/g, ' ');
+  }
+
+  private validateTechnologyName(name: string): boolean {
+    if (!name || name.trim().length === 0) {
+      this.alertService.alertWarning('El nombre de la tecnología no puede estar vacío');
+      return false;
+    }
+
+    const normalizedName = this.normalizeTechnologyName(name);
+    const exists = this.data.some((tech: Tecnologias) =>
+      this.normalizeTechnologyName(tech.nombre).toLowerCase() === normalizedName.toLowerCase()
+    );
+
+    if (exists) {
+      this.alertService.alertWarning('Ya existe esta tecnología');
+      return false;
+    }
+
+    return true;
+  }
+
   get isNameTechnologyValid(): boolean {
     return this.selectedNameTechnology && this.selectedNameTechnology.trim().length > 0;
   }
 
   emitUpdateTechnology() {
-    this.updateTechnology.emit(this.selectedNameTechnology);
+    const normalizedName = this.normalizeTechnologyName(this.selectedNameTechnology);
+
+    if (!this.validateTechnologyName(normalizedName)) {
+      return;
+    }
+
+    this.updateTechnology.emit(normalizedName);
   }
 
   addData() {
 
-    if (!this.selectedNameTechnology) {
-      this.alertService.alertError(
-        'El nombre de la tecnología no puede estar vacío',
-      );
+    const normalizedName = this.normalizeTechnologyName(this.selectedNameTechnology);
+
+    if (!this.validateTechnologyName(normalizedName)) {
       return;
     }
 
-    const newTechnology = {
-      nombre: this.selectedNameTechnology.trim(),
+    const newTechnology: Tecnologias = {
+      nombre: normalizedName,
       estatus: 1
     };
 
@@ -69,16 +99,31 @@ export class ListDataComponent {
         this.tecnologiaService.createTecnologia(newTechnology).subscribe({
           next: () => {
             this.alertService.alertSuccess('Tecnología creada exitosamente');
-            this.selectedNameTechnology = '';
+            this.resetFormFields();
             this.technologyAdded.emit();
           },
-          error: async (error) => {
-            await this.alertService.alertError('Error al crear la tecnología ' + error.message);
+          error: async (err) => {
+            if (err.error && err.error.message) {
+              await this.alertService.alertWarning(err.error.message);
+              this.resetFormFields();
+            } else {
+              await this.alertService.alertError('Error al crear la tecnología');
+            }
           }
-        })
+        });
       }
     );
 
+  }
+
+  resetFormFields() {
+    this.selectedNameTechnology = '';
+    this.creationDate = '';
+    this.modificationDate = '';
+    this.deactivationDate = '';
+    this.isEditing = false;
+    this.isReadOnly = false;
+    this.resetForm.emit();
   }
 
 }
