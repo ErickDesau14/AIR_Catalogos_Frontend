@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonContent } from '@ionic/angular';
 import { Tecnologias } from 'src/app/models/tecnologias';
 import { AlertService } from 'src/app/services/alert.service';
+import { TecnologiaService } from 'src/app/services/tecnologia.service';
 
 @Component({
   selector: 'app-list-technologies',
@@ -14,20 +15,17 @@ export class ListTechnologiesComponent  implements OnInit {
 
   public technologies: Tecnologias[];
   public showForm: boolean;
-
-  public nameTechnology: string = '';
   public selectedNameTechnology: string = '';
   public selectedCreationDate: string = '';
   public selectedModificationDate: string = '';
   public selectedDeactivationDate: string = '';
-
   public isEditing: boolean = false;
   public isReadOnly: boolean = false;
-
   public lastSelectedId: number | null = null;
 
   constructor(
-    private alertService: AlertService
+    private alertService: AlertService,
+    private tecnologiaService: TecnologiaService
   ) {
     this.showForm = false;
     this.technologies = [];
@@ -38,58 +36,85 @@ export class ListTechnologiesComponent  implements OnInit {
   }
 
   getTechnologies() {
-
+    this.tecnologiaService.getTecnologias().subscribe({
+      next: (data) => {
+        this.technologies = data;
+      },
+      error: async (error) => {
+        await this.alertService.alertError('Error al obtener las tecnologías ' + error.message);
+      }
+    })
   }
 
   selectTechnology(item: Tecnologias, editMode: boolean = false) {
 
-    if (this.lastSelectedId === item.id) {
+    if (this.lastSelectedId === item.idTecnologia) {
       this.resetForm();
-      this.lastSelectedId = null;
-      this.isReadOnly = false;
-    } else {
-      this.selectedNameTechnology = item.name || '';
-      this.selectedCreationDate = item.fechaCreacion ? item.fechaCreacion.toLocaleDateString('en-CA') : '';
-      this.selectedModificationDate = item.fechaModificacion ? item.fechaModificacion.toLocaleDateString('en-CA') : '';
-      this.selectedDeactivationDate = item.fechaBaja ? item.fechaBaja.toLocaleDateString('en-CA') : '';
-
-      this.isEditing = editMode;
-      this.isReadOnly = !editMode;
-      this.lastSelectedId = item.id;
-      this.content.scrollToTop(500);
-
-      console.log("Selected Technology Details:", {
-        name: this.selectedNameTechnology,
-        creationDate: this.selectedCreationDate,
-        modificationDate: this.selectedModificationDate,
-        deactivationDate: this.selectedDeactivationDate
-      });
+      return;
     }
+
+      this.tecnologiaService.getTecnologiaById(item.idTecnologia).subscribe({
+        next: (tecnologia) => {
+          this.selectedNameTechnology = tecnologia.nombre;
+          this.selectedCreationDate = tecnologia.fechaCreacion ? new Date(tecnologia.fechaCreacion).toISOString().split('T')[0] : '';
+          this.selectedModificationDate = tecnologia.fechaModificacion ? new Date(tecnologia.fechaModificacion).toISOString().split('T')[0] : '';
+          this.selectedDeactivationDate = tecnologia.fechaBaja ? new Date(tecnologia.fechaBaja).toISOString().split('T')[0] : '';
+
+          this.isEditing = editMode;
+          this.isReadOnly = !editMode;
+          this.lastSelectedId = item.idTecnologia;
+          this.content.scrollToTop(500);
+        },
+        error: async (error) => {
+          await this.alertService.alertError('Error al obtener la tecnología ' + error.message);
+        }
+      });
+  }
+
+  desactivateTecnologia(item: Tecnologias) {
+    const newEstatus = item.estatus === 1 ? 0 : 1;
+    const mensaje = newEstatus === 1
+      ? '¿Estás seguro de que deseas activar la tecnología?'
+      : '¿Estás seguro de que deseas desactivar la tecnología?';
+
+    this.alertService.alertConfirm(
+      mensaje,
+      () => {
+        this.tecnologiaService.updateEstatus(item.idTecnologia, newEstatus).subscribe({
+          next: () => {
+            this.alertService.alertOnOff(newEstatus);
+            this.getTechnologies();
+            this.resetForm();
+          },
+          error: async (error) => {
+            await this.alertService.alertError('Error al actualizar la tecnología ' + error.message);
+          }
+        })
+      }
+    );
   }
 
   async updateTechnology(updatedName: string) {
 
-    if (!updatedName || updatedName.trim().length === 0) {
-      await this.alertService.alertError(
-        'El nombre de la tecnología no puede estar vacío'
-      );
-      return;
-    }
-
     if (this.lastSelectedId !== null) {
       const updatedTechnology: Tecnologias = {
-        id: this.lastSelectedId,
-        name: updatedName.trim(),
+        nombre: updatedName.trim(),
         estatus: 1,
-        fechaCreacion: this.selectedCreationDate ? new Date(this.selectedCreationDate) : null,
-        fechaModificacion: new Date(),
-        fechaBaja: this.selectedDeactivationDate ? new Date(this.selectedDeactivationDate) : null
       };
 
       this.alertService.alertConfirm(
         '¿Estás seguro de que deseas actualizar la tecnología?',
         () => {
-
+          this.tecnologiaService.updateTecnologia(this.lastSelectedId, updatedTechnology).subscribe({
+            next: () => {
+              this.alertService.alertSuccess('Tecnología actualizada exitosamente');
+              this.getTechnologies();
+              this.resetForm();
+            },
+            error: async (err) => {
+              await this.alertService.alertError('Error al actualizar la tecnología ' + err.message);
+            }
+          })
         }
       );
     }
@@ -103,14 +128,12 @@ export class ListTechnologiesComponent  implements OnInit {
 
     this.isEditing = false;
     this.isReadOnly = false;
+
+    this.lastSelectedId = null;
   }
 
   onShowForm() {
     this.showForm = true;
-  }
-
-  desactivateTechnology(idTecnologia: number) {
-    this.resetForm();
   }
 
 }
