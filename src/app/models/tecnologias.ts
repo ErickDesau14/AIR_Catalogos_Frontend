@@ -1,8 +1,8 @@
 export class Tecnologias {
-    id: number;
-    name: string;
+    idTecnologia?: number;
+    nombre: string;
     estatus: number;
-    fechaCreacion: Date;
-    fechaModificacion: Date;
-    fechaBaja: Date;
+    fechaCreacion?: Date;
+    fechaModificacion?: Date;
+    fechaBaja?: Date;
 }
