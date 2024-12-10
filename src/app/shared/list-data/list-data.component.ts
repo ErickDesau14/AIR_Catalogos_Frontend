@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { AlertService } from 'src/app/services/alert.service';
+import { TecnologiaService } from 'src/app/services/tecnologia.service';
 
 @Component({
   selector: 'app-list-data',
@@ -34,7 +35,8 @@ export class ListDataComponent {
   templateData: TemplateRef<any>;
 
   constructor(
-    private alertService: AlertService
+    private alertService: AlertService,
+    private tecnologiaService: TecnologiaService
   ) {
 
   }
@@ -56,15 +58,26 @@ export class ListDataComponent {
       return;
     }
 
-    // const normalizedTechnologyName = this.selectedNameTechnology.replace(/\s+/g, '').toLowerCase();
+    const newTechnology = {
+      nombre: this.selectedNameTechnology.trim(),
+      estatus: 1
+    };
 
-    // this.sqliteManager.technologyExists(normalizedTechnologyName)
-    // .then((exists) => {
-    //   if (exists) {
-    //     this.alertService.alertWarning('Esta tecnología ya existe');
-    //     return;
-    //   }
-    // });
+    this.alertService.alertConfirm(
+      '¿Está seguro de que desea agregar esta tecnología?',
+      () => {
+        this.tecnologiaService.createTecnologia(newTechnology).subscribe({
+          next: () => {
+            this.alertService.alertSuccess('Tecnología creada exitosamente');
+            this.selectedNameTechnology = '';
+            this.technologyAdded.emit();
+          },
+          error: async (error) => {
+            await this.alertService.alertError('Error al crear la tecnología ' + error.message);
+          }
+        })
+      }
+    );
 
   }
 
