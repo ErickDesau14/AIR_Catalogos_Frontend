@@ -3,6 +3,7 @@ import { Device } from '@capacitor/device';
 import { Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { TecnologiaService } from './services/tecnologia.service';
+import { PuestoService } from './services/puesto.service';
 
 @Component({
   selector: 'app-root',
@@ -14,12 +15,14 @@ export class AppComponent {
   public isWeb: boolean;
   public load: boolean;
   public tecnologias: any[] = [];
+  public puestos: any[] = [];
   public error: string = '';
 
   constructor(
     private platform: Platform,
     private translate: TranslateService,
-    private tecnologiaService: TecnologiaService
+    private tecnologiaService: TecnologiaService,
+    private puestoService: PuestoService
   ) {
     this.load = false;
     this.isWeb = false;
@@ -46,8 +49,19 @@ export class AppComponent {
   testConnection() {
     this.tecnologiaService.getTecnologiasService().subscribe({
       next: (data) => {
-        console.log('Conexión exitosa. Datos recibidos:', data);
+        console.log('Conexión exitosa. Tecnologías recibidas:', data);
         this.tecnologias = data;
+      },
+      error: (err) => {
+        console.log('Error al obtener la conexión: ', err);
+        this.error = 'Error de conexión: ' + err.message;
+      }
+    })
+
+    this.puestoService.getTPuestosService().subscribe({
+      next: (data) => {
+        console.log('Conexión exitosa. Puestos recibidos:', data);
+        this.puestos = data;
       },
       error: (err) => {
         console.log('Error al obtener la conexión: ', err);
