@@ -1,5 +1,5 @@
 export class Puestos {
-    idPuesto: number;
+    idPuesto?: number;
     nombre: string;
     estatus: number;
     fechaCreacion?: Date;
