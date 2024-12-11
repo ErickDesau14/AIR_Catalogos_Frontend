@@ -65,10 +65,10 @@ export class ListDataPositionComponent {
   }
 
   get isNamePositionValid(): boolean {
-    return this.namePosition && this.namePosition.trim().length > 0;
+    return this.selectedNamePosition && this.selectedNamePosition.trim().length > 0;
   }
 
-  emmitUpdateposition() {
+  emmitUpdatePosition() {
     const normalizedName = this.normalizePositionName(this.selectedNamePosition);
 
     if (!this.validatePositionName(normalizedName)) {
