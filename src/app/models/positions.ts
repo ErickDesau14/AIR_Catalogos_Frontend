@@ -1,8 +1,8 @@
 export class Puestos {
-    id: number;
-    name: string;
+    idPuesto: number;
+    nombre: string;
     estatus: number;
-    fechaCreacion: Date;
-    fechaModificacion: Date;
-    fechaBaja: Date;
+    fechaCreacion?: Date;
+    fechaModificacion?: Date;
+    fechaBaja?: Date;
 }
