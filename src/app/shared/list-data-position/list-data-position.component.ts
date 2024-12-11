@@ -3,7 +3,9 @@ import { Component, Input, Output, EventEmitter, ContentChild, TemplateRef } fro
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
+import { Puestos } from 'src/app/models/positions';
 import { AlertService } from 'src/app/services/alert.service';
+import { PuestoService } from 'src/app/services/puesto.service';
 
 @Component({
   selector: 'app-list-data-position',
@@ -29,37 +31,97 @@ export class ListDataPositionComponent {
 
   @Output() positionAdded: EventEmitter<void> = new EventEmitter<void>();
   @Output() updatePosition = new EventEmitter<string>();
+  @Output() resetForm = new EventEmitter<void>();
 
   @ContentChild('templateData', { static: false})
   templateData: TemplateRef<any>;
 
   constructor(
-    private alertService: AlertService
+    private alertService: AlertService,
+    private puestoService: PuestoService
   ) { }
+
+  private normalizePositionName(name: string): string {
+    return name.trim().replace(/\s+/g, ' ');
+  }
+
+  private validatePositionName(name: string): boolean {
+    if (!name || name.trim().length === 0) {
+      this.alertService.alertWarning('El nombre del puesto no puede estar vacío');
+      return false;
+    }
+
+    const normalizedName = this.normalizePositionName(name);
+    const exists = this.data.some((pos: any) =>
+      this.normalizePositionName(pos.nombre).toLowerCase() === normalizedName.toLowerCase()
+    );
+
+    if (exists) {
+      this.alertService.alertWarning('Este puesto ya existe');
+      return false;
+    }
+
+    return true;
+  }
 
   get isNamePositionValid(): boolean {
     return this.namePosition && this.namePosition.trim().length > 0;
   }
 
-  addData() {
+  emmitUpdateposition() {
+    const normalizedName = this.normalizePositionName(this.selectedNamePosition);
 
-    if (!this.selectedNamePosition) {
-      this.alertService.alertError(
-        'El nombre del puesto no puede estar vacío',
-      );
+    if (!this.validatePositionName(normalizedName)) {
       return;
     }
 
-    // const normalizedPositionName = this.namePosition.replace(/\s+/g, '').toLowerCase();
+    this.updatePosition.emit(normalizedName);
+  }
 
-    // this.sqliteManager.technologyExists(normalizedPositionName)
-    // .then((exists) => {
-    //   if (exists) {
-    //     this.alertService.alertWarning('Este puesto ya existe');
-    //     return;
-    //   }
-    // });
+  addData() {
 
+    const normalizedname = this.normalizePositionName(this.selectedNamePosition);
+
+    if (!this.validatePositionName(normalizedname)) {
+      return;
+    }
+
+    const newPosition: Puestos = {
+      nombre: normalizedname,
+      estatus: 1
+    };
+
+    this.alertService.alertConfirm(
+      '¿Está seguro de que desea agregar este puesto?',
+      () => {
+        this.puestoService.createPuesto(newPosition).subscribe({
+          next: () => {
+            this.alertService.alertSuccess('Puesto agregado exitosamente');
+            this.resetFormFields();
+            this.positionAdded.emit();
+          },
+          error: async (err) => {
+            if (err.error && err.error.message) {
+              await this.alertService.alertWarning(err.error.message);
+              this.resetFormFields();
+            } else {
+              await this.alertService.alertError('Error al agregar el puesto ' + err.message);
+            }
+          }
+        });
+      }
+    );
+
+  }
+
+  resetFormFields() {
+    this.selectedNamePosition = '';
+    this.creationDate = '';
+    this.modificationDate = '';
+    this.deactivationDate = '';
+    this.isEditing = false;
+    this.isReadOnly = false;
+    this.resetForm.emit();
   }
 
 }
