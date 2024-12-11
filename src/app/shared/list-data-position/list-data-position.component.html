@@ -8,8 +8,8 @@
         type="text"
         name="Puesto"
         placeholder="Puesto"
-        [(ngModel)]="namePosition"
-        maxlength="15"
+        [(ngModel)]="selectedNamePosition"
+        maxlength="50"
         [readonly]="isReadOnly"
         >
       </ion-input>
@@ -24,7 +24,7 @@
       label="Creado el"
       label-placement="floating"
       type="date"
-      name="fechaCreacionTecnologia"
+      name="fechaCreacionPuesto"
       placeholder="Creado el"
       [(ngModel)]="creationDate"
       disabled
@@ -36,12 +36,12 @@
   <!-- Fecha de Modificación -->
   <div class="ion-padding-bottom">
     <ion-item id="style-inputs">
-      <ion-icon name="calendar-clear-outline" class="icon-input"></ion-icon>
+      <ion-icon name="create-outline" class="icon-input"></ion-icon>
       <ion-input
         label="Modificado el"
         label-placement="floating"
         type="date"
-        name="fechaModificacionTecnologia"
+        name="fechaModificacionPuesto"
         placeholder="Modificado el"
         [(ngModel)]="modificationDate"
         disabled
@@ -53,12 +53,12 @@
   <!-- Fecha de Baja -->
   <div>
     <ion-item id="style-inputs">
-      <ion-icon name="calendar-clear-outline" class="icon-input"></ion-icon>
+      <ion-icon name="power-outline" class="icon-input"></ion-icon>
       <ion-input
         label="Desactivado desde el"
         label-placement="floating"
         type="date"
-        name="fechaBajaTecnologia"
+        name="fechaBajaPuesto"
         placeholder="Desactivado desde el"
         [(ngModel)]="deactivationDate"
         disabled
@@ -67,12 +67,13 @@
     </ion-item>
   </div>
 
-  <ion-row *ngIf="showAdd">
+  <ion-row *ngIf="true">
     <ion-col>
-      <ion-item (click)="addData()" id="item-button">
-        <ion-button class="add-button" *ngIf="addText" [disabled]="!isNamePositionValid">
-          <ion-icon name="add-outline" class="icon-button-add"></ion-icon>
-          Agregar puesto
+      <ion-item (click)="isEditing ? emmitUpdatePosition() : addData()" id="item-button">
+        <ion-button [ngClass]="isEditing ? 'edit-button' : 'add-button'" [disabled]="!isNamePositionValid">
+          <ion-icon *ngIf="!isEditing" name="add-outline" class="icon-button-add"></ion-icon>
+          <ion-icon *ngIf="isEditing" name="create-outline" class="icon-button-add"></ion-icon>
+          {{ isEditing ? 'Editar puesto' : 'Agregar puesto' }}
         </ion-button>
       </ion-item>
     </ion-col>
@@ -81,8 +82,8 @@
   <ion-grid id="size-grid-table-header">
     <ion-row id="table-header">
       <ion-col size="1"> Id </ion-col>
-      <ion-col size="auto"> Puesto </ion-col>
-      <ion-col size="auto"> Estatus </ion-col>
+      <ion-col size="4"> Puesto </ion-col>
+      <ion-col size="3"> Estatus </ion-col>
       <ion-col size="4"> Añadido el</ion-col>
     </ion-row>
   </ion-grid>
