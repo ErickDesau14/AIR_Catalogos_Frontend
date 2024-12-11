@@ -16,7 +16,7 @@ export class PuestoService {
   ) {}
 
   getPuestoById(id: number): Observable<Puestos> {
-    return this.httpClient.get<Puestos>(`${environment.puestoUrl}/puesto/${id}`);
+    return this.httpClient.get<Puestos>(`${environment.puestoUrl}/puestos/${id}`);
   }
 
   getTPuestosService() {
