@@ -12,12 +12,14 @@
               [creationDate]="selectedCreationDate"
               [modificationDate]="selectedModificationDate"
               [deactivationDate]="selectedDeactivationDate"
+              [isReadOnly]="isReadOnly"
               [isReadOnly]="isEditing"
-              (technologyAdded)="getExperience()"
+              (updateYearExperience)="updateExperience($event)"
+              (experienceAdded)="getExperiences()"
               >
               <ng-template #templateData let-item="item">
                 <ion-item-sliding>
-                  <ion-item id="table-content" (click)="selectExperience(item)">
+                  <ion-item id="table-content" (click)="selectExperience(item, false)">
                     <ion-label>
                       <ion-grid id="table">
                         <ion-row id="table">
@@ -38,10 +40,10 @@
                     </ion-label>
                   </ion-item>
                   <ion-item-options side="end">
-                    <ion-item-option class="option-edit">
+                    <ion-item-option class="option-edit" (click)="selectExperience(item, true)">
                       <ion-icon slot="icon-only" name="create-outline"></ion-icon>
                     </ion-item-option>
-                    <ion-item-option class="option-delete" (click)="desactivateExperience(item.id)">
+                    <ion-item-option class="option-delete" (click)="desactivateExperience(item)">
                       <ion-icon slot="icon-only" name="power-outline"></ion-icon>
                     </ion-item-option>
                   </ion-item-options>
