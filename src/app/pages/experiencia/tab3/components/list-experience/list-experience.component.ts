@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonContent } from '@ionic/angular';
 import { Experiencia } from 'src/app/models/experiencie';
 import { AlertService } from 'src/app/services/alert.service';
+import { ExperienciaService } from 'src/app/services/experience.service';
 
 @Component({
   selector: 'app-list-experience',
@@ -14,107 +15,126 @@ export class ListExperienceComponent  implements OnInit {
 
   public experience: Experiencia[];
   public showForm: boolean;
-
-  public nameExperience: string = '';
-  public selectedYearExperience: string = '';
+  public selectedYearExperience: number = 0;
   public selectedCreationDate: string = '';
   public selectedModificationDate: string = '';
   public selectedDeactivationDate: string = '';
-
   public isEditing: boolean = false;
   public isReadOnly: boolean = false;
-
   public lastSelectedId: number | null = null;
 
   constructor(
-    private alertService: AlertService
+    private alertService: AlertService,
+    private experienciaService: ExperienciaService
   ) {
     this.showForm = false;
     this.experience = [];
   }
 
   ngOnInit() {
-    this.getExperience();
+    this.getExperiences();
   }
 
-  getExperience() {
-
+  getExperiences() {
+    this.experienciaService.getExperiencia().subscribe({
+      next: (data) => {
+        this.experience = data;
+      },
+      error: async (error) => {
+        await this.alertService.alertError('Error al obtener las experiencias ' + error.message);
+      }
+    })
   }
 
   selectExperience(item: Experiencia, editMode: boolean = false) {
 
-    if (this.lastSelectedId === item.id) {
+    if (this.lastSelectedId === item.idExperiencia) {
       this.resetForm();
-      this.lastSelectedId = null;
-      this.isReadOnly = false;
-    } else {
-
-      this.selectedYearExperience = item.name || '';
-      this.selectedCreationDate = item.fechaCreacion ? item.fechaCreacion.toLocaleDateString('en-CA') : '';
-      this.selectedModificationDate = item.fechaModificacion ? item.fechaModificacion.toLocaleDateString('en-CA') : '';
-      this.selectedDeactivationDate = item.fechaBaja ? item.fechaBaja.toLocaleDateString('en-CA') : '';
-
-      this.isEditing = editMode;
-      this.isReadOnly = !editMode;
-      this.lastSelectedId = item.id;
-      this.content.scrollToTop(500);
-
-    }
-
-    console.log("Selected Experience Details:", {
-      name: this.selectedYearExperience,
-      creationDate: this.selectedCreationDate,
-      modificationDate: this.selectedModificationDate,
-      deactivationDate: this.selectedDeactivationDate
-    });
-  }
-
-  async updateExperience(updatedName: string) {
-
-    if (!updatedName || updatedName.trim().length === 0) {
-      await this.alertService.alertError(
-        'El nombre de la modalidad no puede estar vacío'
-      );
       return;
     }
 
-    // if (this.lastSelectedId !== null) {
-    //   const updatedExperience: Experiencia = {
-    //     id: this.lastSelectedId,
-    //     name: updatedName.trim(),
-    //     estatus: 1,
-    //     fechaCreacion: this.selectedCreationDate ? new Date(this.selectedCreationDate) : null,
-    //     fechaModificacion: new Date(), // Actualiza la fecha de modificación
-    //     fechaBaja: this.selectedDeactivationDate ? new Date(this.selectedDeactivationDate) : null
-    //   };
-    // }
+    this.experienciaService.getExperienceById(item.idExperiencia).subscribe({
+      next: (experiencia) => {
+        this.selectedYearExperience = experiencia.anho;
+        this.selectedCreationDate = experiencia.fechaCreacion ? new Date(experiencia.fechaCreacion).toISOString().split('T')[0] : '';
+        this.selectedModificationDate = experiencia.fechaModificacion ? new Date(experiencia.fechaModificacion).toISOString().split('T')[0] : '';
+        this.selectedDeactivationDate = experiencia.fechaBaja ? new Date(experiencia.fechaBaja).toISOString().split('T')[0] : '';
+
+        this.isEditing = editMode;
+        this.isReadOnly = !editMode;
+        this.lastSelectedId = item.idExperiencia;
+        this.content.scrollToTop(500);
+      },
+      error: async (error) => {
+        await this.alertService.alertError('Error al obtener la experiencia ' + error.message);
+      }
+    });
+  }
+
+  async updateExperience(updatedAnho: number) {
+
+    if (this.lastSelectedId !== null) {
+      const updatedExperience: Experiencia = {
+        anho: updatedAnho,
+        estatus: 1
+      };
+
+      this.alertService.alertConfirm(
+        '¿Estás seguro de que deseas actualizar el año de experiencia?',
+        () => {
+          this.experienciaService.updateExperience(this.lastSelectedId, updatedExperience).subscribe({
+            next: () => {
+              this.alertService.alertSuccess('Año de experiencia actualizado correctamente');
+              this.getExperiences();
+              this.resetForm();
+            },
+            error: async (error) => {
+              await this.alertService.alertError('Error al actualizar el año de experiencia ' + error.message);
+            }
+          });
+        }
+      );
+    }
+
+  }
+
+  desactivateExperience(item: Experiencia) {
+
+    const newEstatus = item.estatus === 1 ? 0 : 1;
+    const mensaje = newEstatus === 1
+      ? '¿Estás seguro de que deseas activar el año de experiencia?'
+      : '¿Estás seguro de que deseas desactivar el año de experiencia?';
 
     this.alertService.alertConfirm(
-      '¿Estás seguro de que deseas actualizar el año de experiencia?',
+      mensaje,
       () => {
-
+        this.experienciaService.updateEstatus(item.idExperiencia, newEstatus).subscribe({
+          next: () => {
+            this.alertService.alertOnOff(newEstatus);
+            this,this.getExperiences();
+            this.resetForm();
+          },
+          error: async (error) => {
+            await this.alertService.alertError('Error al actualizar el año de experiencia ' + error.message);
+          }
+        });
       }
     );
 
   }
 
   resetForm() {
-    this.selectedYearExperience = '';
+    this.selectedYearExperience = 0;
     this.selectedCreationDate = '';
     this.selectedModificationDate = '';
     this.selectedDeactivationDate = '';
-
     this.isEditing = false;
     this.isReadOnly = false;
+    this.lastSelectedId = null;
   }
 
   onShowForm() {
     this.showForm = true;
-  }
-
-  desactivateExperience(idExperience: number) {
-
-    this.resetForm();
   }
 
 }
