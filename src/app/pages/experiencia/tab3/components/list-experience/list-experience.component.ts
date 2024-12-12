@@ -15,7 +15,7 @@ export class ListExperienceComponent  implements OnInit {
 
   public experience: Experiencia[];
   public showForm: boolean;
-  public selectedYearExperience: number = 0;
+  public selectedYearExperience: number;
   public selectedCreationDate: string = '';
   public selectedModificationDate: string = '';
   public selectedDeactivationDate: string = '';
@@ -111,7 +111,7 @@ export class ListExperienceComponent  implements OnInit {
         this.experienciaService.updateEstatus(item.idExperiencia, newEstatus).subscribe({
           next: () => {
             this.alertService.alertOnOff(newEstatus);
-            this,this.getExperiences();
+            this.getExperiences();
             this.resetForm();
           },
           error: async (error) => {
@@ -124,7 +124,7 @@ export class ListExperienceComponent  implements OnInit {
   }
 
   resetForm() {
-    this.selectedYearExperience = 0;
+    this.selectedYearExperience = null;
     this.selectedCreationDate = '';
     this.selectedModificationDate = '';
     this.selectedDeactivationDate = '';
