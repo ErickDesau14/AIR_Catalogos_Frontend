@@ -1,8 +1,8 @@
 export class Experiencia {
-    id: number;
-    name: string;
+    idExperiencia?: number;
+    nombre: string;
     estatus: number;
-    fechaCreacion: Date;
-    fechaModificacion: Date;
-    fechaBaja: Date;
+    fechaCreacion?: Date;
+    fechaModificacion?: Date;
+    fechaBaja?: Date;
 }
