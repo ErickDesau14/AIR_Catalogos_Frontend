@@ -22,12 +22,12 @@ export class ListDataExperienceComponent {
   @Input() showAdd: boolean = true;
   @Input() isEditing: boolean = false;
 
-  @Input() yearExperience: number = 0;
+  @Input() yearExperience: number;
   @Input() creationDate: string = '';
   @Input() modificationDate: string = '';
   @Input() deactivationDate: string = '';
   @Input() isReadOnly: boolean = true;
-  @Input() selectedYearExperience: number = 0;
+  @Input() selectedYearExperience: number;
 
   @Output() experienceAdded: EventEmitter<void> = new EventEmitter<void>();
   @Output() updateYearExperience = new EventEmitter<number>();
@@ -103,8 +103,15 @@ export class ListDataExperienceComponent {
 
   }
 
+  limitInput(event: any): void {
+    const input = event.target as HTMLInputElement;
+    if (input.value.length > 2) {
+      input.value = input.value.slice(0, 2);
+    }
+  }
+
   resetFormFields() {
-    this.selectedYearExperience = 0;
+    this.selectedYearExperience = null;
     this.creationDate = '';
     this.modificationDate = '';
     this.deactivationDate = '';
