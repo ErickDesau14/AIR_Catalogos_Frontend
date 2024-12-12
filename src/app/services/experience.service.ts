@@ -15,19 +15,19 @@ export class ExperienciaService {
     private httpClient: HttpClient
   ) {}
 
-  getPuestoById(id: number): Observable<Experiencia> {
+  getExperienceById(id: number): Observable<Experiencia> {
     return this.httpClient.get<Experiencia>(`${environment.experienciaUrl}/puestos/${id}`);
   }
 
-  getTPuestosService() {
+  getExperienciaService() {
     return this.httpClient.get<Experiencia[]>(this.baseUrl);
   }
 
-  getPuestos(): Observable<Experiencia[]> {
+  getExperiencia(): Observable<Experiencia[]> {
     return this.httpClient.get<Experiencia[]>(this.baseUrl);
   }
 
-  createPuesto(experiencia: Experiencia): Observable<Experiencia> {
+  createExperiencia(experiencia: Experiencia): Observable<Experiencia> {
     return this.httpClient.post<Experiencia>(this.baseUrl, experiencia);
   }
 
@@ -35,7 +35,7 @@ export class ExperienciaService {
     return this.httpClient.put<Experiencia>(`${environment.puestoUrl}/experiencia/${id}/estatus/${estatus}`, {});
   }
 
-  updatePuesto(id: number, experiencia: Experiencia): Observable<Experiencia> {
+  updateExperience(id: number, experiencia: Experiencia): Observable<Experiencia> {
     return this.httpClient.put<Experiencia>(`${environment.puestoUrl}/experiencia/${id}`, experiencia);
   }
 
