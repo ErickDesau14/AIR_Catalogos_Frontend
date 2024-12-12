@@ -9,7 +9,7 @@
         name="Año de experiencia"
         placeholder="Año de experiencia"
         [(ngModel)]="selectedYearExperience"
-        maxlength="2"
+        (ionInput) = "limitInput($event)"
         [readonly]="isReadOnly"
         >
       </ion-input>
