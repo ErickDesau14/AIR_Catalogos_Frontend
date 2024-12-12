@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { ListTechnologiesComponent } from '../../tecnologias/tab1/components/list-technologies/list-technologies.component';
+import { ListExperienceComponent } from './components/list-experience/list-experience.component';
 
 @Component({
   selector: 'app-tab3',
@@ -8,14 +8,14 @@ import { ListTechnologiesComponent } from '../../tecnologias/tab1/components/lis
 })
 export class Tab3Page {
 
-  @ViewChild(ListTechnologiesComponent) listTechnologiesComponent!: ListTechnologiesComponent;
+  @ViewChild(ListExperienceComponent) listExperienceComponent!: ListExperienceComponent;
 
   constructor() {}
 
   handleRefresh(event: any) {
 
-    if (this.listTechnologiesComponent) {
-      this.listTechnologiesComponent.resetForm();
+    if (this.listExperienceComponent) {
+      this.listExperienceComponent.resetForm();
     }
 
     setTimeout(() => {
