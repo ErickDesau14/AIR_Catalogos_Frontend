@@ -5,10 +5,10 @@
     <ion-item id="style-inputs">
       <ion-icon name="hammer-outline" class="icon-input"></ion-icon>
       <ion-input
-        type="text"
+        type="number"
         name="Año de experiencia"
         placeholder="Año de experiencia"
-        [(ngModel)]="yearExperience"
+        [(ngModel)]="selectedYearExperience"
         maxlength="2"
         [readonly]="isReadOnly"
         >
@@ -24,7 +24,7 @@
       label="Creado el"
       label-placement="floating"
       type="date"
-      name="fechaCreacionTecnologia"
+      name="fechaCreacionExperiencia"
       placeholder="Creado el"
       [(ngModel)]="creationDate"
       disabled
@@ -41,7 +41,7 @@
         label="Modificado el"
         label-placement="floating"
         type="date"
-        name="fechaModificacionTecnologia"
+        name="fechaModificacionExperiencia"
         placeholder="Modificado el"
         [(ngModel)]="modificationDate"
         disabled
@@ -58,7 +58,7 @@
         label="Desactivado desde el"
         label-placement="floating"
         type="date"
-        name="fechaBajaTecnologia"
+        name="fechaBajaExperiencia"
         placeholder="Desactivado desde el"
         [(ngModel)]="deactivationDate"
         disabled
@@ -67,12 +67,13 @@
     </ion-item>
   </div>
 
-  <ion-row *ngIf="showAdd">
+  <ion-row *ngIf="true">
     <ion-col>
-      <ion-item (click)="addData()" id="item-button">
-        <ion-button class="add-button" *ngIf="addText" [disabled]="!isYearExperienceValid">
-          <ion-icon name="add-outline" class="icon-button-add"></ion-icon>
-          Agregar año de experiencia
+      <ion-item (click)="isEditing ? emmitUpdateYearExperience() : addData()" id="item-button">
+        <ion-button [ngClass]="isEditing ? 'edit-button' : 'add-button'" [disabled]="!isYearExperienceValid">
+          <ion-icon *ngIf="!isEditing" name="add-outline" class="icon-button-add"></ion-icon>
+          <ion-icon *ngIf="isEditing" name="create-outline" class="icon-button-add"></ion-icon>
+          {{ isEditing ? 'Editar año de experiencia' : 'Agregar año de experiencia' }}
         </ion-button>
       </ion-item>
     </ion-col>
