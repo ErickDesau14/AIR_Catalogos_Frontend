@@ -1,8 +1,8 @@
 export class Modalidad {
-    id: number;
-    name: string;
+    idModalidad?: number;
+    nombre: string;
     estatus: number;
-    fechaCreacion: Date;
-    fechaModificacion: Date;
-    fechaBaja: Date;
+    fechaCreacion?: Date;
+    fechaModificacion?: Date;
+    fechaBaja?: Date;
 }
