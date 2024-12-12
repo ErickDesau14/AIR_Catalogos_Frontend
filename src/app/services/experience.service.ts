@@ -16,7 +16,7 @@ export class ExperienciaService {
   ) {}
 
   getExperienceById(id: number): Observable<Experiencia> {
-    return this.httpClient.get<Experiencia>(`${environment.experienciaUrl}/puestos/${id}`);
+    return this.httpClient.get<Experiencia>(`${environment.experienciaUrl}/experiencia/${id}`);
   }
 
   getExperienciaService() {
@@ -32,11 +32,11 @@ export class ExperienciaService {
   }
 
   updateEstatus(id: number, estatus: number): Observable<Experiencia> {
-    return this.httpClient.put<Experiencia>(`${environment.puestoUrl}/experiencia/${id}/estatus/${estatus}`, {});
+    return this.httpClient.put<Experiencia>(`${environment.experienciaUrl}/experiencia/${id}/estatus/${estatus}`, {});
   }
 
   updateExperience(id: number, experiencia: Experiencia): Observable<Experiencia> {
-    return this.httpClient.put<Experiencia>(`${environment.puestoUrl}/experiencia/${id}`, experiencia);
+    return this.httpClient.put<Experiencia>(`${environment.experienciaUrl}/experiencia/${id}`, experiencia);
   }
 
 }
