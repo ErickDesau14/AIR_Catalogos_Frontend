@@ -1,6 +1,6 @@
 export class Experiencia {
     idExperiencia?: number;
-    nombre: string;
+    anho: number;
     estatus: number;
     fechaCreacion?: Date;
     fechaModificacion?: Date;
