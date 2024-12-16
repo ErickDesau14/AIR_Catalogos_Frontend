@@ -8,8 +8,8 @@
         type="text"
         name="Modalidad"
         placeholder="Modalidad"
-        [(ngModel)]="nameMode"
-        maxlength="15"
+        [(ngModel)]="selectedNameMode"
+        maxlength="50"
         [readonly]="isReadOnly"
         >
       </ion-input>
@@ -24,7 +24,7 @@
       label="Creado el"
       label-placement="floating"
       type="date"
-      name="fechaCreacionTecnologia"
+      name="fechaCreacionModalidad"
       placeholder="Creado el"
       [(ngModel)]="creationDate"
       disabled
@@ -36,12 +36,12 @@
   <!-- Fecha de Modificación -->
   <div class="ion-padding-bottom">
     <ion-item id="style-inputs">
-      <ion-icon name="calendar-clear-outline" class="icon-input"></ion-icon>
+      <ion-icon name="create-outline" class="icon-input"></ion-icon>
       <ion-input
         label="Modificado el"
         label-placement="floating"
         type="date"
-        name="fechaModificacionTecnologia"
+        name="fechaModificacionModalidad"
         placeholder="Modificado el"
         [(ngModel)]="modificationDate"
         disabled
@@ -53,12 +53,12 @@
   <!-- Fecha de Baja -->
   <div>
     <ion-item id="style-inputs">
-      <ion-icon name="calendar-clear-outline" class="icon-input"></ion-icon>
+      <ion-icon name="power-outline" class="icon-input"></ion-icon>
       <ion-input
         label="Desactivado desde el"
         label-placement="floating"
         type="date"
-        name="fechaBajaTecnologia"
+        name="fechaBajaModalidad"
         placeholder="Desactivado desde el"
         [(ngModel)]="deactivationDate"
         disabled
@@ -67,12 +67,13 @@
     </ion-item>
   </div>
 
-  <ion-row *ngIf="showAdd">
+  <ion-row *ngIf="true">
     <ion-col>
-      <ion-item (click)="addData()" id="item-button">
-        <ion-button class="add-button" *ngIf="addText" [disabled]="!isNameModeValid">
-          <ion-icon name="add-outline" class="icon-button-add"></ion-icon>
-          Agregar modalidad
+      <ion-item (click)="isEditing ? emitUpdateMode() : addData()" id="item-button">
+        <ion-button [ngClass]="isEditing ? 'edit-button' : 'add-button'" [disabled]="!isNameModeValid">
+          <ion-icon *ngIf="!isEditing" name="add-outline" class="icon-button-add"></ion-icon>
+          <ion-icon *ngIf="isEditing" name="create-outline" class="icon-button-add"></ion-icon>
+          {{ isEditing ? 'Editar tecnología' : 'Agregar tecnología' }}
         </ion-button>
       </ion-item>
     </ion-col>
