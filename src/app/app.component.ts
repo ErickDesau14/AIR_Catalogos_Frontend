@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { TecnologiaService } from './services/tecnologia.service';
 import { PuestoService } from './services/puesto.service';
 import { ExperienciaService } from './services/experience.service';
+import { ModalidadService } from './services/modalidad.service';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ export class AppComponent {
   public tecnologias: any[] = [];
   public puestos: any[] = [];
   public experiencias: any[] = [];
+  public modalidad: any[] = [];
   public error: string = '';
 
   constructor(
@@ -25,7 +27,8 @@ export class AppComponent {
     private translate: TranslateService,
     private tecnologiaService: TecnologiaService,
     private puestoService: PuestoService,
-    private experienciaService: ExperienciaService
+    private experienciaService: ExperienciaService,
+    private modalidadService: ModalidadService
   ) {
     this.load = false;
     this.isWeb = false;
@@ -76,6 +79,17 @@ export class AppComponent {
       next: (data) => {
         console.log('Conexión exitosa. Experiencias recibidas:', data);
         this.experiencias = data;
+      },
+      error: (err) => {
+        console.log('Error al obtener la conexión: ', err);
+        this.error = 'Error de conexión: ' + err.message;
+      }
+    })
+
+    this.modalidadService.getModalidadService().subscribe({
+      next: (data) => {
+        console.log('Conexión exitosa. Modalidades recibidas:', data);
+        this.modalidad = data;
       },
       error: (err) => {
         console.log('Error al obtener la conexión: ', err);
