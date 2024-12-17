@@ -8,7 +8,6 @@
             [data]="typeNotifications"
             [emptyText]="'No hay notificaciones creadas'"
             [addText]="'Agregar nueva notificación'"
-            [TypeNotification]="selectedTypeNotification"
             [selectedTypeNotification]="selectedTypeNotification"
             [creationDate]="selectedCreationDate"
             [modificationDate]="selectedModificationDate"
@@ -25,7 +24,7 @@
                     <ion-grid id="table">
                       <ion-row id="table">
                         <ion-col size="auto">
-                          {{ item.id }}
+                          {{ item.idTipoNotificacion }}
                         </ion-col>
                         <ion-col size="4">
                           {{ item.tipoNotificacion }}
@@ -44,7 +43,7 @@
                   <ion-item-option class="option-edit" (click)="selectNotification(item, true)">
                     <ion-icon slot="icon-only" name="create-outline"></ion-icon>
                   </ion-item-option>
-                  <ion-item-option class="option-delete" (click)="desactivateTechnology(item.id)">
+                  <ion-item-option class="option-delete" (click)="desactivateTypeNotification(item)">
                     <ion-icon slot="icon-only" name="power-outline"></ion-icon>
                   </ion-item-option>
                 </ion-item-options>
