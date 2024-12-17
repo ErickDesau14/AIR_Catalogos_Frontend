@@ -7,6 +7,7 @@ import { PuestoService } from './services/puesto.service';
 import { ExperienciaService } from './services/experience.service';
 import { ModalidadService } from './services/modalidad.service';
 import { NotificationService } from './services/notification.service';
+import { TipoNotificationService } from './services/typeNotification.service';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +23,7 @@ export class AppComponent {
   public experiencias: any[] = [];
   public modalidad: any[] = [];
   public notificaciones: any[] = [];
+  public tipoNotificaciones: any[] = [];
   public error: string = '';
 
   constructor(
@@ -31,7 +33,8 @@ export class AppComponent {
     private puestoService: PuestoService,
     private experienciaService: ExperienciaService,
     private modalidadService: ModalidadService,
-    private notificacionService: NotificationService
+    private notificacionService: NotificationService,
+    private tipoNotificacionService: TipoNotificationService
   ) {
     this.load = false;
     this.isWeb = false;
@@ -104,6 +107,17 @@ export class AppComponent {
       next: (data) => {
         console.log('Conexión exitosa. Notificaciones recibidas:', data);
         this.notificaciones = data;
+      },
+      error: (err) => {
+        console.log('Error al obtener la conexión: ', err);
+        this.error = 'Error de conexión: ' + err.message;
+      }
+    });
+
+    this.tipoNotificacionService.getTipoNotificacion().subscribe({
+      next: (data) => {
+        console.log('Conexión exitosa. Tipos de Notificaciones recibidas:', data);
+        this.tipoNotificaciones = data;
       },
       error: (err) => {
         console.log('Error al obtener la conexión: ', err);
