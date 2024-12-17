@@ -74,15 +74,15 @@ export class ListNotificationsComponent  implements OnInit {
   async updateNotification(updatedText: string) {
 
     if (this.lastSelectedId !== null) {
-      const updatedMode: Notificaciones = {
+      const updatedNotification: Notificaciones = {
         texto: updatedText.trim(),
         estatus: 1
       };
 
       this.alertService.alertConfirm(
-        '¿Está seguro de actualizar esta modalidad?',
+        '¿Está seguro de actualizar esta notificación?',
         () => {
-          this.notificationService.updateNotificacion(this.lastSelectedId, updatedMode).subscribe({
+          this.notificationService.updateNotificacion(this.lastSelectedId, updatedNotification).subscribe({
             next: () => {
               this.alertService.alertSuccess('Notificación actualizada correctamente');
               this.getNotifications();
@@ -91,7 +91,7 @@ export class ListNotificationsComponent  implements OnInit {
             error: () => {
               this.alertService.alertError('Error al actualizar esta notificación');
             }
-          })
+          });
         }
       );
     }
@@ -116,9 +116,9 @@ export class ListNotificationsComponent  implements OnInit {
           error: async (error) => {
             await this.alertService.alertError('Error al actualizar el estatus de la notificación ' + error.message);
           }
-        })
+        });
       }
-    )
+    );
   }
 
   resetForm() {
