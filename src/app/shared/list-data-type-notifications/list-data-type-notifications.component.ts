@@ -3,7 +3,9 @@ import { Component, ContentChild, EventEmitter, Input, OnInit, Output, TemplateR
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
+import { TipoNotificaciones } from 'src/app/models/typeNotifications';
 import { AlertService } from 'src/app/services/alert.service';
+import { TipoNotificationService } from 'src/app/services/typeNotification.service';
 
 @Component({
   selector: 'app-list-data-type-notifications',
@@ -19,7 +21,6 @@ export class ListDataTypeNotificationsComponent {
   @Input() addText: string;
   @Input() showAdd: boolean = true;
   @Input() isEditing: boolean = false;
-
   @Input() TypeNotification: string = '';
   @Input() creationDate: string = '';
   @Input() modificationDate: string = '';
@@ -29,41 +30,95 @@ export class ListDataTypeNotificationsComponent {
 
   @Output() typeNotificationAdded: EventEmitter<void> = new EventEmitter<void>();
   @Output() updateTypeNotification = new EventEmitter<string>();
+  @Output() resetForm = new EventEmitter<void>();
 
   @ContentChild('templateData', { static: false})
   templateData: TemplateRef<any>;
 
   constructor(
-    private alertService: AlertService
+    private alertService: AlertService,
+    private tipoNotificacionService: TipoNotificationService
   ) { }
+
+  private normalizeModeName(name: string): string {
+    return name.trim().replace(/\s+/g, ' ');
+  }
 
   get isTypeNotificationValid(): boolean {
     return this.selectedTypeNotification && this.selectedTypeNotification.trim().length > 0;
   }
 
-  emitUpdateTypeNotification() {
-    this.updateTypeNotification.emit(this.selectedTypeNotification);
+  private validateTypeNotificationName(name: string): boolean {
+    if (!name || name.trim().length === 0) {
+      this.alertService.alertWarning('El tipo de la notificación no puede estar vacío');
+      return false;
+    }
+
+    const normalizedName = this.normalizeModeName(name);
+    const exists = this.data.some((tipoNotificacion: TipoNotificaciones) =>
+      this.normalizeModeName(tipoNotificacion.tipoNotificacion).toLowerCase() === normalizedName.toLowerCase()
+    );
+
+    if (exists) {
+      this.alertService.alertWarning('Ya existe este tipo de notificación');
+      return false;
+    }
+
+    return true;
   }
 
-  addData() {
+  emitUpdateTypeNotification() {
+    const normalizedName = this.normalizeModeName(this.selectedTypeNotification);
 
-    if (!this.selectedTypeNotification) {
-      this.alertService.alertError(
-        'El tipo de la notificación no puede estar vacío',
-      );
+    if (!this.validateTypeNotificationName(normalizedName)) {
       return;
     }
 
-    // const normalizedTechnologyName = this.selectedNameTechnology.replace(/\s+/g, '').toLowerCase();
+    this.updateTypeNotification.emit(normalizedName);
+  }
 
-    // this.sqliteManager.technologyExists(normalizedTechnologyName)
-    // .then((exists) => {
-    //   if (exists) {
-    //     this.alertService.alertWarning('Esta tecnología ya existe');
-    //     return;
-    //   }
-    // });
+  addData() {
+    const normalizedName = this.normalizeModeName(this.selectedTypeNotification);
 
+    if (!this.validateTypeNotificationName(normalizedName)) {
+      return;
+    }
+
+    const newNotification: TipoNotificaciones = {
+      tipoNotificacion: normalizedName,
+      estatus: 1
+    };
+
+    this.alertService.alertConfirm(
+      '¿Estás seguro de agregar este tipo de notificación?',
+      () => {
+        this.tipoNotificacionService.createTipoNotificacion(newNotification).subscribe({
+          next: () => {
+            this.alertService.alertSuccess('Tipo de notificación agregada correctamente');
+            this.resetFormFields();
+            this.typeNotificationAdded.emit();
+          },
+          error: async (err) => {
+            if (err.error && err.error.message) {
+              await this.alertService.alertWarning(err.error.message);
+              this.resetFormFields();
+            } else {
+              await this.alertService.alertError('Error al agregar el tipo de notificación');
+            }
+          }
+        });
+      }
+    );
+  }
+
+  resetFormFields() {
+    this.selectedTypeNotification = '';
+    this.creationDate = '';
+    this.modificationDate = '';
+    this.deactivationDate = '';
+    this.isEditing = false;
+    this.isReadOnly = false;
+    this.resetForm.emit();
   }
 
 }
