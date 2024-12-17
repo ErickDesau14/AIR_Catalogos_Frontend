@@ -6,6 +6,7 @@ import { TecnologiaService } from './services/tecnologia.service';
 import { PuestoService } from './services/puesto.service';
 import { ExperienciaService } from './services/experience.service';
 import { ModalidadService } from './services/modalidad.service';
+import { NotificationService } from './services/notification.service';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,7 @@ export class AppComponent {
   public puestos: any[] = [];
   public experiencias: any[] = [];
   public modalidad: any[] = [];
+  public notificaciones: any[] = [];
   public error: string = '';
 
   constructor(
@@ -28,7 +30,8 @@ export class AppComponent {
     private tecnologiaService: TecnologiaService,
     private puestoService: PuestoService,
     private experienciaService: ExperienciaService,
-    private modalidadService: ModalidadService
+    private modalidadService: ModalidadService,
+    private notificacionService: NotificationService
   ) {
     this.load = false;
     this.isWeb = false;
@@ -62,7 +65,7 @@ export class AppComponent {
         console.log('Error al obtener la conexión: ', err);
         this.error = 'Error de conexión: ' + err.message;
       }
-    })
+    });
 
     this.puestoService.getTPuestosService().subscribe({
       next: (data) => {
@@ -73,7 +76,7 @@ export class AppComponent {
         console.log('Error al obtener la conexión: ', err);
         this.error = 'Error de conexión: ' + err.message;
       }
-    })
+    });
 
     this.experienciaService.getExperienciaService().subscribe({
       next: (data) => {
@@ -84,7 +87,7 @@ export class AppComponent {
         console.log('Error al obtener la conexión: ', err);
         this.error = 'Error de conexión: ' + err.message;
       }
-    })
+    });
 
     this.modalidadService.getModalidadService().subscribe({
       next: (data) => {
@@ -95,7 +98,18 @@ export class AppComponent {
         console.log('Error al obtener la conexión: ', err);
         this.error = 'Error de conexión: ' + err.message;
       }
-    })
+    });
+
+    this.notificacionService.getNotificacionService().subscribe({
+      next: (data) => {
+        console.log('Conexión exitosa. Notificaciones recibidas:', data);
+        this.notificaciones = data;
+      },
+      error: (err) => {
+        console.log('Error al obtener la conexión: ', err);
+        this.error = 'Error de conexión: ' + err.message;
+      }
+    });
   }
 
 }
