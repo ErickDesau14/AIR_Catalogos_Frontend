@@ -6,6 +6,7 @@ export const environment = {
   experienciaUrl: 'http://localhost:8080/api/v1/e',
   modalidadUrl: 'http://localhost:8080/api/v1/m',
   notificacionUrl: 'http://localhost:8080/api/v1/n',
+  tipoNotificacionUrl: 'http://localhost:8080/api/v1/tn',
   empresaUrl: 'http://localhost:8080/api/v1/e',
   archivoUrl: 'http://localhost:8080/api/v1/a/recurso',
   evaluacionUrl: 'http://localhost:8080/api/v1/e/recurso',
