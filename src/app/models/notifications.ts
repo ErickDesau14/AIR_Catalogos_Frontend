@@ -1,8 +1,8 @@
 export class Notificaciones {
-  id: number;
+  idNotificacion?: number;
   texto: string;
   estatus: number;
-  fechaCreacion: Date;
-  fechaModificacion: Date;
-  fechaBaja: Date;
+  fechaCreacion?: Date;
+  fechaModificacion?: Date;
+  fechaBaja?: Date;
 }
