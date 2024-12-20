@@ -21,16 +21,14 @@ export class ListDataExperienceComponent {
   @Input() addText: string;
   @Input() showAdd: boolean = true;
   @Input() isEditing: boolean = false;
-
-  @Input() yearExperience: number;
   @Input() creationDate: string = '';
   @Input() modificationDate: string = '';
   @Input() deactivationDate: string = '';
   @Input() isReadOnly: boolean = true;
-  @Input() selectedYearExperience: number;
+  @Input() selectedExperience: string = '';
 
   @Output() experienceAdded: EventEmitter<void> = new EventEmitter<void>();
-  @Output() updateYearExperience = new EventEmitter<number>();
+  @Output() updateYearExperience = new EventEmitter<string>();
   @Output() resetForm = new EventEmitter<void>();
 
   @ContentChild('templateData', { static: false})
@@ -41,16 +39,22 @@ export class ListDataExperienceComponent {
     private experienciaService: ExperienciaService
   ) { }
 
-  private validateExperienceYear(year: number): boolean {
-    if (!year || year <= 0) {
-      this.alertService.alertWarning('El año de experiencia no puede ser menor o igual a 0');
+  private normalizedExperienceName(name: string): string {
+    return name.trim().replace(/\s+/g, ' ');
+  }
+
+  private validateExperience(experiencia: string): boolean {
+    if (!experiencia || experiencia.trim().length === 0) {
+      this.alertService.alertWarning('La experienciea no puede estar vacío');
       return false;
     }
 
-    const exists = this.data.some((exp: Experiencia) => exp.anho === year);
+    const normalizedExperience = this.normalizedExperienceName(experiencia);
+    const exists = this.data.some((exp: Experiencia) =>
+      this.normalizedExperienceName(exp.experiencia).toLowerCase() === normalizedExperience.toLowerCase());
 
     if (exists) {
-      this.alertService.alertWarning('Este año de experiencia ya existe');
+      this.alertService.alertWarning('Esta experiencia ya existe');
       return false;
     }
 
@@ -58,60 +62,57 @@ export class ListDataExperienceComponent {
   }
 
   get isYearExperienceValid(): boolean {
-    return this.selectedYearExperience > 0;
+    return this.selectedExperience && this.selectedExperience.trim().length > 0;
   }
 
   emmitUpdateYearExperience() {
-    if (!this.validateExperienceYear(this.selectedYearExperience)) {
+    const normalizedExperience = this.normalizedExperienceName(this.selectedExperience);
+
+    if (!this.validateExperience(normalizedExperience)) {
       return;
     }
 
-    this.updateYearExperience.emit(this.selectedYearExperience);
+    this.updateYearExperience.emit(normalizedExperience);
   }
 
   addData() {
 
-    if (!this.validateExperienceYear(this.selectedYearExperience)) {
-      return;
-    }
+    const normalizedExperience = this.normalizedExperienceName(this.selectedExperience);
 
-    const newExperience: Experiencia = {
-      anho: this.selectedYearExperience,
-      estatus: 1
-    };
+        if (!this.validateExperience(normalizedExperience)) {
+          return;
+        }
 
-    this.alertService.alertConfirm(
-      '¿Estás seguro de que deseas agregar el año de experiencia?',
-      () => {
-        this.experienciaService.createExperiencia(newExperience).subscribe({
-          next: () => {
-            this.alertService.alertSuccess('Año de experiencia agregado correctamente');
-            this.resetFormFields();
-            this.experienceAdded.emit();
-          },
-          error: async (err) => {
-            if (err.error && err.error.message) {
-              await this.alertService.alertWarning(err.error.message);
-              this.resetFormFields();
-            } else {
-              await this.alertService.alertError('Error al agregar el año de experiencia ' + err.message);
-            }
+        const newTechnology: Experiencia = {
+          experiencia: normalizedExperience,
+          estatus: true
+        };
+
+        this.alertService.alertConfirm(
+          '¿Está seguro de que desea agregar esta tecnología?',
+          () => {
+            this.experienciaService.createExperiencia(newTechnology).subscribe({
+              next: () => {
+                this.alertService.alertSuccess('Experiencia creada exitosamente');
+                this.resetFormFields();
+                this.experienceAdded.emit();
+              },
+              error: async (err) => {
+                if (err.error && err.error.message) {
+                  await this.alertService.alertWarning(err.error.message);
+                  this.resetFormFields();
+                } else {
+                  await this.alertService.alertError('Error al crear esta experiencia');
+                }
+              }
+            });
           }
-        })
-      }
-    )
+        );
 
-  }
-
-  limitInput(event: any): void {
-    const input = event.target as HTMLInputElement;
-    if (input.value.length > 2) {
-      input.value = input.value.slice(0, 2);
-    }
   }
 
   resetFormFields() {
-    this.selectedYearExperience = null;
+    this.selectedExperience = '';
     this.creationDate = '';
     this.modificationDate = '';
     this.deactivationDate = '';
