@@ -15,7 +15,7 @@ export class ListExperienceComponent  implements OnInit {
 
   public experience: Experiencia[];
   public showForm: boolean;
-  public selectedYearExperience: number;
+  public selectedExperience: string = '';
   public selectedCreationDate: string = '';
   public selectedModificationDate: string = '';
   public selectedDeactivationDate: string = '';
@@ -55,10 +55,10 @@ export class ListExperienceComponent  implements OnInit {
 
     this.experienciaService.getExperienceById(item.idExperiencia).subscribe({
       next: (experiencia) => {
-        this.selectedYearExperience = experiencia.anho;
-        this.selectedCreationDate = experiencia.fechaCreacion ? new Date(experiencia.fechaCreacion).toISOString().split('T')[0] : '';
-        this.selectedModificationDate = experiencia.fechaModificacion ? new Date(experiencia.fechaModificacion).toISOString().split('T')[0] : '';
-        this.selectedDeactivationDate = experiencia.fechaBaja ? new Date(experiencia.fechaBaja).toISOString().split('T')[0] : '';
+        this.selectedExperience = experiencia.experiencia;
+        this.selectedCreationDate = experiencia.fecha_creacion ? new Date(experiencia.fecha_creacion).toISOString().split('T')[0] : '';
+        this.selectedModificationDate = experiencia.fecha_modificacion ? new Date(experiencia.fecha_modificacion).toISOString().split('T')[0] : '';
+        this.selectedDeactivationDate = experiencia.fecha_baja ? new Date(experiencia.fecha_baja).toISOString().split('T')[0] : '';
 
         this.isEditing = editMode;
         this.isReadOnly = !editMode;
@@ -71,12 +71,12 @@ export class ListExperienceComponent  implements OnInit {
     });
   }
 
-  async updateExperience(updatedAnho: number) {
+  async updateExperience(updatedExpereince: string) {
 
     if (this.lastSelectedId !== null) {
       const updatedExperience: Experiencia = {
-        anho: updatedAnho,
-        estatus: 1
+        experiencia: updatedExpereince,
+        estatus: true
       };
 
       this.alertService.alertConfirm(
@@ -100,7 +100,7 @@ export class ListExperienceComponent  implements OnInit {
 
   desactivateExperience(item: Experiencia) {
 
-    const newEstatus = item.estatus === 1 ? 0 : 1;
+    const newEstatus = item.estatus === true ? 0 : 1;
     const mensaje = newEstatus === 1
       ? '¿Estás seguro de que deseas activar el año de experiencia?'
       : '¿Estás seguro de que deseas desactivar el año de experiencia?';
@@ -124,7 +124,7 @@ export class ListExperienceComponent  implements OnInit {
   }
 
   resetForm() {
-    this.selectedYearExperience = null;
+    this.selectedExperience = '';
     this.selectedCreationDate = '';
     this.selectedModificationDate = '';
     this.selectedDeactivationDate = '';
