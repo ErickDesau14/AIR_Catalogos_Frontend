@@ -5,11 +5,10 @@
     <ion-item id="style-inputs">
       <ion-icon name="hammer-outline" class="icon-input"></ion-icon>
       <ion-input
-        type="number"
+        type="text"
         name="Año de experiencia"
         placeholder="Año de experiencia"
-        [(ngModel)]="selectedYearExperience"
-        (ionInput) = "limitInput($event)"
+        [(ngModel)]="selectedExperience"
         [readonly]="isReadOnly"
         >
       </ion-input>
