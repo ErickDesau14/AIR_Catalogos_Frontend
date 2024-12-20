@@ -56,9 +56,9 @@ export class ListTypeNotificationsComponent  implements OnInit {
     this.tipoNotificacionesService.getTipoNotificacionById(item.idTipoNotificacion).subscribe({
       next: (typeNotification) => {
         this.selectedTypeNotification = typeNotification.tipoNotificacion;
-        this.selectedCreationDate = typeNotification.fechaCreacion ? new Date(typeNotification.fechaCreacion).toISOString().split('T')[0] : '';
-        this.selectedModificationDate = typeNotification.fechaModificacion ? new Date(typeNotification.fechaModificacion).toISOString().split('T')[0] : '';
-        this.selectedDeactivationDate = typeNotification.fechaBaja ? new Date(typeNotification.fechaBaja).toISOString().split('T')[0] : '';
+        this.selectedCreationDate = typeNotification.fecha_creacion ? new Date(typeNotification.fecha_creacion).toISOString().split('T')[0] : '';
+        this.selectedModificationDate = typeNotification.fecha_modificacion ? new Date(typeNotification.fecha_modificacion).toISOString().split('T')[0] : '';
+        this.selectedDeactivationDate = typeNotification.fecha_baja ? new Date(typeNotification.fecha_baja).toISOString().split('T')[0] : '';
         this.isEditing = editMode;
         this.isReadOnly = !editMode;
         this.lastSelectedId = item.idTipoNotificacion;
@@ -75,7 +75,7 @@ export class ListTypeNotificationsComponent  implements OnInit {
     if (this.lastSelectedId !== null) {
       const updatedTypeNotification: TipoNotificaciones = {
         tipoNotificacion: updatedText.trim(),
-        estatus: 1
+        estatus: true
       };
 
       this.alertService.alertConfirm(
@@ -97,7 +97,7 @@ export class ListTypeNotificationsComponent  implements OnInit {
   }
 
   desactivateTypeNotification(item: TipoNotificaciones) {
-    const newEstatus = item.estatus === 1 ? 0 : 1;
+    const newEstatus = item.estatus === true ? 0 : 1;
     const mensaje = newEstatus === 1
       ? '¿Está seguro de activar este tipo de notificación?'
       : '¿Está seguro de desactivar este tipo notificación?';
