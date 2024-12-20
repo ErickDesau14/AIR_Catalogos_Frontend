@@ -8,7 +8,7 @@
               [data]="experience"
               [emptyText]="'No hay años de experiencia creadas'"
               [addText]="'Agregar nuevo año de experiencia'"
-              [selectedYearExperience]="selectedYearExperience"
+              [selectedExperience]="selectedExperience"
               [creationDate]="selectedCreationDate"
               [modificationDate]="selectedModificationDate"
               [deactivationDate]="selectedDeactivationDate"
@@ -27,13 +27,13 @@
                             {{ item.idExperiencia }}
                           </ion-col>
                           <ion-col size="4">
-                            {{ item.anho }}
+                            {{ item.experiencia }}
                           </ion-col>
-                          <ion-col size="3" [id]="item.estatus === 1 ? 'col-estatus-activa' : 'col-estatus-desactivada'">
-                            {{ item.estatus === 1 ? 'Activa' : 'Inactiva' }}
+                          <ion-col size="3" [id]="item.estatus === true ? 'col-estatus-activa' : 'col-estatus-desactivada'">
+                            {{ item.estatus === true ? 'Activa' : 'Inactiva' }}
                           </ion-col>
                           <ion-col size="3" id="col-estatus-fecha">
-                            {{ item.fechaCreacion | date: 'dd-MM-yy' }}
+                            {{ item.fecha_creacion | date: 'dd-MM-yy' }}
                           </ion-col>
                         </ion-row>
                       </ion-grid>
