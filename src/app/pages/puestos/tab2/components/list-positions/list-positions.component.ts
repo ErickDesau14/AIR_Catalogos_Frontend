@@ -55,10 +55,10 @@ export class ListPositionsComponent  implements OnInit {
 
     this.puestoService.getPuestoById(item.idPuesto).subscribe({
       next: (puesto) => {
-        this.selectedNamePosition = puesto.nombre;
-        this.selectedCreationDate = puesto.fechaCreacion ? new Date(puesto.fechaCreacion).toISOString().split('T')[0] : '';
-        this.selectedModificationDate = puesto.fechaModificacion ? new Date(puesto.fechaModificacion).toISOString().split('T')[0] : '';
-        this.selectedDeactivationDate = puesto.fechaBaja ? new Date(puesto.fechaBaja).toISOString().split('T')[0] : '';
+        this.selectedNamePosition = puesto.puesto;
+        this.selectedCreationDate = puesto.fecha_creacion ? new Date(puesto.fecha_creacion).toISOString().split('T')[0] : '';
+        this.selectedModificationDate = puesto.fecha_modificacion ? new Date(puesto.fecha_modificacion).toISOString().split('T')[0] : '';
+        this.selectedDeactivationDate = puesto.fecha_baja ? new Date(puesto.fecha_baja).toISOString().split('T')[0] : '';
 
         this.isEditing = editMode;
         this.isReadOnly = !editMode;
@@ -73,7 +73,7 @@ export class ListPositionsComponent  implements OnInit {
   }
 
   desactivatePosition(item: Puestos) {
-    const newEstatus = item.estatus === 1 ? 0 : 1;
+    const newEstatus = item.estatus === true ? 0 : 1;
     const mensaje = newEstatus === 1
     ? '¿Estás seguro de que deseas activar el puesto?'
     : '¿Estás seguro de que deseas desactivar el puesto?';
@@ -99,8 +99,8 @@ export class ListPositionsComponent  implements OnInit {
 
     if (this.lastSelectedId !== null) {
       const updatedPosition: Puestos = {
-        nombre: updatedName.trim(),
-        estatus: 1,
+        puesto: updatedName.trim(),
+        estatus: true,
       };
 
       this.alertService.alertConfirm(

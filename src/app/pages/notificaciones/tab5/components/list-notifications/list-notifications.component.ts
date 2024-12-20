@@ -56,9 +56,9 @@ export class ListNotificationsComponent  implements OnInit {
     this.notificationService.getNotificacionById(item.idNotificacion).subscribe({
       next: (notification) => {
         this.selectedTextNotification = notification.texto;
-        this.selectedCreationDate = notification.fechaCreacion ? new Date(notification.fechaCreacion).toISOString().split('T')[0] : '';
-        this.selectedModificationDate = notification.fechaModificacion ? new Date(notification.fechaModificacion).toISOString().split('T')[0] : '';
-        this.selectedDeactivationDate = notification.fechaBaja ? new Date(notification.fechaBaja).toISOString().split('T')[0] : '';
+        this.selectedCreationDate = notification.fecha_creacion ? new Date(notification.fecha_creacion).toISOString().split('T')[0] : '';
+        this.selectedModificationDate = notification.fecha_modificacion ? new Date(notification.fecha_modificacion).toISOString().split('T')[0] : '';
+        this.selectedDeactivationDate = notification.fecha_baja ? new Date(notification.fecha_baja).toISOString().split('T')[0] : '';
         this.isEditing = editMode;
         this.isReadOnly = !editMode;
         this.lastSelectedId = item.idNotificacion;
@@ -76,7 +76,7 @@ export class ListNotificationsComponent  implements OnInit {
     if (this.lastSelectedId !== null) {
       const updatedNotification: Notificaciones = {
         texto: updatedText.trim(),
-        estatus: 1
+        estatus: true
       };
 
       this.alertService.alertConfirm(
@@ -99,7 +99,7 @@ export class ListNotificationsComponent  implements OnInit {
   }
 
   desactivateNotification(item: Notificaciones) {
-    const newEstatus = item.estatus === 1 ? 0 : 1;
+    const newEstatus = item.estatus === true ? 0 : 1;
     const mensaje = newEstatus === 1
       ? '¿Está seguro de activar este notificación?'
       : '¿Está seguro de desactivar esta notificación?';

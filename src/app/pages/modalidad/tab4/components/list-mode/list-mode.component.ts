@@ -55,10 +55,10 @@ export class ListModeComponent  implements OnInit {
 
     this.modalidadService.getModalidadById(item.idModalidad).subscribe({
       next: (modalidad) => {
-        this.selectedNameMode = modalidad.nombre;
-        this.selectedCreationDate = modalidad.fechaCreacion ? new Date(modalidad.fechaCreacion).toISOString().split('T')[0] : '';
-        this.selectedModificationDate = modalidad.fechaModificacion ? new Date(modalidad.fechaModificacion).toISOString().split('T')[0] : '';
-        this.selectedDeactivationDate = modalidad.fechaBaja ? new Date(modalidad.fechaBaja).toISOString().split('T')[0] : '';
+        this.selectedNameMode = modalidad.modalidad;
+        this.selectedCreationDate = modalidad.fecha_creacion ? new Date(modalidad.fecha_creacion).toISOString().split('T')[0] : '';
+        this.selectedModificationDate = modalidad.fecha_modificacion ? new Date(modalidad.fecha_modificacion).toISOString().split('T')[0] : '';
+        this.selectedDeactivationDate = modalidad.fecha_baja ? new Date(modalidad.fecha_baja).toISOString().split('T')[0] : '';
         this.isEditing = editMode;
         this.isReadOnly = !editMode;
         this.lastSelectedId = item.idModalidad;
@@ -73,8 +73,8 @@ export class ListModeComponent  implements OnInit {
   async updateMode(updatedName: string) {
     if (this.lastSelectedId !== null) {
       const updatedMode: Modalidad = {
-        nombre: updatedName.trim(),
-        estatus: 1
+        modalidad: updatedName.trim(),
+        estatus: true
       };
 
       this.alertService.alertConfirm(
@@ -96,7 +96,7 @@ export class ListModeComponent  implements OnInit {
   }
 
   desactivateMode(item: Modalidad) {
-    const newEstatus = item.estatus === 1 ? 0 : 1;
+    const newEstatus = item.estatus === true ? 0 : 1;
     const mensaje = newEstatus === 1
       ? '¿Está seguro de activar este modalidad?'
       : '¿Está seguro de desactivar esta modalidad?';

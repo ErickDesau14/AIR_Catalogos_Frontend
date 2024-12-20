@@ -55,10 +55,10 @@ export class ListTechnologiesComponent  implements OnInit {
 
       this.tecnologiaService.getTecnologiaById(item.idTecnologia).subscribe({
         next: (tecnologia) => {
-          this.selectedNameTechnology = tecnologia.nombre;
-          this.selectedCreationDate = tecnologia.fechaCreacion ? new Date(tecnologia.fechaCreacion).toISOString().split('T')[0] : '';
-          this.selectedModificationDate = tecnologia.fechaModificacion ? new Date(tecnologia.fechaModificacion).toISOString().split('T')[0] : '';
-          this.selectedDeactivationDate = tecnologia.fechaBaja ? new Date(tecnologia.fechaBaja).toISOString().split('T')[0] : '';
+          this.selectedNameTechnology = tecnologia.tecnologia;
+          this.selectedCreationDate = tecnologia.fecha_creacion ? new Date(tecnologia.fecha_creacion).toISOString().split('T')[0] : '';
+          this.selectedModificationDate = tecnologia.fecha_modificacion ? new Date(tecnologia.fecha_modificacion).toISOString().split('T')[0] : '';
+          this.selectedDeactivationDate = tecnologia.fecha_baja ? new Date(tecnologia.fecha_baja).toISOString().split('T')[0] : '';
 
           this.isEditing = editMode;
           this.isReadOnly = !editMode;
@@ -72,7 +72,7 @@ export class ListTechnologiesComponent  implements OnInit {
   }
 
   desactivateTecnologia(item: Tecnologias) {
-    const newEstatus = item.estatus === 1 ? 0 : 1;
+    const newEstatus = item.estatus === true ? 0 : 1;
     const mensaje = newEstatus === 1
       ? '¿Estás seguro de que deseas activar la tecnología?'
       : '¿Estás seguro de que deseas desactivar la tecnología?';
@@ -98,8 +98,8 @@ export class ListTechnologiesComponent  implements OnInit {
 
     if (this.lastSelectedId !== null) {
       const updatedTechnology: Tecnologias = {
-        nombre: updatedName.trim(),
-        estatus: 1,
+        tecnologia: updatedName.trim(),
+        estatus: true,
       };
 
       this.alertService.alertConfirm(
