@@ -56,7 +56,7 @@ export class ListDataModeComponent {
 
     const normalizedName = this.normalizeModeName(name);
     const exists = this.data.some((mode: Modalidad) =>
-      this.normalizeModeName(mode.nombre).toLowerCase() === normalizedName.toLowerCase()
+      this.normalizeModeName(mode.modalidad).toLowerCase() === normalizedName.toLowerCase()
     );
 
     if (exists) {
@@ -85,8 +85,8 @@ export class ListDataModeComponent {
     }
 
     const newMode: Modalidad = {
-      nombre: normalizedName,
-      estatus: 1
+      modalidad: normalizedName,
+      estatus: true
     };
 
     this.alertService.alertConfirm(

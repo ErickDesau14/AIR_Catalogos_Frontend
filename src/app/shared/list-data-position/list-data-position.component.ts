@@ -53,7 +53,7 @@ export class ListDataPositionComponent {
 
     const normalizedName = this.normalizePositionName(name);
     const exists = this.data.some((pos: any) =>
-      this.normalizePositionName(pos.nombre).toLowerCase() === normalizedName.toLowerCase()
+      this.normalizePositionName(pos.puesto).toLowerCase() === normalizedName.toLowerCase()
     );
 
     if (exists) {
@@ -87,8 +87,8 @@ export class ListDataPositionComponent {
     }
 
     const newPosition: Puestos = {
-      nombre: normalizedname,
-      estatus: 1
+      puesto: normalizedname,
+      estatus: true
     };
 
     this.alertService.alertConfirm(

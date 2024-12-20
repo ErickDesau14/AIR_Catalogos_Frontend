@@ -86,7 +86,7 @@ export class ListDataTypeNotificationsComponent {
 
     const newNotification: TipoNotificaciones = {
       tipoNotificacion: normalizedName,
-      estatus: 1
+      estatus: true
     };
 
     this.alertService.alertConfirm(

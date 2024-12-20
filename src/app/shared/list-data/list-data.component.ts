@@ -55,7 +55,7 @@ export class ListDataComponent {
 
     const normalizedName = this.normalizeTechnologyName(name);
     const exists = this.data.some((tech: Tecnologias) =>
-      this.normalizeTechnologyName(tech.nombre).toLowerCase() === normalizedName.toLowerCase()
+      this.normalizeTechnologyName(tech.tecnologia).toLowerCase() === normalizedName.toLowerCase()
     );
 
     if (exists) {
@@ -89,8 +89,8 @@ export class ListDataComponent {
     }
 
     const newTechnology: Tecnologias = {
-      nombre: normalizedName,
-      estatus: 1
+      tecnologia: normalizedName,
+      estatus: true
     };
 
     this.alertService.alertConfirm(

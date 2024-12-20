@@ -86,7 +86,7 @@ export class ListDataNotificationsComponent {
 
     const newNotification: Notificaciones = {
       texto: normalizedName,
-      estatus: 1
+      estatus: true
     };
 
     this.alertService.alertConfirm(
