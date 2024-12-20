@@ -9,7 +9,7 @@ import { Modalidad } from "../models/mode";
 })
 export class ModalidadService {
 
-  private baseUrl = `${environment.modalidadUrl}/modalidad`;
+  private baseUrl = `${environment.modalidadUrl}/modalidades`;
 
   constructor(
     private httpClient: HttpClient
@@ -28,7 +28,7 @@ export class ModalidadService {
   }
 
   createModalidad(modalidad: Modalidad): Observable<Modalidad> {
-    return this.httpClient.post<Modalidad>(this.baseUrl, modalidad);
+    return this.httpClient.post<Modalidad>(`${environment.modalidadUrl}/modalidad`, modalidad);
   }
 
   updateEstatus(id: number, estatus: number): Observable<Modalidad> {

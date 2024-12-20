@@ -9,7 +9,7 @@ import { environment } from "src/environments/environment";
 })
 export class ExperienciaService {
 
-  private baseUrl = `${environment.experienciaUrl}/experiencia`;
+  private baseUrl = `${environment.experienciaUrl}/experiencias`;
 
   constructor(
     private httpClient: HttpClient
@@ -28,7 +28,7 @@ export class ExperienciaService {
   }
 
   createExperiencia(experiencia: Experiencia): Observable<Experiencia> {
-    return this.httpClient.post<Experiencia>(this.baseUrl, experiencia);
+    return this.httpClient.post<Experiencia>(`${environment.experienciaUrl}/experiencia`, experiencia);
   }
 
   updateEstatus(id: number, estatus: number): Observable<Experiencia> {
